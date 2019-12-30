@@ -1,0 +1,23 @@
+.App {
+
+}
+
+.header {
+    background-color: black;
+    color: white;
+    display: block;
+}
+
+.header a {
+    color: white;
+}
+
+.header a.active {
+    color: #8686dc;
+}
+
+body {
+    /*background-image: url('https://i.imgur.com/zhG1F1q.jpg');*/
+    background-repeat: no-repeat;
+    background-size: cover;
+}
