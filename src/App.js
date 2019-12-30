@@ -8,33 +8,23 @@ import UsersContainer from "./Components/Users/UsersContainer";
 
 function App(props) {
     return (
-        < div
-    className = "App" >
-        < div
-    className = 'header' >
-        < NavLink
-    to = '/MyChat' > MyChat < /NavLink><br/ >
-        < NavLink
-    to = '/Users' > Users < /NavLink>
-        < /div>
-        < Route
-    path = '/MyChat'
-    render = {()
-=> <
-    InfoContainer / >
-}
-    />
-    < Route
-    path = '/Users'
-    render = {()
-=> <
-    UsersContainer / >
-}
-    />
+        <div className="App">
+            < div
+                className='header'>
+                <NavLink
+                    to='/MyChat'> MyChat </NavLink><br/>
+                <NavLink to='/Users'> Users </NavLink>
+            </div>
+            < Route
+                path='/MyChat'
+                render={() => <
+                    InfoContainer/>}
+            />
+            < Route
+                path='/Users'
+                render={() => <UsersContainer />}/>
 
-    < /div>
-)
-    ;
+        </div>
+    );
 }
-
 export default App;
