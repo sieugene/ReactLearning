@@ -30,3 +30,9 @@
 .userImg {
     width: 80px;
 }
+.currentPage{
+    font-weight: bolder;
+}
+.pagination{
+    background-color: #8686dc;
+}
