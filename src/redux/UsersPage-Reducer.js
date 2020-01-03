@@ -53,7 +53,7 @@ const UsersPageReducer = (state = initialState, action) => {
                 totalUsers: action.totalUsers
             }
         case SET_SEARCH_TERM:
-            return{
+            return {
                 ...state,
                 searchTerm: action.text
             }
