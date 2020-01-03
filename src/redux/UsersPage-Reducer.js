@@ -3,13 +3,15 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
+const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
 
 
 let initialState = {
     UsersList: [],
     pageSize: 35,
     totalUsers: 0,
-    currentPage: 1
+    currentPage: 1,
+    searchTerm: '',
 }
 
 
@@ -50,6 +52,11 @@ const UsersPageReducer = (state = initialState, action) => {
                 ...state,
                 totalUsers: action.totalUsers
             }
+        case SET_SEARCH_TERM:
+            return{
+                ...state,
+                searchTerm: action.text
+            }
         default:
             return state
 
@@ -79,6 +86,11 @@ export const setCurrentPageAC = (currentPage) => {
 export const setUsersTotalCount = (totalUsers) => {
     return {
         type: SET_USERS_TOTAL_COUNT, totalUsers
+    }
+}
+export const setSearchTermAC = (text) => {
+    return {
+        type: SET_SEARCH_TERM, text
     }
 }
 

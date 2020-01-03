@@ -15,7 +15,6 @@ class Users extends React.Component {
                 this.props.setUsersTotal(response.data.totalCount)
             })
     }
-
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
@@ -25,7 +24,16 @@ class Users extends React.Component {
                 this.props.setUsersTotal(response.data.totalCount)
             })
     }
-
+    //поиск по пользователям метод
+    onSearchChange = (text) => {
+        this.props.setSearchTermText(text);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}
+        &&term=${text}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setUsersTotal(response.data.totalCount)
+            })
+    }
     render() {
         //считаем сколько страниц
         let totalPages = this.props.totalUsers / this.props.pageSize;
@@ -34,8 +42,18 @@ class Users extends React.Component {
         for (let i = 1; i <= totalPages; i++) {
             pages.push(i);
         }
+        //поиск по пользователям, реф
+        let newTextTerm = React.createRef();
         return (
             <div className={s.mainBlock}>
+                <div>
+                    Search on page
+                    <input value={this.props.searchTerm} ref={newTextTerm}
+                    onChange={ () => {
+                        this.onSearchChange(newTextTerm.current.value)
+                    }}
+                    />
+                </div>
                 <div className={s.pagination}>
                     {pages.map(p => {
                         //map страниц, присвоение класса выбранной странице
