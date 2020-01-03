@@ -40,7 +40,7 @@ class UsersContainerClass extends React.Component {
     onSearchChange = (text) => {
         this.props.toggleIsFetching(true);
         this.props.setSearchTermText(text);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}&term=${text}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=1&term=${text}`)
             .then(response => {
                 this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
