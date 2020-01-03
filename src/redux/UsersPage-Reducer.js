@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_USERS_TOTAL_COUNT';
 const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 
 let initialState = {
@@ -12,8 +13,8 @@ let initialState = {
     totalUsers: 0,
     currentPage: 1,
     searchTerm: '',
+    isFetching: false
 }
-
 
 const UsersPageReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -57,6 +58,11 @@ const UsersPageReducer = (state = initialState, action) => {
                 ...state,
                 searchTerm: action.text
             }
+        case TOGGLE_IS_FETCHING:
+            return{
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state
 
@@ -93,5 +99,13 @@ export const setSearchTermAC = (text) => {
         type: SET_SEARCH_TERM, text
     }
 }
+export const toggleIsFetchingAC = (isFetching) => {
+    return{
+        type: TOGGLE_IS_FETCHING, isFetching
+    }
+}
+
+
+
 
 export default UsersPageReducer;

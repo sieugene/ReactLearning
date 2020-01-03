@@ -5,37 +5,44 @@ import {
     setCurrentPageAC,
     setSearchTermAC,
     setUsersAC,
-    setUsersTotalCount,
+    setUsersTotalCount, toggleIsFetchingAC,
     unFollowAC
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
 import * as axios from "axios";
 import s from "./Users.module.css";
+import Preloader from "../../assets/preloader/Preloader";
 
 //эту классовую компоненту мы создали для того чтобы
 // , наша компонента Users стала чистой, а здесь мы выполняем запросы и передаем через callback
 class UsersContainerClass extends React.Component {
     componentDidMount() {
+        this.props.toggleIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
             .then(response => {
+                this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
                 this.props.setUsersTotal(response.data.totalCount)
             })
     }
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
+        this.props.toggleIsFetching(true);
         this.props.setCurrentPage(pageNumber);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`)
             .then(response => {
+                this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
                 this.props.setUsersTotal(response.data.totalCount)
             })
     }
     //поиск по пользователям метод
     onSearchChange = (text) => {
+        this.props.toggleIsFetching(true);
         this.props.setSearchTermText(text);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}&term=${text}`)
             .then(response => {
+                this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items)
                 this.props.setUsersTotal(response.data.totalCount)
             })
@@ -43,6 +50,8 @@ class UsersContainerClass extends React.Component {
 
     render() {
         return (
+            <>
+                {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsers={this.props.totalUsers}
                    pageSize={this.props.pageSize}
                    searchTerm={this.props.searchTerm}
@@ -53,6 +62,7 @@ class UsersContainerClass extends React.Component {
                    follow={this.props.follow}
                    unFollow={this.props.unFollow}
             />
+            </>
         )
     }
 }
@@ -65,6 +75,7 @@ let mapStateToProps = (state) => {
         totalUsers: state.userPage.totalUsers,
         currentPage: state.userPage.currentPage,
         searchTerm: state.userPage.searchTerm,
+        isFetching: state.userPage.isFetching
     }
 }
 let mapDispatchToProps = (dispatch) => {
@@ -86,6 +97,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setSearchTermText: (text) => {
             dispatch(setSearchTermAC(text))
+        },
+        toggleIsFetching: (isFetching) => {
+            dispatch(toggleIsFetchingAC(isFetching))
         }
     }
 }
