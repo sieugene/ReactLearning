@@ -15,7 +15,7 @@ function App(props) {
                 <NavLink
                     to='/MyChat'> MyChat </NavLink><br/>
                 <NavLink to='/Users'> Users </NavLink><br/>
-                <NavLink to='/profile'> Profile </NavLink>
+                <NavLink to='/profile/'> Profile </NavLink>
             </div>
             <Route
                 path='/MyChat'
@@ -26,7 +26,7 @@ function App(props) {
                 path='/Users'
                 render={() => <UsersContainer />}/>
                 <Route
-                    path='/profile'
+                    path='/profile/:userId?'
                     render={() => <ProfileContainer/>}/>
 
         </div>
