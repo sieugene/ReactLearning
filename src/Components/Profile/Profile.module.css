@@ -1,0 +1,15 @@
+.profileContain{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #5959a6;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 30px;
+}
+.profileContain img {
+    width: 130px;
+}
