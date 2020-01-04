@@ -12,16 +12,20 @@ let mapStateToProps = (state) => {
         userMessage: state
     }
 }
-let MapDispatchToProps = (dispatch) => {
-    return {
-        UpdateChangeMessage: (text) => {
-            dispatch(messageTextChangeActionCreator(text))
-        },
-        NewAddMessage: () => {
-            dispatch(addMessageActionCreator())
-        }
-    }
-}
+//old method mdtp
+// let MapDispatchToProps = (dispatch) => {
+//     return {
+//         UpdateChangeMessage: (text) => {
+//             dispatch(messageTextChangeActionCreator(text))
+//         },
+//         NewAddMessage: () => {
+//             dispatch(addMessageActionCreator())
+//         }
+//     }
+// }
 
-const InfoContainer = connect(mapStateToProps, MapDispatchToProps)(Info);
+const InfoContainer = connect(mapStateToProps, {
+    UpdateChangeMessage: messageTextChangeActionCreator,
+    NewAddMessage: addMessageActionCreator
+})(Info);
 export default InfoContainer;

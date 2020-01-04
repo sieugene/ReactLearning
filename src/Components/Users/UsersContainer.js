@@ -78,33 +78,44 @@ let mapStateToProps = (state) => {
         isFetching: state.userPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => {
-            dispatch(followAC(userId))
-        },
-        unFollow: (userId) => {
-            dispatch(unFollowAC(userId))
-        },
-        setUsers: (UsersList) => {
-            dispatch(setUsersAC(UsersList))
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setUsersTotal: (totalUsers) => {
-            dispatch(setUsersTotalCount(totalUsers))
-        },
-        setSearchTermText: (text) => {
-            dispatch(setSearchTermAC(text))
-        },
-        toggleIsFetching: (isFetching) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
+//old method mdtp
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userId) => {
+//             dispatch(followAC(userId))
+//         },
+//         unFollow: (userId) => {
+//             dispatch(unFollowAC(userId))
+//         },
+//         setUsers: (UsersList) => {
+//             dispatch(setUsersAC(UsersList))
+//         },
+//         setCurrentPage: (currentPage) => {
+//             dispatch(setCurrentPageAC(currentPage))
+//         },
+//         setUsersTotal: (totalUsers) => {
+//             dispatch(setUsersTotalCount(totalUsers))
+//         },
+//         setSearchTermText: (text) => {
+//             dispatch(setSearchTermAC(text))
+//         },
+//         toggleIsFetching: (isFetching) => {
+//             dispatch(toggleIsFetchingAC(isFetching))
+//         }
+//     }
+// }
+
+
+const UsersContainer = connect(mapStateToProps,
+    {
+        follow: followAC,
+        unFollow: unFollowAC,
+        setUsers: setUsersAC,
+        setCurrentPage: setCurrentPageAC,
+        setUsersTotal: setUsersTotalCount,
+        setSearchTermText: setSearchTermAC,
+        toggleIsFetching: toggleIsFetchingAC
     }
-}
-
-
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainerClass);
+    )(UsersContainerClass);
 
 export default UsersContainer;
