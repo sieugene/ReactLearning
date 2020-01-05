@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Users.module.css';
 import {NavLink} from "react-router-dom";
+import * as axios from "axios";
 
 
 const Users = (props) => {
@@ -13,7 +14,6 @@ const Users = (props) => {
     }
     //поиск по пользователям, реф
     let newTextTerm = React.createRef();
-
     return (
         <div className={s.mainBlock}>
             <div>
@@ -50,17 +50,39 @@ const Users = (props) => {
                                 ?
                                 <button onClick={
                                     () => {
-                                        props.unFollow(u.id)
+                                        //делаем отписку
+                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                            withCredentials: true,
+                                            headers: {
+                                                "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
+                                            }
+                                        })
+                                            .then(response => {
+                                                props.unFollow(u.id)
+                                            })
+
                                     }
                                 }>UnFollow</button>
                                 :
                                 <button onClick={
                                     () => {
-                                        props.follow(u.id)
+
+                                        //делаем подписку
+                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                            {}, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
+                                                }
+                                            })
+                                            .then(response => {
+                                                props.follow(u.id)
+                                            })
+
                                     }
                                 }>Follow</button>
                         }
-                        <div>Name: {u.name}</div>
+                        < div> Name : {u.name}</div>
                         <div>Status :{u.status}</div>
                         <div>City: {'u.location.city'}</div>
                         <div>Country: {'u.location.country'}</div>
