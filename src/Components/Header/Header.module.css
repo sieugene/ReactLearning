@@ -1,0 +1,21 @@
+.loginBlock {
+    float: right;
+}
+
+.loginBlock a {
+    color: white;
+}
+
+.header {
+    background-color: black;
+    color: white;
+    display: block;
+}
+
+.header a {
+    color: white;
+}
+
+.header a.active {
+    color: #8686dc;
+}
