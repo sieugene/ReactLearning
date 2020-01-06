@@ -26,6 +26,10 @@
     outline: none;
     cursor: pointer;
 }
+.userMain button:disabled,
+.userMain button[disabled]{
+    background-color: #40314d
+}
 
 .userImg {
     width: 80px;

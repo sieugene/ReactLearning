@@ -17,6 +17,7 @@ const Users = (props) => {
     let newTextTerm = React.createRef();
     return (
         <div className={s.mainBlock}>
+            <button disabled={true}>test</button>
             <div>
                 Search on page
                 <input value={props.searchTerm} ref={newTextTerm}
@@ -49,7 +50,8 @@ const Users = (props) => {
                         {
                             u.followed
                                 ?
-                                <button onClick={
+                                <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                         onClick={
                                     () => {
                                         //делаем отписку
                                         //old method, without axios instance
@@ -59,15 +61,18 @@ const Users = (props) => {
                                         //         "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
                                         //     }
                                         // })
+                                        props.toggleFollowingInProgress(true,u.id)
                                         FollowAPI.unfollowUser(u.id)
                                             .then(response => {
                                                 props.unFollow(u.id)
+                                                props.toggleFollowingInProgress(false,u.id)
                                             })
 
                                     }
                                 }>UnFollow</button>
                                 :
-                                <button onClick={
+                                <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                    onClick={
                                     () => {
                                         //делаем подписку
                                         //old method, without axios instance
@@ -78,9 +83,12 @@ const Users = (props) => {
                                         //             "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
                                         //         }
                                         //     })
+
+                                        props.toggleFollowingInProgress(true,u.id)
                                         FollowAPI.followUser(u.id)
                                             .then(response => {
                                                 props.follow(u.id)
+                                                props.toggleFollowingInProgress(false,u.id)
                                             })
 
                                     }

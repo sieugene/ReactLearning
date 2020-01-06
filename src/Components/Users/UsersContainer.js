@@ -5,7 +5,7 @@ import {
     setCurrentPageAC,
     setSearchTermAC,
     setUsersAC,
-    setUsersTotalCount, toggleIsFetchingAC,
+    setUsersTotalCount, toggleFollowingInProgressAC, toggleIsFetchingAC,
     unFollowAC
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
@@ -63,6 +63,8 @@ class UsersContainerClass extends React.Component {
                        UsersList={this.props.UsersList}
                        follow={this.props.follow}
                        unFollow={this.props.unFollow}
+                       followingInProgress={this.props.followingInProgress}
+                       toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                 />
             </>
         )
@@ -77,7 +79,8 @@ let mapStateToProps = (state) => {
         totalUsers: state.userPage.totalUsers,
         currentPage: state.userPage.currentPage,
         searchTerm: state.userPage.searchTerm,
-        isFetching: state.userPage.isFetching
+        isFetching: state.userPage.isFetching,
+        followingInProgress: state.userPage.followingInProgress
     }
 }
 //old method mdtp
@@ -116,7 +119,8 @@ const UsersContainer = connect(mapStateToProps,
         setCurrentPage: setCurrentPageAC,
         setUsersTotal: setUsersTotalCount,
         setSearchTermText: setSearchTermAC,
-        toggleIsFetching: toggleIsFetchingAC
+        toggleIsFetching: toggleIsFetchingAC,
+        toggleFollowingInProgress: toggleFollowingInProgressAC
     }
 )(UsersContainerClass);
 
