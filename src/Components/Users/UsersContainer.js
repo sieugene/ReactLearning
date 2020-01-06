@@ -12,45 +12,41 @@ import React from "react";
 import * as axios from "axios";
 import s from "./Users.module.css";
 import Preloader from "../../assets/preloader/Preloader";
+import {UsersAPI} from "../../Api/Api";
 
 //эту классовую компоненту мы создали для того чтобы
 // , наша компонента Users стала чистой, а здесь мы выполняем запросы и передаем через callback
 class UsersContainerClass extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,{
-            withCredentials: true
-        })
+        UsersAPI.getUsers(this.props.pageSize, this.props.currentPage)
             .then(response => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items)
-                this.props.setUsersTotal(response.data.totalCount)
+                this.props.setUsers(response.items)
+                this.props.setUsersTotal(response.totalCount)
             })
     }
+
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
         this.props.toggleIsFetching(true);
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`,{
-            withCredentials: true
-        })
+        UsersAPI.getUsers(this.props.pageSize, pageNumber)
             .then(response => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items)
-                this.props.setUsersTotal(response.data.totalCount)
+                this.props.setUsers(response.items)
+                this.props.setUsersTotal(response.totalCount)
             })
     }
     //поиск по пользователям метод
     onSearchChange = (text) => {
         this.props.toggleIsFetching(true);
         this.props.setSearchTermText(text);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=1&term=${text}`,{
-            withCredentials: true
-        })
+        UsersAPI.getUsersTerm(this.props.pageSize, text)
             .then(response => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items)
-                this.props.setUsersTotal(response.data.totalCount)
+                this.props.setUsers(response.items)
+                this.props.setUsersTotal(response.totalCount)
             })
     }
 
@@ -58,16 +54,16 @@ class UsersContainerClass extends React.Component {
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsers={this.props.totalUsers}
-                   pageSize={this.props.pageSize}
-                   searchTerm={this.props.searchTerm}
-                   onSearchChange={this.onSearchChange}
-                   currentPage={this.props.currentPage}
-                   onPageCurrentChange={this.onPageCurrentChange}
-                   UsersList={this.props.UsersList}
-                   follow={this.props.follow}
-                   unFollow={this.props.unFollow}
-            />
+                <Users totalUsers={this.props.totalUsers}
+                       pageSize={this.props.pageSize}
+                       searchTerm={this.props.searchTerm}
+                       onSearchChange={this.onSearchChange}
+                       currentPage={this.props.currentPage}
+                       onPageCurrentChange={this.onPageCurrentChange}
+                       UsersList={this.props.UsersList}
+                       follow={this.props.follow}
+                       unFollow={this.props.unFollow}
+                />
             </>
         )
     }
@@ -122,6 +118,6 @@ const UsersContainer = connect(mapStateToProps,
         setSearchTermText: setSearchTermAC,
         toggleIsFetching: toggleIsFetchingAC
     }
-    )(UsersContainerClass);
+)(UsersContainerClass);
 
 export default UsersContainer;

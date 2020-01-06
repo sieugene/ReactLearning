@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Users.module.css';
 import {NavLink} from "react-router-dom";
 import * as axios from "axios";
+import {FollowAPI} from "../../Api/Api";
 
 
 const Users = (props) => {
@@ -51,12 +52,14 @@ const Users = (props) => {
                                 <button onClick={
                                     () => {
                                         //делаем отписку
-                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
-                                            }
-                                        })
+                                        //old method, without axios instance
+                                        // axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                        //     withCredentials: true,
+                                        //     headers: {
+                                        //         "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
+                                        //     }
+                                        // })
+                                        FollowAPI.unfollowUser(u.id)
                                             .then(response => {
                                                 props.unFollow(u.id)
                                             })
@@ -66,15 +69,16 @@ const Users = (props) => {
                                 :
                                 <button onClick={
                                     () => {
-
                                         //делаем подписку
-                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                                            {}, {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
-                                                }
-                                            })
+                                        //old method, without axios instance
+                                        // axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                        //     {}, {
+                                        //         withCredentials: true,
+                                        //         headers: {
+                                        //             "API-KEY": "854c2128-c8b3-4384-8ac5-b69b15ea1eff"
+                                        //         }
+                                        //     })
+                                        FollowAPI.followUser(u.id)
                                             .then(response => {
                                                 props.follow(u.id)
                                             })
