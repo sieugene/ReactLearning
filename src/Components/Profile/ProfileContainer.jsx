@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
+import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
 import * as axios from "axios";
 import {withRouter} from "react-router-dom";
 import {ProfileAPI} from "../../Api/Api";
@@ -9,16 +9,14 @@ import {ProfileAPI} from "../../Api/Api";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
+        //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
-        if(!userId){
-            userId = '1709'
-        }
+        //если не нашли, вызываем узнать наш профиль
+        if(!userId){ this.props.getMyProfileThunk(); userId = this.props.myProfileId}
+        //если не нашли наш профиль, то по дефолту 2
+        if(!userId){ userId = '2'}
+        //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
-        //none thunk method
-        // ProfileAPI.getProfile(userId)
-        //     .then(response => {
-        //         this.props.setUser(response.data)
-        //     })
     }
     render(){
         return(
@@ -31,12 +29,14 @@ class ProfileContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return{
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        myProfileId: state.profilePage.myProfileId
     }
 }
 
 let WithDataUrlContainerComponent = withRouter(ProfileContainer)
 export default connect(mapStateToProps, {
     setUser: setUserProfileAC,
-    getProfileThunk: getProfileThunkCreator
+    getProfileThunk: getProfileThunkCreator,
+    getMyProfileThunk: getMyProfileThunkCreator
 })(WithDataUrlContainerComponent);
