@@ -1,3 +1,5 @@
+import {FollowAPI, UsersAPI} from "../Api/Api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -121,7 +123,65 @@ export const toggleFollowingInProgressAC = (isFetching, userId) => {
     }
 }
 
+export const getUsersThunkCreator = (pageSize,currentPage) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        UsersAPI.getUsers(pageSize, currentPage)
+            .then(response => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(response.items));
+                dispatch(setUsersTotalCount(response.totalCount));
+            })
+    }
+}
 
+export const setCurrentPageThunkCreator = (pageSize,pageNumber) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        dispatch(setCurrentPageAC(pageNumber));
+        UsersAPI.getUsers(pageSize, pageNumber)
+            .then(response => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(response.items));
+                dispatch(setUsersTotalCount(response.totalCount));
+            })
+    }
+}
+
+export const setSearchTermTextThunkCreator = (pageSize,text) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        dispatch(setSearchTermAC(text));
+        UsersAPI.getUsersTerm(pageSize, text)
+            .then(response => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(response.items));
+                dispatch(setUsersTotalCount(response.totalCount));
+            })
+    }
+}
+
+export const unFollowUserThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgressAC(true, userId))
+        FollowAPI.unfollowUser(userId)
+            .then(response => {
+                dispatch(unFollowAC(userId));
+                dispatch(toggleFollowingInProgressAC(false, userId));
+            })
+    }
+}
+
+export const followUserThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgressAC(true, userId))
+        FollowAPI.followUser(userId)
+            .then(response => {
+                dispatch(followAC(userId));
+                dispatch(toggleFollowingInProgressAC(false, userId));
+            })
+    }
+}
 
 
 export default UsersPageReducer;

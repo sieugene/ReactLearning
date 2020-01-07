@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
-    followAC,
-    setCurrentPageAC,
-    setSearchTermAC,
+    followAC, followUserThunkCreator, getUsersThunkCreator,
+    setCurrentPageAC, setCurrentPageThunkCreator,
+    setSearchTermAC, setSearchTermTextThunkCreator,
     setUsersAC,
     setUsersTotalCount, toggleFollowingInProgressAC, toggleIsFetchingAC,
-    unFollowAC
+    unFollowAC, unFollowUserThunkCreator
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
 import * as axios from "axios";
@@ -18,36 +18,42 @@ import {UsersAPI} from "../../Api/Api";
 // , наша компонента Users стала чистой, а здесь мы выполняем запросы и передаем через callback
 class UsersContainerClass extends React.Component {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        UsersAPI.getUsers(this.props.pageSize, this.props.currentPage)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.items)
-                this.props.setUsersTotal(response.totalCount)
-            })
+        this.props.getUsersThunk(this.props.pageSize, this.props.currentPage)
+        //none thunks method
+        // this.props.toggleIsFetching(true);
+        // UsersAPI.getUsers(this.props.pageSize, this.props.currentPage)
+        //     .then(response => {
+        //         this.props.toggleIsFetching(false);
+        //         this.props.setUsers(response.items)
+        //         this.props.setUsersTotal(response.totalCount)
+        //     })
     }
 
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
-        this.props.toggleIsFetching(true);
-        this.props.setCurrentPage(pageNumber);
-        UsersAPI.getUsers(this.props.pageSize, pageNumber)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.items)
-                this.props.setUsersTotal(response.totalCount)
-            })
+        this.props.setCurrentPageThunk(this.props.pageSize,pageNumber)
+        //none thunks method
+        // this.props.toggleIsFetching(true);
+        // this.props.setCurrentPage(pageNumber);
+        // UsersAPI.getUsers(this.props.pageSize, pageNumber)
+        //     .then(response => {
+        //         this.props.toggleIsFetching(false);
+        //         this.props.setUsers(response.items)
+        //         this.props.setUsersTotal(response.totalCount)
+        //     })
     }
     //поиск по пользователям метод
     onSearchChange = (text) => {
-        this.props.toggleIsFetching(true);
-        this.props.setSearchTermText(text);
-        UsersAPI.getUsersTerm(this.props.pageSize, text)
-            .then(response => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.items)
-                this.props.setUsersTotal(response.totalCount)
-            })
+        this.props.setSearchTermTextThunk(this.props.pageSize,text)
+        //none thunks method
+        // this.props.toggleIsFetching(true);
+        // this.props.setSearchTermText(text);
+        // UsersAPI.getUsersTerm(this.props.pageSize, text)
+        //     .then(response => {
+        //         this.props.toggleIsFetching(false);
+        //         this.props.setUsers(response.items)
+        //         this.props.setUsersTotal(response.totalCount)
+        //     })
     }
 
     render() {
@@ -61,10 +67,10 @@ class UsersContainerClass extends React.Component {
                        currentPage={this.props.currentPage}
                        onPageCurrentChange={this.onPageCurrentChange}
                        UsersList={this.props.UsersList}
-                       follow={this.props.follow}
-                       unFollow={this.props.unFollow}
                        followingInProgress={this.props.followingInProgress}
-                       toggleFollowingInProgress={this.props.toggleFollowingInProgress}
+                       unFollowUserThunk={this.props.unFollowUserThunk}
+                       followUserThunk={this.props.followUserThunk}
+
                 />
             </>
         )
@@ -115,12 +121,12 @@ const UsersContainer = connect(mapStateToProps,
     {
         follow: followAC,
         unFollow: unFollowAC,
-        setUsers: setUsersAC,
-        setCurrentPage: setCurrentPageAC,
-        setUsersTotal: setUsersTotalCount,
-        setSearchTermText: setSearchTermAC,
-        toggleIsFetching: toggleIsFetchingAC,
-        toggleFollowingInProgress: toggleFollowingInProgressAC
+        toggleFollowingInProgress: toggleFollowingInProgressAC,
+        getUsersThunk: getUsersThunkCreator,
+        setCurrentPageThunk: setCurrentPageThunkCreator,
+        setSearchTermTextThunk: setSearchTermTextThunkCreator,
+        unFollowUserThunk: unFollowUserThunkCreator,
+        followUserThunk: followUserThunkCreator
     }
 )(UsersContainerClass);
 

@@ -1,3 +1,5 @@
+import {ProfileAPI} from "../Api/Api";
+
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 let initialState = {
@@ -22,4 +24,12 @@ export const setUserProfileAC = (profile) => {
     }
 }
 
+export const getProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+        ProfileAPI.getProfile(userId)
+            .then(response => {
+                dispatch(setUserProfileAC(response.data));
+            })
+    }
+}
 export default profilePageReducer;
