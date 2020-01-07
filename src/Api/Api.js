@@ -38,3 +38,9 @@ export const FollowAPI = {
         return instance.delete(`follow/${id}`, {})
     },
 }
+
+export const meAPI = {
+    me(){
+        return instance.get(`auth/me`)
+    }
+}

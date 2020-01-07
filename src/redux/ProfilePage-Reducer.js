@@ -3,7 +3,8 @@ import {ProfileAPI} from "../Api/Api";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 let initialState = {
-    profile: null
+    profile: null,
+
 }
 
 const profilePageReducer = (state = initialState, action) => {
@@ -32,4 +33,7 @@ export const getProfileThunkCreator = (userId) => {
             })
     }
 }
+
+
+
 export default profilePageReducer;

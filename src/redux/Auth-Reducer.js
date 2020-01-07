@@ -1,3 +1,5 @@
+import {meAPI} from "../Api/Api";
+
 const SET_AUTH_USER = 'SET_AUTH_USER';
 
 let initialState = {
@@ -26,5 +28,12 @@ export const setAuthUserAC = (id,login,email) => {
         data: {id,login,email}
     }
 }
-
+export const authMeThunkCreator = () => (dispatch) => {
+    meAPI.me().then(response => {
+        if (response.data.resultCode === 0) {
+            let {id, login, email} = response.data.data;
+            dispatch(setAuthUserAC(id, login, email))
+        }
+    })
+}
 export default authReducer;
