@@ -2,17 +2,14 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import {
     followAC, followUserThunkCreator, getUsersThunkCreator,
-    setCurrentPageAC, setCurrentPageThunkCreator,
-    setSearchTermAC, setSearchTermTextThunkCreator,
-    setUsersAC,
-    setUsersTotalCount, toggleFollowingInProgressAC, toggleIsFetchingAC,
+    setCurrentPageThunkCreator,
+    setSearchTermTextThunkCreator,
+    toggleFollowingInProgressAC,
     unFollowAC, unFollowUserThunkCreator
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
-import * as axios from "axios";
-import s from "./Users.module.css";
 import Preloader from "../../assets/preloader/Preloader";
-import {UsersAPI} from "../../Api/Api";
+
 
 //эту классовую компоненту мы создали для того чтобы
 // , наша компонента Users стала чистой, а здесь мы выполняем запросы и передаем через callback
@@ -31,7 +28,7 @@ class UsersContainerClass extends React.Component {
 
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
-        this.props.setCurrentPageThunk(this.props.pageSize,pageNumber)
+        this.props.setCurrentPageThunk(this.props.pageSize, pageNumber)
         //none thunks method
         // this.props.toggleIsFetching(true);
         // this.props.setCurrentPage(pageNumber);
@@ -44,7 +41,7 @@ class UsersContainerClass extends React.Component {
     }
     //поиск по пользователям метод
     onSearchChange = (text) => {
-        this.props.setSearchTermTextThunk(this.props.pageSize,text)
+        this.props.setSearchTermTextThunk(this.props.pageSize, text)
         //none thunks method
         // this.props.toggleIsFetching(true);
         // this.props.setSearchTermText(text);

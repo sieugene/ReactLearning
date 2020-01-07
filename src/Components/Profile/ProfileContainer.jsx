@@ -2,9 +2,7 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
-import * as axios from "axios";
 import {withRouter} from "react-router-dom";
-import {ProfileAPI} from "../../Api/Api";
 
 
 class ProfileContainer extends React.Component {

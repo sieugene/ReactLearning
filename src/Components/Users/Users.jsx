@@ -1,9 +1,6 @@
 import React from 'react';
 import s from './Users.module.css';
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
-import {FollowAPI} from "../../Api/Api";
-
 
 const Users = (props) => {
     //считаем сколько страниц
@@ -20,21 +17,15 @@ const Users = (props) => {
             <div>
                 Search on page
                 <input value={props.searchTerm} ref={newTextTerm}
-                       onChange={() => {
-                           props.onSearchChange(newTextTerm.current.value)
-                       }}
+                       onChange={() => { props.onSearchChange(newTextTerm.current.value)}}
                 />
             </div>
             <div className={s.pagination}>
                 {pages.map(p => {
                     //map страниц, присвоение класса выбранной странице
                     //и функция на изменение страницы
-                    return <span
-                        className={props.currentPage === p && s.currentPage}
-                        onClick={(e) => {
-                            props.onPageCurrentChange(p)
-                        }}>
-                            {p} </span>
+                    return <span className={props.currentPage === p ? s.currentPage : ''}
+                        onClick={(e) => { props.onPageCurrentChange(p) }} key={p}> {p} </span>
                 })}
             </div>
             {
@@ -42,9 +33,9 @@ const Users = (props) => {
                     <div key={u.id} className={s.userMain}>
                         <NavLink to={'profile/' + u.id}><img className={s.userImg} src={
                             u.photos.small != null ? u.photos.small :
-                                ' https://www.kanali6.com.cy/sites/default/files/producer_0.png'
+                                'https://www.kanali6.com.cy/sites/default/files/producer_0.png'
                         }
-                        /></NavLink>
+                        alt='' /></NavLink>
                         <br/>
                         {
                             u.followed

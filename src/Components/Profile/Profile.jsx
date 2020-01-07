@@ -10,7 +10,7 @@ const Profile = (props) => {
             <img src={
                 props.profile.photos.small === null ? 'http://www.pngmart.com/files/10/User-Account-Person-PNG-File.png'
                     : props.profile.photos.small
-            }/><br/>
+            } alt=''/><br/>
             AboutMe: {props.profile.aboutMe}<br/>
             FullName: {props.profile.fullName}
         </div>
