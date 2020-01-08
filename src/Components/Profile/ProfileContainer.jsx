@@ -6,14 +6,18 @@ import {Redirect, withRouter} from "react-router-dom";
 
 
 
+
 class ProfileContainer extends React.Component {
     componentDidMount() {
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
-        if(!userId){ this.props.getMyProfileThunk(); userId = this.props.myProfileId}
-        //если не нашли наш профиль, то по дефолту 2
-        if(!userId){ userId = '2'}
+        if(!userId) {
+            if (this.props.isAuth) {
+                this.props.getMyProfileThunk();
+                userId = this.props.myProfileId
+            }
+        }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
     }
