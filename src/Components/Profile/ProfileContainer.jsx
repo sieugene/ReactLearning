@@ -2,8 +2,9 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
-import {Redirect, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
+import Preloader from "../../assets/preloader/Preloader";
 
 
 
@@ -18,6 +19,9 @@ class ProfileContainer extends React.Component {
                 this.props.getMyProfileThunk();
                 userId = this.props.myProfileId
             }
+        }
+        while(!userId){
+           return <Preloader />
         }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
