@@ -9,6 +9,7 @@ import {
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
 import Preloader from "../../assets/preloader/Preloader";
+import {compose} from "redux";
 
 
 //эту классовую компоненту мы создали для того чтобы
@@ -113,18 +114,31 @@ let mapStateToProps = (state) => {
 //     }
 // }
 
+//none compose
+// const UsersContainer = connect(mapStateToProps,
+//     {
+//         follow: followAC,
+//         unFollow: unFollowAC,
+//         toggleFollowingInProgress: toggleFollowingInProgressAC,
+//         getUsersThunk: getUsersThunkCreator,
+//         setCurrentPageThunk: setCurrentPageThunkCreator,
+//         setSearchTermTextThunk: setSearchTermTextThunkCreator,
+//         unFollowUserThunk: unFollowUserThunkCreator,
+//         followUserThunk: followUserThunkCreator
+//     }
+// )(UsersContainerClass);
+// export default UsersContainer;
 
-const UsersContainer = connect(mapStateToProps,
-    {
-        follow: followAC,
-        unFollow: unFollowAC,
-        toggleFollowingInProgress: toggleFollowingInProgressAC,
-        getUsersThunk: getUsersThunkCreator,
-        setCurrentPageThunk: setCurrentPageThunkCreator,
-        setSearchTermTextThunk: setSearchTermTextThunkCreator,
-        unFollowUserThunk: unFollowUserThunkCreator,
-        followUserThunk: followUserThunkCreator
-    }
-)(UsersContainerClass);
-
-export default UsersContainer;
+export default compose(
+    connect(mapStateToProps,
+        {
+            follow: followAC,
+            unFollow: unFollowAC,
+            toggleFollowingInProgress: toggleFollowingInProgressAC,
+            getUsersThunk: getUsersThunkCreator,
+            setCurrentPageThunk: setCurrentPageThunkCreator,
+            setSearchTermTextThunk: setSearchTermTextThunkCreator,
+            unFollowUserThunk: unFollowUserThunkCreator,
+            followUserThunk: followUserThunkCreator
+        })
+)(UsersContainerClass)

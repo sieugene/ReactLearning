@@ -5,6 +5,7 @@ import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from
 import {withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import Preloader from "../../assets/preloader/Preloader";
+import {compose} from "redux";
 
 
 
@@ -42,11 +43,24 @@ let mapStateToProps = (state) => {
     }
 }
 
+//none compose
+// let WithDataUrlContainerComponent = withRouter(ProfileContainer)
+// let withAuthRedirect = withAuthRedirectHoc(WithDataUrlContainerComponent)
+// export default connect(mapStateToProps, {
+//     setUser: setUserProfileAC,
+//     getProfileThunk: getProfileThunkCreator,
+//     getMyProfileThunk: getMyProfileThunkCreator
+// })(withAuthRedirect);
 
-let WithDataUrlContainerComponent = withRouter(ProfileContainer)
-let withAuthRedirect = withAuthRedirectHoc(WithDataUrlContainerComponent)
-export default connect(mapStateToProps, {
-    setUser: setUserProfileAC,
-    getProfileThunk: getProfileThunkCreator,
-    getMyProfileThunk: getMyProfileThunkCreator
-})(withAuthRedirect);
+export default compose(
+    connect(mapStateToProps,
+        {setUser: setUserProfileAC,
+        getProfileThunk: getProfileThunkCreator,
+        getMyProfileThunk: getMyProfileThunkCreator
+    }),
+    withAuthRedirectHoc,
+    withRouter
+)(ProfileContainer)
+
+//Compose берет ProfileContainer закидывает в withRouter, после получает результат кидает в withAuthRedirectHoc
+//после получает результат и записывает в connect
