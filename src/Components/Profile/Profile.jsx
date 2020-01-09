@@ -14,7 +14,7 @@ const Profile = (props) => {
             } alt=''/><br/>
             <span>AboutMe: {props.profile.aboutMe}<br/></span>
             <span>FullName: {props.profile.fullName}<br/></span>
-            <ProfileStatus />
+            <ProfileStatus status={"local status"}/>
         </div>
     )
 }

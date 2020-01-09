@@ -58,7 +58,7 @@ export default compose(
         getProfileThunk: getProfileThunkCreator,
         getMyProfileThunk: getMyProfileThunkCreator
     }),
-    withAuthRedirectHoc,
+    //withAuthRedirectHoc,
     withRouter
 )(ProfileContainer)
 
