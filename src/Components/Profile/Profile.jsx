@@ -1,6 +1,7 @@
 import React from 'react';
 import Preloader from "../../assets/preloader/Preloader";
 import s from './Profile.module.css';
+import ProfileStatus from "./ProfileStatus";
 const Profile = (props) => {
     if(!props.profile){
        return <Preloader/>
@@ -11,8 +12,9 @@ const Profile = (props) => {
                 props.profile.photos.small === null ? 'http://www.pngmart.com/files/10/User-Account-Person-PNG-File.png'
                     : props.profile.photos.small
             } alt=''/><br/>
-            AboutMe: {props.profile.aboutMe}<br/>
-            FullName: {props.profile.fullName}
+            <span>AboutMe: {props.profile.aboutMe}<br/></span>
+            <span>FullName: {props.profile.fullName}<br/></span>
+            <ProfileStatus />
         </div>
     )
 }

@@ -16,8 +16,8 @@ class ProfileContainer extends React.Component {
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
         if(!userId) {
+            this.props.getMyProfileThunk();
             if (this.props.isAuth) {
-                this.props.getMyProfileThunk();
                 userId = this.props.myProfileId
             }
         }

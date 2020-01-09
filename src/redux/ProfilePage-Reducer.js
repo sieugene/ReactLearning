@@ -50,11 +50,13 @@ export const getProfileThunkCreator = (userId) => {
 export const getMyProfileThunkCreator = () => {
     return (dispatch) => {
         meAPI.me().then(response => {
-            dispatch(getMyProfileAC(response.data.data.id));
-            ProfileAPI.getProfile(response.data.data.id)
-                .then(response => {
-                    dispatch(setUserProfileAC(response.data));
-                })
+            if(response.data.resultCode === 0) {
+                dispatch(getMyProfileAC(response.data.data.id));
+                ProfileAPI.getProfile(response.data.data.id)
+                    .then(response => {
+                        dispatch(setUserProfileAC(response.data));
+                    })
+            }
         })
     }
 }
