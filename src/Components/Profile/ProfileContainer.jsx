@@ -2,7 +2,7 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import Preloader from "../../assets/preloader/Preloader";
 import {compose} from "redux";
@@ -15,19 +15,23 @@ class ProfileContainer extends React.Component {
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
-        if(!userId) {
+        if(!userId || !this.props.match.params.userId) {
             this.props.getMyProfileThunk();
-            if (this.props.isAuth) {
-                userId = this.props.myProfileId
-            }
-        }
-        while(!userId){
-           return <Preloader />
         }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
     }
     render(){
+        //добавление id к url после авторизации
+        if(!this.props.match.params.userId){
+            if(!this.props.myProfileId){
+                return <div>not auth</div>
+            }else {
+                let path = `/profile/${this.props.myProfileId}`;
+                return <Redirect to={path}/>
+            }
+        }
+
         return(
             <div>
                 <Profile profile={this.props.profile}/>

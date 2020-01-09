@@ -1,4 +1,5 @@
 import {meAPI, ProfileAPI} from "../Api/Api";
+import React from "react";
 
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const GET_MY_PROFILE = 'GET_MY_PROFILE';

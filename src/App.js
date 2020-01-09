@@ -19,9 +19,7 @@ function App(props) {
             <Route
                 path='/Users'
                 render={() => <UsersContainer />}/>
-                <Route
-                    path='/profile/:userId?'
-                    render={() => <ProfileContainer/>}/>
+                <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     <Route path='/Login' render={ () => <Login/>}/>
 
         </div>
