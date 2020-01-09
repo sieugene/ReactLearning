@@ -1,12 +1,10 @@
 import {meAPI, ProfileAPI} from "../Api/Api";
 import React from "react";
-
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const GET_MY_PROFILE = 'GET_MY_PROFILE';
+
 
 let initialState = {
-    profile: null,
-    myProfileId: null
+    profile: null
 }
 
 const profilePageReducer = (state = initialState, action) => {
@@ -16,12 +14,6 @@ const profilePageReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile
             }
-        case GET_MY_PROFILE:
-
-            return{
-                ...state,
-                myProfileId: action.myProfileId
-            }
         default:
             return state
     }
@@ -30,11 +22,6 @@ const profilePageReducer = (state = initialState, action) => {
 export const setUserProfileAC = (profile) => {
     return {
         type: SET_USER_PROFILE, profile
-    }
-}
-export const getMyProfileAC = (myProfileId) => {
-    return {
-        type: GET_MY_PROFILE, myProfileId
     }
 }
 export const getProfileThunkCreator = (userId) => {
@@ -52,7 +39,6 @@ export const getMyProfileThunkCreator = () => {
     return (dispatch) => {
         meAPI.me().then(response => {
             if(response.data.resultCode === 0) {
-                dispatch(getMyProfileAC(response.data.data.id));
                 ProfileAPI.getProfile(response.data.data.id)
                     .then(response => {
                         dispatch(setUserProfileAC(response.data));

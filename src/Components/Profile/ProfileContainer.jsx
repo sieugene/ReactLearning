@@ -7,8 +7,6 @@ import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import {compose} from "redux";
 
 
-
-
 class ProfileContainer extends React.Component {
     componentDidMount() {
         //проверяем из url пользователя по параметрам
@@ -24,11 +22,11 @@ class ProfileContainer extends React.Component {
     render(){
         //добавление id к url после авторизации
         if(!this.props.match.params.userId){
-            if(!this.props.myProfileId){
+            if(!this.props.id){
                 return <div>not auth</div>
             }else {
-                let path = `/profile/${this.props.myProfileId}`;
-                this.props.getProfileThunk(this.props.myProfileId);
+                let path = `/profile/${this.props.id}`;
+                this.props.getProfileThunk(this.props.id);
                 return <Redirect to={path}/>
             }
         }
@@ -44,7 +42,7 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return{
         profile: state.profilePage.profile,
-        myProfileId: state.profilePage.myProfileId,
+        id: state.Auth.id
     }
 }
 
