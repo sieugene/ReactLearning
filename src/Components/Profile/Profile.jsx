@@ -14,7 +14,9 @@ const Profile = (props) => {
             } alt=''/><br/>
             <span>AboutMe: {props.profile.aboutMe}<br/></span>
             <span>FullName: {props.profile.fullName}<br/></span>
-            <ProfileStatus status={"local status"}/>
+            <ProfileStatus status={props.status} updateStatusUserThunk={props.updateStatusUserThunk}
+                id={props.id}
+            />
         </div>
     )
 }

@@ -1,10 +1,12 @@
 import {meAPI, ProfileAPI} from "../Api/Api";
 import React from "react";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 
 let initialState = {
-    profile: null
+    profile: null,
+    status: ""
 }
 
 const profilePageReducer = (state = initialState, action) => {
@@ -14,6 +16,12 @@ const profilePageReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile
             }
+        case SET_STATUS:
+            return{
+                ...state,
+                status: action.status
+            }
+
         default:
             return state
     }
@@ -22,6 +30,11 @@ const profilePageReducer = (state = initialState, action) => {
 export const setUserProfileAC = (profile) => {
     return {
         type: SET_USER_PROFILE, profile
+    }
+}
+export const setStatusUserAC = (status) => {
+    return{
+        type: SET_STATUS, status
     }
 }
 export const getProfileThunkCreator = (userId) => {
@@ -45,6 +58,30 @@ export const getMyProfileThunkCreator = () => {
                     })
             }
         })
+    }
+}
+//получение статуса пользователя
+export const setStatusUserThunkCreator = (userId) => {
+    return (dispatch) => {
+        ProfileAPI.getStatus(userId).then(response => {
+            dispatch(setStatusUserAC(response.data))
+        })
+    }
+}
+export const updateStatusUserThunkCreator = (userId,newStatus) => {
+    return (dispatch) => {
+        //проверка на изменение входящего текста
+        ProfileAPI.getStatus(userId).then(response => {
+            dispatch(setStatusUserAC(response.data))
+            if(response.data !== newStatus){
+                ProfileAPI.updateStatus(newStatus).then(response => {
+                    if(response.data.resultCode === 0){
+                        dispatch(setStatusUserAC(newStatus))
+                    }
+                })
+            }
+        })
+        //end
     }
 }
 

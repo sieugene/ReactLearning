@@ -1,7 +1,12 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getMyProfileThunkCreator, getProfileThunkCreator, setUserProfileAC} from "../../redux/ProfilePage-Reducer";
+import {
+    getMyProfileThunkCreator,
+    getProfileThunkCreator,
+    setStatusUserThunkCreator,
+    setUserProfileAC, updateStatusUserThunkCreator
+} from "../../redux/ProfilePage-Reducer";
 import {Redirect, withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import {compose} from "redux";
@@ -12,37 +17,45 @@ class ProfileContainer extends React.Component {
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
-        if(!userId || !this.props.match.params.userId) {
+        if (!userId || !this.props.match.params.userId) {
             this.props.getMyProfileThunk();
         }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
+        //установка статуса
+        this.props.setStatusUserThunk(userId);
     }
 
-    render(){
+    render() {
         //добавление id к url после авторизации
-        if(!this.props.match.params.userId){
-            if(!this.props.id){
+        //синхронизация профиля
+        if (!this.props.match.params.userId) {
+            if (!this.props.id) {
                 return <div>not auth</div>
-            }else {
+            } else {
                 let path = `/profile/${this.props.id}`;
                 this.props.getProfileThunk(this.props.id);
+                this.props.setStatusUserThunk(this.props.id);
                 return <Redirect to={path}/>
             }
         }
 
-        return(
+        return (
             <div>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile} status={this.props.status}
+                         updateStatusUserThunk={this.props.updateStatusUserThunk}
+                         id={this.props.id}
+                />
             </div>
         )
     }
 }
 
 let mapStateToProps = (state) => {
-    return{
+    return {
         profile: state.profilePage.profile,
-        id: state.Auth.id
+        id: state.Auth.id,
+        status: state.profilePage.status
     }
 }
 
@@ -57,10 +70,13 @@ let mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps,
-        {setUser: setUserProfileAC,
-        getProfileThunk: getProfileThunkCreator,
-        getMyProfileThunk: getMyProfileThunkCreator
-    }),
+        {
+            setUser: setUserProfileAC,
+            getProfileThunk: getProfileThunkCreator,
+            getMyProfileThunk: getMyProfileThunkCreator,
+            setStatusUserThunk: setStatusUserThunkCreator,
+            updateStatusUserThunk: updateStatusUserThunkCreator
+        }),
     //withAuthRedirectHoc,
     withRouter
 )(ProfileContainer)
