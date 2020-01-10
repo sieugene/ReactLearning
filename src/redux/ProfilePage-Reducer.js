@@ -1,5 +1,4 @@
 import {meAPI, ProfileAPI} from "../Api/Api";
-import React from "react";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
@@ -73,12 +72,16 @@ export const updateStatusUserThunkCreator = (userId,newStatus) => {
         //проверка на изменение входящего текста
         ProfileAPI.getStatus(userId).then(response => {
             dispatch(setStatusUserAC(response.data))
-            if(response.data !== newStatus){
-                ProfileAPI.updateStatus(newStatus).then(response => {
-                    if(response.data.resultCode === 0){
-                        dispatch(setStatusUserAC(newStatus))
-                    }
-                })
+            if(!newStatus){
+                //none
+            }else {
+                if (response.data !== newStatus) {
+                    ProfileAPI.updateStatus(newStatus).then(response => {
+                        if (response.data.resultCode === 0) {
+                            dispatch(setStatusUserAC(newStatus))
+                        }
+                    })
+                }
             }
         })
         //end

@@ -45,6 +45,9 @@ class ProfileContainer extends React.Component {
                 <Profile profile={this.props.profile} status={this.props.status}
                          updateStatusUserThunk={this.props.updateStatusUserThunk}
                          id={this.props.id}
+                         //math params для изменения статуса
+                        urlMatchParams={this.props.match.params.userId}
+
                 />
             </div>
         )

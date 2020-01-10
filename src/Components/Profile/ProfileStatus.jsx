@@ -14,22 +14,37 @@ class ProfileStatus extends React.Component {
         this.setState({
             editMode: false
         })
-        this.props.updateStatusUserThunk(this.props.id,this.state.status);
+        this.props.updateStatusUserThunk(this.props.id, this.state.status);
     }
     onChangeTextStatus = (e) => {
         this.setState({
             status: e.currentTarget.value
         })
     }
+
     render() {
+        const withEditStatus = () => {
+            //теряется значение поля, исправлено:
+            let statusTextInput = !this.state.status ? this.state.status = this.props.status : this.state.status;
+            //проверка страницы, если страница пользователя, то можно редактировать.
+            if (this.props.urlMatchParams == this.props.id) {
+                if (!this.state.editMode) {
+                    return <span onDoubleClick={this.activateEditMode}>Status: {this.props.status}</span>
+                } else {
+                    return <input onChange={this.onChangeTextStatus} autoFocus={true} onBlur={this.deactivateEditMode}
+                                  value={statusTextInput}/>
+                }
+            } else {
+                //просто вывод
+                return <div>
+                    {!this.props.status ? <div>_____</div> : 'Status:' + this.props.status}
+                </div>
+            }
+
+        }
         return (
             <div>
-                {!this.state.editMode ?
-                    <span onDoubleClick={this.activateEditMode}>Status: {this.props.status}</span>
-                    :
-                    <input onChange={this.onChangeTextStatus} autoFocus={true} onBlur={this.deactivateEditMode}
-                           value={this.state.status}/>
-                }
+                {withEditStatus()}
             </div>
         )
     }

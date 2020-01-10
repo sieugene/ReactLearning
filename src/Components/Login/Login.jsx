@@ -5,7 +5,7 @@ const Login = (props) => {
         <div>
             <h1>Login page</h1>
             <h3>Sorry, but right now the authorization doesn't work, go
-                <a href="https://social-network.samuraijs.com/" target='_blank'> here</a>
+                <a href="https://social-network.samuraijs.com/" target="_blank" rel="noopener noreferrer"> here</a>
             </h3>
         </div>
     )
