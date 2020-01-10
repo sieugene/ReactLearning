@@ -24,15 +24,15 @@ class ProfileStatus extends React.Component {
 
     render() {
         const withEditStatus = () => {
-            //теряется значение поля, исправлено:
-            let statusTextInput = !this.state.status ? this.state.status = this.props.status : this.state.status;
+            //теряется значение поля, исправлено, но поле не может быть пустым
+            //statusTextInput = !this.state.status ? this.state.status = this.props.status : this.state.status;
             //проверка страницы, если страница пользователя, то можно редактировать.
             if (this.props.urlMatchParams == this.props.id) {
                 if (!this.state.editMode) {
                     return <span onDoubleClick={this.activateEditMode}>Status: {this.props.status}</span>
                 } else {
                     return <input onChange={this.onChangeTextStatus} autoFocus={true} onBlur={this.deactivateEditMode}
-                                  value={statusTextInput}/>
+                                  value={this.state.status}/>
                 }
             } else {
                 //просто вывод
