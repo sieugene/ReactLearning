@@ -11,13 +11,12 @@ import {Redirect, withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import {compose} from "redux";
 
-
 class ProfileContainer extends React.Component {
     componentDidMount() {
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
-        if (!userId || !this.props.match.params.userId) {
+        if (!userId || !this.props.id) {
             this.props.getMyProfileThunk();
         }
         //устанавливаем пользователя и получаем массив
@@ -25,7 +24,6 @@ class ProfileContainer extends React.Component {
         //установка статуса
         this.props.setStatusUserThunk(userId);
     }
-
     render() {
         //добавление id к url после авторизации
         //синхронизация профиля

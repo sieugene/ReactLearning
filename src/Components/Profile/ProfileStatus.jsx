@@ -21,11 +21,15 @@ class ProfileStatus extends React.Component {
             status: e.currentTarget.value
         })
     }
+    //исправление поля статуса при переходах
+    componentDidUpdate(prevProps){
+        if (this.props.status !== prevProps.status) {
+            this.state.status = this.props.status
+        }
+    }
 
     render() {
         const withEditStatus = () => {
-            //теряется значение поля, исправлено, но поле не может быть пустым
-            //statusTextInput = !this.state.status ? this.state.status = this.props.status : this.state.status;
             //проверка страницы, если страница пользователя, то можно редактировать.
             if (this.props.urlMatchParams == this.props.id) {
                 if (!this.state.editMode) {

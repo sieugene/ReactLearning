@@ -38,10 +38,14 @@ export const setStatusUserAC = (status) => {
 }
 export const getProfileThunkCreator = (userId) => {
     return (dispatch) => {
-        ProfileAPI.getProfile(userId)
-            .then(response => {
-                dispatch(setUserProfileAC(response.data));
-            })
+        if(!userId){
+            //none
+        }else {
+            ProfileAPI.getProfile(userId)
+                .then(response => {
+                    dispatch(setUserProfileAC(response.data));
+                })
+        }
     }
 }
 //два запроса, возможно не правильная реализация, но выдает правильный профиль
@@ -62,9 +66,13 @@ export const getMyProfileThunkCreator = () => {
 //получение статуса пользователя
 export const setStatusUserThunkCreator = (userId) => {
     return (dispatch) => {
-        ProfileAPI.getStatus(userId).then(response => {
-            dispatch(setStatusUserAC(response.data))
-        })
+        if(!userId){
+            //none
+        }else {
+            ProfileAPI.getStatus(userId).then(response => {
+                dispatch(setStatusUserAC(response.data))
+            })
+        }
     }
 }
 export const updateStatusUserThunkCreator = (userId,newStatus) => {
@@ -73,7 +81,7 @@ export const updateStatusUserThunkCreator = (userId,newStatus) => {
         ProfileAPI.getStatus(userId).then(response => {
             dispatch(setStatusUserAC(response.data))
             if(!newStatus){
-                //none
+                alert('field empty')
             }else {
                 if (response.data !== newStatus) {
                     ProfileAPI.updateStatus(newStatus).then(response => {
