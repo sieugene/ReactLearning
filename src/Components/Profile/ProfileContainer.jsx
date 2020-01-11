@@ -13,6 +13,7 @@ import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
+        //Установка профиля пользователя
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
@@ -25,8 +26,8 @@ class ProfileContainer extends React.Component {
         this.props.setStatusUserThunk(userId);
     }
     render() {
-        //добавление id к url после авторизации
         //синхронизация профиля
+        //добавление id к url после авторизации
         if (!this.props.match.params.userId) {
             if (!this.props.id) {
                 return <div>not auth</div>
@@ -37,7 +38,6 @@ class ProfileContainer extends React.Component {
                 return <Redirect to={path}/>
             }
         }
-
         return (
             <div>
                 <Profile profile={this.props.profile} status={this.props.status}
