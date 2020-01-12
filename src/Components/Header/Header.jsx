@@ -11,7 +11,8 @@ const Header = (props) => {
             }
             <NavLink to='/MyChat'> MyChat </NavLink><br/>
             <NavLink to='/Users'> Users </NavLink><br/>
-            <NavLink to='/profile/'> Profile </NavLink>
+            <NavLink to='/profile/'> Profile </NavLink><br/>
+            <NavLink to='/login/'> Login </NavLink>
         </div>
     )
 }

@@ -1,16 +1,21 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import {Field, reduxForm} from 'redux-form';
+import {InputAuth} from "../../assets/FormControl/FormsControls";
+import {maxLengthCreator, required} from "../utils/validators/validators";
 
+//testing validate maxLength
+//let maxLength5 = maxLengthCreator(5);
 
 //create local form
 const LoginForm = (props) => {
-    return(
+    return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder='Email' name='email' component='input'/>
+                <Field placeholder='Email' validate={[required]} name='email' component={InputAuth}/>
             </div>
             <div>
-                <Field placeholder='Password' name='password' type='Password' component='input'/>
+                <Field placeholder='Password' validate={[required]}
+                       name='password' type='Password' component={InputAuth}/>
             </div>
             <div>
                 <Field name='rememberMe' component="input" type="Checkbox"/>Remember Me
@@ -33,7 +38,8 @@ const Login = (props) => {
                 <a href="https://social-network.samuraijs.com/login" target="_blank" rel="noopener noreferrer"> here</a>
             </h3>
             <h3>If you do not have an account, you can register
-                <a href="https://social-network.samuraijs.com/signUp" target="_blank" rel="noopener noreferrer"> here</a>
+                <a href="https://social-network.samuraijs.com/signUp" target="_blank"
+                   rel="noopener noreferrer"> here</a>
             </h3>
 
         </div>

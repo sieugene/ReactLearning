@@ -2,6 +2,8 @@ import React from 'react';
 import s from './UserMessage.module.css';
 import {Field, reduxForm} from "redux-form";
 import UserMessage from "./UserMessage";
+import {InputMessage} from "../../assets/FormControl/FormsControls";
+import {required} from "../utils/validators/validators";
 
 
 const Info = (props) => {
@@ -16,7 +18,8 @@ const Info = (props) => {
     const AddMessageForm = (props) => {
         return (
             <form onSubmit={props.handleSubmit}>
-                <Field placeholder='write a message' name='userTextMessage' component='input'/>
+                <Field placeholder='write a message'
+                       validate={[required]} name='userTextMessage' component={InputMessage}/>
                 <button>ok</button>
             </form>
         )
