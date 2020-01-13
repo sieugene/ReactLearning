@@ -3,6 +3,7 @@ import {Field, reduxForm} from 'redux-form';
 import {InputAuth} from "../../assets/FormControl/FormsControls";
 import {maxLengthCreator, required} from "../utils/validators/validators";
 import {Redirect} from "react-router-dom";
+import s from './../../assets/FormControl/FormsControls.module.css';
 
 //testing validate maxLength
 //let maxLength5 = maxLengthCreator(5);
@@ -20,6 +21,11 @@ const LoginForm = (props) => {
             <div>
                 <Field name='rememberMe' component="input" type="Checkbox"/>Remember Me
             </div>
+            {props.error &&
+            <div className={s.someError}>
+                {props.error}
+            </div>
+            }
             <button>Login</button>
         </form>
     )
