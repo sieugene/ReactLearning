@@ -2,7 +2,6 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
-    getMyProfileThunkCreator,
     getProfileThunkCreator,
     setStatusUserThunkCreator,
     setUserProfileAC, updateStatusUserThunkCreator
@@ -16,10 +15,6 @@ class ProfileContainer extends React.Component {
         //Установка профиля пользователя
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
-        //если не нашли, вызываем узнать наш профиль
-        // if (!userId || !this.props.id) {
-        //     //this.props.getMyProfileThunk();
-        // }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
         //установка статуса
@@ -31,7 +26,6 @@ class ProfileContainer extends React.Component {
         if (!this.props.match.params.userId) {
             if (!this.props.id) {
                 return <Redirect to={'/login'}/>
-                return <div>Not auth</div>
             } else {
                 let path = `/profile/${this.props.id}`;
                 this.props.getProfileThunk(this.props.id);
@@ -61,27 +55,15 @@ let mapStateToProps = (state) => {
     }
 }
 
-//none compose
-// let WithDataUrlContainerComponent = withRouter(ProfileContainer)
-// let withAuthRedirect = withAuthRedirectHoc(WithDataUrlContainerComponent)
-// export default connect(mapStateToProps, {
-//     setUser: setUserProfileAC,
-//     getProfileThunk: getProfileThunkCreator,
-//     getMyProfileThunk: getMyProfileThunkCreator
-// })(withAuthRedirect);
 
 export default compose(
     connect(mapStateToProps,
         {
             setUser: setUserProfileAC,
             getProfileThunk: getProfileThunkCreator,
-            getMyProfileThunk: getMyProfileThunkCreator,
             setStatusUserThunk: setStatusUserThunkCreator,
             updateStatusUserThunk: updateStatusUserThunkCreator
         }),
     //withAuthRedirectHoc,
     withRouter
 )(ProfileContainer)
-
-//Compose берет ProfileContainer закидывает в withRouter, после получает результат кидает в withAuthRedirectHoc
-//после получает результат и записывает в connect

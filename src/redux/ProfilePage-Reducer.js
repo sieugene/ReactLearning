@@ -48,21 +48,6 @@ export const getProfileThunkCreator = (userId) => {
         }
     }
 }
-//два запроса, возможно не правильная реализация, но выдает правильный профиль
-//изначально узнаем кто мы и берем id
-//после делаем запрос к profileApi и добавляем массив данных, который мапится
-export const getMyProfileThunkCreator = () => {
-    return (dispatch) => {
-        meAPI.me().then(response => {
-            if(response.data.resultCode === 0) {
-                ProfileAPI.getProfile(response.data.data.id)
-                    .then(response => {
-                        dispatch(setUserProfileAC(response.data));
-                    })
-            }
-        })
-    }
-}
 //получение статуса пользователя
 export const setStatusUserThunkCreator = (userId) => {
     return (dispatch) => {
