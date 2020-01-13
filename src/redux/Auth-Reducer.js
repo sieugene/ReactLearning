@@ -32,7 +32,6 @@ export const authMeThunkCreator = () => (dispatch) => {
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data;
             dispatch(setAuthUserAC(id, login, email,true))
-
         }
     })
 }

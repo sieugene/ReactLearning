@@ -17,9 +17,9 @@ class ProfileContainer extends React.Component {
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
         //если не нашли, вызываем узнать наш профиль
-        if (!userId || !this.props.id) {
-            this.props.getMyProfileThunk();
-        }
+        // if (!userId || !this.props.id) {
+        //     //this.props.getMyProfileThunk();
+        // }
         //устанавливаем пользователя и получаем массив
         this.props.getProfileThunk(userId);
         //установка статуса
@@ -31,6 +31,7 @@ class ProfileContainer extends React.Component {
         if (!this.props.match.params.userId) {
             if (!this.props.id) {
                 return <Redirect to={'/login'}/>
+                return <div>Not auth</div>
             } else {
                 let path = `/profile/${this.props.id}`;
                 this.props.getProfileThunk(this.props.id);
