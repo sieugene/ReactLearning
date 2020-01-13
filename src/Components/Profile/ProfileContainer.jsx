@@ -30,7 +30,7 @@ class ProfileContainer extends React.Component {
         //добавление id к url после авторизации
         if (!this.props.match.params.userId) {
             if (!this.props.id) {
-                return <div>not auth</div>
+                return <Redirect to={'/login'}/>
             } else {
                 let path = `/profile/${this.props.id}`;
                 this.props.getProfileThunk(this.props.id);

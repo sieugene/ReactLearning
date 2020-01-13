@@ -2,10 +2,10 @@ import React from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {InputAuth} from "../../assets/FormControl/FormsControls";
 import {maxLengthCreator, required} from "../utils/validators/validators";
+import {Redirect} from "react-router-dom";
 
 //testing validate maxLength
 //let maxLength5 = maxLengthCreator(5);
-
 //create local form
 const LoginForm = (props) => {
     return (
@@ -28,7 +28,11 @@ const LoginForm = (props) => {
 const ReduxLoginForm = reduxForm({form: 'login'})(LoginForm)
 const Login = (props) => {
     let onSubmit = (formData) => {
-        console.log(formData)
+        //авторизация
+        props.loginThunk(formData.email,formData.password,formData.rememberMe)
+    }
+    if(props.isAuth){
+       return <Redirect to={'/profile'}/>
     }
     return (
         <div>
