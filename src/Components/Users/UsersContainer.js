@@ -10,6 +10,14 @@ import {
 import React from "react";
 import Preloader from "../../assets/preloader/Preloader";
 import {compose} from "redux";
+import {
+    getCurrentPage, getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getSearchTerm,
+    getTotalUsers,
+    getUsersList
+} from "../../redux/users-selectors";
 
 
 //эту классовую компоненту мы создали для того чтобы
@@ -77,13 +85,13 @@ class UsersContainerClass extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        UsersList: state.userPage.UsersList,
-        pageSize: state.userPage.pageSize,
-        totalUsers: state.userPage.totalUsers,
-        currentPage: state.userPage.currentPage,
-        searchTerm: state.userPage.searchTerm,
-        isFetching: state.userPage.isFetching,
-        followingInProgress: state.userPage.followingInProgress
+        UsersList: getUsersList(state),
+        pageSize: getPageSize(state),
+        totalUsers: getTotalUsers(state),
+        currentPage: getCurrentPage(state),
+        searchTerm: getSearchTerm(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 //old method mdtp
