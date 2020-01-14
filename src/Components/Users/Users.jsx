@@ -7,7 +7,7 @@ const Users = (props) => {
     let totalPages = props.totalUsers / props.pageSize;
     let pages = [];
     //пробегаем и пушим
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= Math.ceil(totalPages); i++) {
         pages.push(i);
     }
     //поиск по пользователям, реф
