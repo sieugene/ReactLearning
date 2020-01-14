@@ -29,7 +29,7 @@ export const setAuthUserAC = (id,login,email,isAuth) => {
     }
 }
 export const authMeThunkCreator = () => (dispatch) => {
-    meAPI.me().then(response => {
+    return meAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data;
             dispatch(setAuthUserAC(id, login, email,true))
