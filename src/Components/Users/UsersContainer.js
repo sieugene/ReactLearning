@@ -16,7 +16,7 @@ import {
     getPageSize,
     getSearchTerm,
     getTotalUsers,
-    getUsersList
+    getUsersListSuperSelector
 } from "../../redux/users-selectors";
 
 
@@ -85,7 +85,7 @@ class UsersContainerClass extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        UsersList: getUsersList(state),
+        UsersList: getUsersListSuperSelector(state),
         pageSize: getPageSize(state),
         totalUsers: getTotalUsers(state),
         currentPage: getCurrentPage(state),
