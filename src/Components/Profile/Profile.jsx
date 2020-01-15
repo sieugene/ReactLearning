@@ -1,7 +1,7 @@
 import React from 'react';
 import Preloader from "../../assets/preloader/Preloader";
 import s from './Profile.module.css';
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 const Profile = (props) => {
     if (!props.profile) {
@@ -15,7 +15,7 @@ const Profile = (props) => {
             } alt=''/><br/>
             <span>AboutMe: {props.profile.aboutMe}<br/></span>
             <span>FullName: {props.profile.fullName}<br/></span>
-            <ProfileStatus status={props.status}
+            <ProfileStatusWithHooks status={props.status}
                            updateStatusUserThunk={props.updateStatusUserThunk}
                            id={props.id}
                            urlMatchParams={props.urlMatchParams}

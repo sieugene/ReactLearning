@@ -1,5 +1,5 @@
 import React from 'react';
-
+//WITHOUT HOOKS, old file
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,

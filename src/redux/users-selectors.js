@@ -4,7 +4,7 @@ export const getUsersList = (state) => {
     return state.userPage.UsersList;
 }
 //reselect library, simple
-export const getUsersListSuperSelector = createSelector(getUsersList,(UsersList) => {
+export const getUsersListSubSuperSelector = createSelector(getUsersList,(UsersList) => {
     return UsersList.filter(u => true)
 })
 export const getPageSize = (state) => {
