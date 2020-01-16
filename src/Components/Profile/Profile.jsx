@@ -3,7 +3,7 @@ import Preloader from "../../assets/preloader/Preloader";
 import s from './Profile.module.css';
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
-const Profile = (props) => {
+const Profile = React.memo(props => {
     if (!props.profile) {
         return <Preloader/>
     }
@@ -22,6 +22,6 @@ const Profile = (props) => {
             />
         </div>
     )
-}
+})
 
 export default Profile
