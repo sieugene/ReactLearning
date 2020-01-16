@@ -24,41 +24,15 @@ import {
 class UsersContainerClass extends React.Component {
     componentDidMount() {
         this.props.getUsersThunk(this.props.pageSize, this.props.currentPage)
-        //none thunks method
-        // this.props.toggleIsFetching(true);
-        // UsersAPI.getUsers(this.props.pageSize, this.props.currentPage)
-        //     .then(response => {
-        //         this.props.toggleIsFetching(false);
-        //         this.props.setUsers(response.items)
-        //         this.props.setUsersTotal(response.totalCount)
-        //     })
     }
 
     //новый запрос, на изменение выбранной страницы
     onPageCurrentChange = (pageNumber) => {
         this.props.setCurrentPageThunk(this.props.pageSize, pageNumber)
-        //none thunks method
-        // this.props.toggleIsFetching(true);
-        // this.props.setCurrentPage(pageNumber);
-        // UsersAPI.getUsers(this.props.pageSize, pageNumber)
-        //     .then(response => {
-        //         this.props.toggleIsFetching(false);
-        //         this.props.setUsers(response.items)
-        //         this.props.setUsersTotal(response.totalCount)
-        //     })
     }
     //поиск по пользователям метод
     onSearchChange = (text) => {
         this.props.setSearchTermTextThunk(this.props.pageSize, text)
-        //none thunks method
-        // this.props.toggleIsFetching(true);
-        // this.props.setSearchTermText(text);
-        // UsersAPI.getUsersTerm(this.props.pageSize, text)
-        //     .then(response => {
-        //         this.props.toggleIsFetching(false);
-        //         this.props.setUsers(response.items)
-        //         this.props.setUsersTotal(response.totalCount)
-        //     })
     }
 
     render() {
