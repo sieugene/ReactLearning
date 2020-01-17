@@ -63,12 +63,12 @@ const UsersPageReducer = (state = initialState, action) => {
                 searchTerm: action.text
             }
         case TOGGLE_IS_FETCHING:
-            return{
+            return {
                 ...state,
                 isFetching: action.isFetching
             }
         case TOGGLE_FOLLOWING_PROGRESS:
-            return{
+            return {
                 ...state,
                 followingInProgress: action.isFetching ?
                     [...state.followingInProgress, action.userId]
@@ -112,75 +112,68 @@ export const setSearchTermAC = (text) => {
     }
 }
 export const toggleIsFetchingAC = (isFetching) => {
-    return{
+    return {
         type: TOGGLE_IS_FETCHING, isFetching
     }
 }
 export const toggleFollowingInProgressAC = (isFetching, userId) => {
-    return{
+    return {
         type: TOGGLE_FOLLOWING_PROGRESS,
         isFetching, userId
     }
 }
 
-export const getUsersThunkCreator = (pageSize,currentPage) => {
-    return (dispatch) => {
+export const getUsersThunkCreator = (pageSize, currentPage) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
-        UsersAPI.getUsers(pageSize, currentPage)
-            .then(response => {
-                dispatch(toggleIsFetchingAC(false));
-                dispatch(setUsersAC(response.items));
-                dispatch(setUsersTotalCount(response.totalCount));
-            })
+        let response = await UsersAPI.getUsers(pageSize, currentPage)
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(response.items));
+        dispatch(setUsersTotalCount(response.totalCount));
     }
 }
 
-export const setCurrentPageThunkCreator = (pageSize,pageNumber) => {
-    return (dispatch) => {
+export const setCurrentPageThunkCreator = (pageSize, pageNumber) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         dispatch(setCurrentPageAC(pageNumber));
-        UsersAPI.getUsers(pageSize, pageNumber)
-            .then(response => {
-                dispatch(toggleIsFetchingAC(false));
-                dispatch(setUsersAC(response.items));
-                dispatch(setUsersTotalCount(response.totalCount));
-            })
+        let response = await UsersAPI.getUsers(pageSize, pageNumber)
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(response.items));
+        dispatch(setUsersTotalCount(response.totalCount));
     }
 }
 
-export const setSearchTermTextThunkCreator = (pageSize,text) => {
-    return (dispatch) => {
+export const setSearchTermTextThunkCreator = (pageSize, text) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         dispatch(setSearchTermAC(text));
-        UsersAPI.getUsersTerm(pageSize, text)
-            .then(response => {
-                dispatch(toggleIsFetchingAC(false));
-                dispatch(setUsersAC(response.items));
-                dispatch(setUsersTotalCount(response.totalCount));
-            })
+        if(!text){
+            text = ' ';
+        }
+        let response = await UsersAPI.getUsersTerm(pageSize, text)
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(response.items));
+        dispatch(setUsersTotalCount(response.totalCount));
     }
 }
 
-export const unFollowUserThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgressAC(true, userId))
-        FollowAPI.unfollowUser(userId)
-            .then(response => {
-                dispatch(unFollowAC(userId));
-                dispatch(toggleFollowingInProgressAC(false, userId));
-            })
-    }
+
+const followUnfollowFlow = async (dispatch, userId, methoApi, action) => {
+    dispatch(toggleFollowingInProgressAC(true, userId))
+    await methoApi(userId)
+    dispatch(action(userId));
+    dispatch(toggleFollowingInProgressAC(false, userId));
 }
 
-export const followUserThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgressAC(true, userId))
-        FollowAPI.followUser(userId)
-            .then(response => {
-                dispatch(followAC(userId));
-                dispatch(toggleFollowingInProgressAC(false, userId));
-            })
-    }
+
+export const unFollowUserThunkCreator = (userId) => (dispatch) => {
+    return followUnfollowFlow(dispatch, userId, FollowAPI.unfollowUser, unFollowAC)
+}
+
+
+export const followUserThunkCreator = (userId) => (dispatch) => {
+    return followUnfollowFlow(dispatch, userId, FollowAPI.followUser, followAC)
 }
 
 
