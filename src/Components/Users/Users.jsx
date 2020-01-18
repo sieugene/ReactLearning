@@ -6,6 +6,7 @@ import {SearchFormRedux} from "./SearchForm";
 
 const Users = React.memo(props => {
     //for react form
+    
     let onChangedTextForSearch = (formData) => {
         props.onSearchChange(formData.searchForm)
     }
