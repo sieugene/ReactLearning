@@ -37,7 +37,9 @@ const Users = React.memo(props => {
                 </button></h3>
             </div>
             <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize} currentPage={props.currentPage}
-                       onPageCurrentChange={props.onPageCurrentChange}/>
+                       onPageCurrentChange={props.onPageCurrentChange}
+                       portionSize={10}
+            />
             {showFollowing ?
                 //вывод подписчиков
                 arrayWithSubs.map(u => <User
