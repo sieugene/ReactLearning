@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import './App.css';
 import InfoContainer from "./Components/UserMessage/InfoContainer";
 import {Route} from "react-router";
-import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {LoginContainer} from "./Components/Login/LoginContainer";
@@ -12,6 +11,8 @@ import {withRouter} from "react-router-dom";
 import {initiliazedThunkCreator} from "./redux/App-Reducer";
 import Preloader from "./assets/preloader/Preloader";
 
+//import UsersContainer from "./Components/Users/UsersContainer";
+const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
 
 class App extends React.Component {
     componentDidMount() {
@@ -30,7 +31,12 @@ class App extends React.Component {
                     render={() => <InfoContainer/>}/>
                 <Route
                     path='/Users'
-                    render={() => <UsersContainer/>}/>
+                    render={() => {
+                        return  <Suspense fallback={<Preloader/>}>
+                            <UsersContainer/>
+                        </Suspense>
+                    }
+                    }/>
                 <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                 <Route path='/Login' render={() => <LoginContainer/>}/>
 
