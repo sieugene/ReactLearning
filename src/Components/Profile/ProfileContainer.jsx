@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
     getProfileThunkCreator,
     setStatusUserThunkCreator,
-    setUserProfileAC, updateStatusUserThunkCreator
+    setUserProfileAC, updateProfileUserThunkCreator, updateStatusUserThunkCreator
 } from "../../redux/ProfilePage-Reducer";
 import {Redirect, withRouter} from "react-router-dom";
 import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
@@ -40,7 +40,7 @@ class ProfileContainer extends React.Component {
                          id={this.props.id}
                          //math params для изменения статуса
                         urlMatchParams={this.props.match.params.userId}
-
+                         updateProfileUserThunk={this.props.updateProfileUserThunk}
                 />
             </div>
         )
@@ -62,7 +62,8 @@ export default compose(
             setUser: setUserProfileAC,
             getProfileThunk: getProfileThunkCreator,
             setStatusUserThunk: setStatusUserThunkCreator,
-            updateStatusUserThunk: updateStatusUserThunkCreator
+            updateStatusUserThunk: updateStatusUserThunkCreator,
+            updateProfileUserThunk: updateProfileUserThunkCreator,
         }),
     //withAuthRedirectHoc,
     withRouter

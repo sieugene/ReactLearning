@@ -2,14 +2,21 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     background-color: #5959a6;
-    width: 50%;
+    width: 80%;
     margin: 0 auto;
     margin-top: 20px;
     padding: 15px;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 .profileContain img {
     width: 130px;
+}
+.profileContain button{
+    width: 60px;
+}
+.someError{
+    border: 2px solid red;
+    color: red;
 }

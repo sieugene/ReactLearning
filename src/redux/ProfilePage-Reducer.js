@@ -1,4 +1,5 @@
 import {meAPI, ProfileAPI} from "../Api/Api";
+import {stopSubmit} from "redux-form";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
@@ -80,6 +81,19 @@ export const updateStatusUserThunkCreator = (userId,newStatus) => {
         //end
     }
 }
+export const updateProfileUserThunkCreator = (profile) => (dispatch,getState) => {
+        return ProfileAPI.updateProfile(profile).then(response => {
+            if(response.data.resultCode === 0){
+                const userId = getState().Auth.id;
+                dispatch(getProfileThunkCreator(userId));
+            }else{
+                let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+                dispatch(stopSubmit("editProfile",{_error: messageError}))
+                return Promise.reject(response.data.messages[0]);
+            }
+        })
+
+    }
 
 
 export default profilePageReducer;
