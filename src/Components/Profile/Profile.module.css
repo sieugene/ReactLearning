@@ -1,8 +1,7 @@
-.profileContain{
+.profileContain {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    align-items: left;
     background-color: #5959a6;
     width: 80%;
     margin: 0 auto;
@@ -10,13 +9,38 @@
     padding: 15px;
     border-radius: 10px;
 }
+
 .profileContain img {
+    float: left;
+    padding-left: 40px;
     width: 130px;
+    height: 130px;
 }
-.profileContain button{
+.profileContain img:hover{
+    cursor: pointer;
+}
+.uploadPhoto{
+    float: left;
+    width: 130px;
+    height: 130px;
+    position: relative;
+    top: 130px;
+    left: 40px;
+    margin-top: -130px;
+    cursor: pointer;
+    transition: 1s all ease;
+}
+.uploadPhoto:hover{
+    background-color: #fbfbff3b
+}
+input[type="file"] { display: none; }
+
+
+.profileContain button {
     width: 60px;
 }
-.someError{
+
+.someError {
     border: 2px solid red;
     color: red;
 }

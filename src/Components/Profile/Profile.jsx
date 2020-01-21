@@ -19,16 +19,22 @@ const Profile = React.memo(props => {
             })
         }
     }
+    let onUploadNewPhoto = (e) => {
+        if(e.target.files.length){
+            props.uploadNewPhotoThunk(e.target.files[0])
+        }
+    }
     return (
         <div className={s.profileContain}>
+            <input type="file" name="myFile" id="myFile" onChange={onUploadNewPhoto}/>
+                <label htmlFor="myFile" className={s.uploadPhoto}></label>
+            <img src={props.profile.photos.small === null ?
+                    'http://cdn.onlinewebfonts.com/svg/img_566357.png'
+                    : props.profile.photos.small} alt=''/><br/>
+
             {editProfile ? <ReduxEditProfile initialValues={props.profile} onSubmit={onSubmit} profile={props.profile}/>
                 :
                 <div className={s.profileContain}>
-                    <img src={
-                        props.profile.photos.small === null ?
-                            'http://cdn.onlinewebfonts.com/svg/img_566357.png'
-                            : props.profile.photos.small
-                    } alt=''/><br/>
                     <button onClick={() => {setEditProfile(true)}}>Edit</button>
                     <span><b>AboutMe:</b> {props.profile.aboutMe}<br/></span>
                     <span><b>FullName:</b> {props.profile.fullName}<br/></span>

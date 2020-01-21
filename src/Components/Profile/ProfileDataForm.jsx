@@ -7,11 +7,6 @@ const ProfileDataForm = (props) => {
     return (
         <div className={s.profileContain}>
             <form onSubmit={props.handleSubmit}>
-                <img src={
-                    props.profile.photos.small === null ?
-                        'http://cdn.onlinewebfonts.com/svg/img_566357.png'
-                        : props.profile.photos.small
-                } alt=''/><br/>
                 <button>Save</button>
                 {props.error &&
                     <div className={s.someError}>
