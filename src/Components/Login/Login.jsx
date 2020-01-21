@@ -21,11 +21,10 @@ const LoginForm = (props) => {
             <div>
                 <Field name='rememberMe' component="input" type="Checkbox"/>Remember Me
             </div>
-            {props.error &&
-            <div className={s.someError}>
-                {props.error}
-            </div>
-            }
+            {props.error && <div className={s.someError}>{props.error}</div>}
+            {props.captcha && <div><img src={props.captcha}/></div>}
+            {props.captcha && <div><Field placeholder='enter symbols' name='captcha' component='input'
+                                          validate={[required]}/></div>}
             <button>Login</button>
         </form>
     )
@@ -35,22 +34,46 @@ const ReduxLoginForm = reduxForm({form: 'login'})(LoginForm)
 const Login = (props) => {
     let onSubmit = (formData) => {
         //авторизация
-        props.loginThunk(formData.email,formData.password,formData.rememberMe)
+        props.loginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
-    if(props.isAuth){
-       return <Redirect to={'/profile'}/>
+    if (props.isAuth) {
+        return <Redirect to={'/profile'}/>
     }
     return (
         <div>
             <h1>Login page</h1>
-            <ReduxLoginForm onSubmit={onSubmit}/>
+            <ReduxLoginForm onSubmit={onSubmit} captcha={props.captcha}/>
+            <h3>To interact with a social network:</h3>
+            <ul>
+                <li>
+                    <h3>register
+                        <a href="https://social-network.samuraijs.com/signUp" target="_blank"
+                           rel="noopener noreferrer"> here</a>
+                    </h3>
+                </li>
+                <li>
+                    <h3>
+                        Go to settings, take the API KEY and replace it in the
+                        <b style={{color: 'red'}}> src/api/Api.js</b>
+                    </h3>
+                </li>
+                <li>
+                    <h3>Log in with your account</h3>
+                </li>
+                <li>
+                    <h4>Also check out the request
+                        <a href="https://social-network.samuraijs.com/Default/Default/Limits"
+                           target="_blank" rel="noopener noreferrer" style={{color:'orange'}}>{' '}
+                            restriction
+                        </a>
+                    </h4>
+                </li>
+
+            </ul>
             <h3>If authorization does not work, do it
                 <a href="https://social-network.samuraijs.com/login" target="_blank" rel="noopener noreferrer"> here</a>
             </h3>
-            <h3>If you do not have an account, you can register
-                <a href="https://social-network.samuraijs.com/signUp" target="_blank"
-                   rel="noopener noreferrer"> here</a>
-            </h3>
+
 
         </div>
     )
