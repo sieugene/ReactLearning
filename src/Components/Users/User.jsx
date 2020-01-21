@@ -1,14 +1,13 @@
 import React from 'react';
 import s from './Users.module.css';
 import {NavLink} from "react-router-dom";
-
+import userPhoto from './../../assets/images/userPhoto.png'
 
 const User = ({user, unFollowUserThunk, followUserThunk, followingInProgress}) => {
     return (
         <div key={user.id} className={s.userMain}>
             <NavLink to={'profile/' + user.id}><img className={s.userImg} src={
-                user.photos.small != null ? user.photos.small :
-                    'https://www.kanali6.com.cy/sites/default/files/producer_0.png'} alt=''/></NavLink>
+                user.photos.small != null ? user.photos.small : userPhoto} alt=''/></NavLink>
             <br/>
             {
                 user.followed
@@ -23,10 +22,8 @@ const User = ({user, unFollowUserThunk, followUserThunk, followingInProgress}) =
                                 followUserThunk(user.id)
                             }}>Follow</button>
             }
-            <div> Name : {user.name}</div>
-            <div>Status :{user.status}</div>
-            <div>City: {'u.location.city'}</div>
-            <div>Country: {'u.location.country'}</div>
+            <div>Name : {user.name}</div>
+            <div>Status : {user.status}</div>
         </div>
     )
 }

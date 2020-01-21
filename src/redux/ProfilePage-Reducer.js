@@ -1,4 +1,4 @@
-import {meAPI, ProfileAPI} from "../Api/Api";
+import {ProfileAPI} from "../Api/Api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_PROFILE = 'SET_USER_PROFILE';

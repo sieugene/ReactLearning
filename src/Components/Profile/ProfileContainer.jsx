@@ -7,29 +7,35 @@ import {
     setUserProfileAC, updateProfileUserThunkCreator, updateStatusUserThunkCreator, uploadNewPhotoThunkCreator
 } from "../../redux/ProfilePage-Reducer";
 import {Redirect, withRouter} from "react-router-dom";
-import {withAuthRedirectHoc} from "../HOC/WithAuthRedirect";
 import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
+    updateProfile(userId) {
+        this.props.getProfileThunk(userId);
+        this.props.setStatusUserThunk(userId);
+    }
+
     componentDidMount() {
         //Установка профиля пользователя
         //проверяем из url пользователя по параметрам
         let userId = this.props.match.params.userId;
-        //устанавливаем пользователя и получаем массив
-        this.props.getProfileThunk(userId);
-        //установка статуса
-        this.props.setStatusUserThunk(userId);
+        this.updateProfile(userId);
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        //обновление профилей при смене url
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.updateProfile(this.props.match.params.userId);
+        }
+    }
+
     render() {
-        //синхронизация профиля
-        //добавление id к url после авторизации
+        //добавление url
         if (!this.props.match.params.userId) {
             if (!this.props.id) {
                 return <Redirect to={'/login'}/>
             } else {
                 let path = `/profile/${this.props.id}`;
-                this.props.getProfileThunk(this.props.id);
-                this.props.setStatusUserThunk(this.props.id);
                 return <Redirect to={path}/>
             }
         }
@@ -38,8 +44,8 @@ class ProfileContainer extends React.Component {
                 <Profile profile={this.props.profile} status={this.props.status}
                          updateStatusUserThunk={this.props.updateStatusUserThunk}
                          id={this.props.id}
-                         //math params для изменения статуса
-                        urlMatchParams={this.props.match.params.userId}
+                    //math params для изменения статуса
+                         urlMatchParams={this.props.match.params.userId}
                          updateProfileUserThunk={this.props.updateProfileUserThunk}
                          uploadNewPhotoThunk={this.props.uploadNewPhotoThunk}
                 />

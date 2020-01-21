@@ -1,46 +1,76 @@
-.profileContain {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #5959a6;
-    width: 80%;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-.profileContain img {
-    float: left;
-    padding-left: 40px;
-    width: 130px;
-    height: 130px;
-}
-.profileContain img:hover{
-    cursor: pointer;
-}
-.uploadPhoto{
-    float: left;
-    width: 130px;
-    height: 130px;
-    position: relative;
-    top: 130px;
-    left: 40px;
-    margin-top: -130px;
-    cursor: pointer;
-    transition: 1s all ease;
-}
-.uploadPhoto:hover{
-    background-color: #fbfbff3b
-}
-input[type="file"] { display: none; }
-
-
-.profileContain button {
-    width: 60px;
-}
-
 .someError {
     border: 2px solid red;
     color: red;
+    margin-top: 10px;
+    padding: 3px;
+}
+.profileContain{
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 3%;
+    background-color: aliceblue;
+    padding: 10px;
+    width: 85%;
+}
+.mainBlock{
+    display: flex;
+}
+.avatarBlock{
+    width: 100%;
+    padding: 15px;
+    background-color: #2d2d2d;
+    border-radius: 1px;
+    margin-right: 5px;
+    color: white;
+}
+
+.avatarBlock img{
+    width: 200px;
+}
+.uploadPhoto{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    display: flex;
+    margin-top: -204px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+.uploadPhoto:hover {
+    background-color: #efefef91;
+}
+
+input[type="file"] { display: none; }
+.editButton button,.saveButton{
+    border: 0px;
+    background-color: white;
+    color: black;
+    width: 100px;
+    height: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.infoProfile{
+    width: 100%;
+    padding: 15px;
+    margin-left: 5px;
+    background-color: #2d2d2d;
+    border-radius: 1px;
+    color: white;
+}
+.infoProfile input,.avatarBlock input{
+    border: none;
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+    color: black;
+    font-weight: 700;
+}
+.infoProfile span{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    font-size: 14px;
 }

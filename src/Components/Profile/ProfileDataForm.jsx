@@ -5,22 +5,22 @@ import s from "./Profile.module.css";
 
 const ProfileDataForm = (props) => {
     return (
-        <div className={s.profileContain}>
+        <div className={s.infoProfile}>
             <form onSubmit={props.handleSubmit}>
-                <button>Save</button>
+                <button className={s.saveButton}>Save</button>
                 {props.error &&
                     <div className={s.someError}>
                         {props.error}
                     </div>
                 }
                 <br/>
-                <span>AboutMe: {props.profile.aboutMe}<br/></span>
+                <span><b>AboutMe:</b> {props.profile.aboutMe}<br/></span>
                 <Field placeholder='About me' name='aboutMe' component={InputMessage}/>
-                <span>FullName: {props.profile.fullName}<br/></span>
+                <span><b>FullName:</b> {props.profile.fullName}<br/></span>
                 <Field placeholder='Full Name' name='fullName' component={InputMessage}/>
-                <span>lookingForAJob: {props.profile.lookingForAJob}</span>
+                <span><b>lookingForAJob:</b> {props.profile.lookingForAJob}</span>
                 <Field placeholder='Looking for a job' type="checkbox" name='lookingForAJob' component={InputMessage}/>
-                <span>lookingForAJobDescription: {props.profile.lookingForAJobDescription}</span>
+                <span><b>lookingForAJobDescription:</b> {props.profile.lookingForAJobDescription}</span>
                 <Field placeholder='Looking for a job desc' name='lookingForAJobDescription' component={InputMessage}/>
                 {Object.keys(props.profile.contacts).map(key =>
                     <Contact key={key} contactTitle={key} contactBody={props.profile.contacts[key]}/>
@@ -32,7 +32,7 @@ const ProfileDataForm = (props) => {
 const Contact = ({contactTitle, contactBody}) => {
     return (
         <div>
-            <b>{contactTitle}:</b>{contactBody}
+            <span><b>{contactTitle}:</b>{contactBody}</span>
             <Field placeholder={`https://www.${contactTitle}.com`}
                    name={`contacts.${contactTitle}`} component={InputMessage}/>
         </div>
