@@ -75,3 +75,36 @@ export const securityAPI = {
         return instance.get(`security/get-captcha-url`)
     }
 }
+
+export const DialogsAPI = {
+    startChatting(userId){
+        return instance.put(`dialogs/${userId}`)
+    },
+    getAllDialogs(){
+        return instance.get(`dialogs`)
+    },
+    getListMessagesWithFriend(userId ){
+        return instance.get(`dialogs/${userId}/messages`)
+    },
+    sendMessageToFriend(userId,newMessage){
+        return instance.post(`dialogs/${userId}/messages`,{body: newMessage})
+    },
+    isViewedYourMessage(messageId){
+        return instance.get(`dialogs/messages/${messageId}/viewed`)
+    },
+    messageInSpam(messageId){
+        return instance.post(`dialogs/messages/${messageId}/spam`)
+    },
+    deleteMessage(messageId){
+        return instance.delete(`dialogs/messages/${messageId}`)
+    },
+    restoreMessage(messageId){
+        return instance.put(`dialogs/messages/${messageId}/restore`)
+    },
+    returnMessageThanDate(userId,date){
+        return instance.get(`dialogs/${userId}/messages/new?newerThen=${date}`)
+    },
+    listNewMessage(){
+        return instance.get(`dialogs/messages/new/count`)
+    }
+}

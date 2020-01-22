@@ -6,6 +6,8 @@ import authReducer from "./Auth-Reducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import {appReducer} from "./App-Reducer";
+import DialogsReducer from "./Dialogs-Reducer";
+
 
 let reducers = combineReducers({
     infoPage: infoPageReducer,
@@ -13,7 +15,8 @@ let reducers = combineReducers({
     profilePage: profilePageReducer,
     Auth: authReducer,
     form: formReducer,
-    app: appReducer
+    app: appReducer,
+    dialogs: DialogsReducer
 })
 
 //extension
