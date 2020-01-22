@@ -10,6 +10,8 @@ import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 import {initiliazedThunkCreator} from "./redux/App-Reducer";
 import Preloader from "./assets/preloader/Preloader";
+import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
+import Sidebar from "./Components/Sidebar/SIdebar";
 
 //import UsersContainer from "./Components/Users/UsersContainer";
 const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
@@ -20,37 +22,41 @@ class App extends React.Component {
     }
 
     render() {
-        if(!this.props.initialized){
+        if (!this.props.initialized) {
             return <Preloader/>
         }
         return (
             <div className="App">
                 <HeaderContainer/>
-                <Route
-                    path='/MyChat'
-                    render={() => <InfoContainer/>}/>
-                <Route
-                    path='/Users'
-                    render={() => {
-                        return  <Suspense fallback={<Preloader/>}>
-                            <UsersContainer/>
-                        </Suspense>
-                    }
-                    }/>
-                <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                <Route path='/Login' render={() => <LoginContainer/>}/>
-
+                <div className="mainApp">
+                    <Sidebar/>
+                    <Route
+                        path='/MyChat'
+                        render={() => <InfoContainer/>}/>
+                    <Route
+                        path='/Users'
+                        render={() => {
+                            return <Suspense fallback={<Preloader/>}>
+                                <UsersContainer/>
+                            </Suspense>
+                        }
+                        }/>
+                    <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
+                    <Route path='/Login' render={() => <LoginContainer/>}/>
+                    <SecondSidebar/>
+                </div>
             </div>
         );
     }
 }
+
 let mapStateToProps = (state) => ({
     initialized: state.app.initialized
 })
 
 export default compose(
-    connect(mapStateToProps,{
-        initiliazedThunk:initiliazedThunkCreator
+    connect(mapStateToProps, {
+        initiliazedThunk: initiliazedThunkCreator
     }),
     withRouter
 )(App)

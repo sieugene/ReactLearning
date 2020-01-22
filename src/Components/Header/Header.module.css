@@ -2,14 +2,53 @@
     float: right;
 }
 
+.loginBlock img {
+    width: 34px;
+    border-radius: 30px;
+}
+
 .loginBlock a {
     color: white;
+}
+.loginBlock h4{
+     display: inline-block;
+     margin: 0;
+     padding: 0;
+     position: relative;
+     bottom: 15px;
+     right: 10px;
+    font-size: 14px;
+ }
+.loginBlock button{
+    bottom: 15px;
+    position: relative;
+    margin-left: 10px;
+    border: 0px;
+    background-color: white;
+    color: black;
+    width: 78px;
+    height: 20px;
+    font-size: 12px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.loginBtn{
+    bottom: 0px !important;
+}
+
+.container {
+    margin-left: 3%;
+    margin-right: 3%;
+    padding-top: 10px;
 }
 
 .header {
     background-color: black;
     color: white;
     display: block;
+    margin-bottom: 3%;
+    height: 56px;
+
 }
 
 .header a {

@@ -5,20 +5,18 @@
     padding: 3px;
 }
 .profileContain{
-    margin-left: 10%;
-    margin-right: 10%;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 3%;
     background-color: aliceblue;
     padding: 10px;
-    width: 85%;
+    width: 100%;
 }
 .mainBlock{
     display: flex;
+    width: 100%;
 }
 .avatarBlock{
-    width: 100%;
+    width: 40%;
     padding: 15px;
     background-color: #2d2d2d;
     border-radius: 1px;
@@ -37,6 +35,7 @@
     margin-top: -204px;
     cursor: pointer;
     transition: 0.3s all ease;
+    bottom: 21px;
 }
 .uploadPhoto:hover {
     background-color: #efefef91;
@@ -73,4 +72,73 @@ input[type="file"] { display: none; }
     justify-content: space-between;
     padding: 5px;
     font-size: 14px;
+}
+.infoProfile span p {
+    text-align: end;
+    margin: 0;
+}
+.infoProfile span a {
+   color: white;
+    text-decoration: none;
+    text-decoration-color: white;
+    transition: 0.3s all ease;
+}
+.infoProfile span a:hover{
+    color: #8a8a8a;
+}
+
+/*tooltip*/
+[data-tooltip] {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+[data-tooltip]:before,
+[data-tooltip]:after {
+    visibility: hidden;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    pointer-events: none;
+}
+[data-tooltip]:before {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    margin-bottom: 5px;
+    padding: 7px 15px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background: #006104;
+    background: hsla(110,26%,97%,0.9);
+    color: black;
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    font-size: 14px;
+    line-height: 1.2;
+    text-shadow: 0 1px 1px hsla(0,0%,0%,1);
+}
+
+[data-tooltip]:after {
+    position: absolute;
+    bottom: 100%;
+    left: 24px;
+    width: 0;
+    border-top: 5px solid #006104;
+    border-top: 5px solid hsla(110,26%,97%,0.9);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    content: " ";
+    font-size: 0;
+    line-height: 0;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+    visibility: visible;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+    transition: all 0.4s ease-in-out;
 }

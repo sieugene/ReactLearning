@@ -58,7 +58,6 @@ export const loginThunkCreator = (email,password,rememberMe,captcha) => (dispatc
             let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
             dispatch(stopSubmit("login",{_error: messageError}))
         }
-
     })
 }
 export const logoutThunkCreator = () => (dispatch) => {

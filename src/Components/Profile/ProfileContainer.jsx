@@ -40,7 +40,6 @@ class ProfileContainer extends React.Component {
             }
         }
         return (
-            <div>
                 <Profile profile={this.props.profile} status={this.props.status}
                          updateStatusUserThunk={this.props.updateStatusUserThunk}
                          id={this.props.id}
@@ -49,7 +48,6 @@ class ProfileContainer extends React.Component {
                          updateProfileUserThunk={this.props.updateProfileUserThunk}
                          uploadNewPhotoThunk={this.props.uploadNewPhotoThunk}
                 />
-            </div>
         )
     }
 }

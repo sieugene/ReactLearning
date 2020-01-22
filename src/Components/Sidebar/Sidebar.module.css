@@ -1,0 +1,15 @@
+.sidebar{
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.sidebar a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.active{
+    font-weight: bold;
+}
