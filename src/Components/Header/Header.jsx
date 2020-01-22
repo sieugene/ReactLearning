@@ -6,8 +6,8 @@ import userPhoto from './../../assets/images/userPhoto.png'
 
 const Header = (props) => {
     let getUserPhoto = () => {
-        return !props.profile ? <img src={userPhoto} alt=''/> :
-            <img src={props.profile.photos.small} alt=''/> || <img src={props.profile.photos.large} alt={''}/>;
+        return !props.userPhoto ? <img src={userPhoto} alt=''/> :
+            <img src={props.userPhoto.small} alt=''/> || <img src={props.userPhoto.large} alt={''}/>;
     }
     return (
         <div className={s.header}>
