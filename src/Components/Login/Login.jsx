@@ -22,7 +22,7 @@ const LoginForm = (props) => {
                 <Field name='rememberMe' component="input" type="Checkbox"/>Remember Me
             </div>
             {props.error && <div className={s.someError}>{props.error}</div>}
-            {props.captcha && <div><img src={props.captcha}/></div>}
+            {props.captcha && <div><img src={props.captcha} alt={''}/></div>}
             {props.captcha && <div><Field placeholder='enter symbols' name='captcha' component='input'
                                           validate={[required]}/></div>}
             <button>Login</button>

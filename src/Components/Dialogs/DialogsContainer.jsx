@@ -1,31 +1,42 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {
     getAllDialogsThunkCreator,
-    getListMessagesWithFriendThunkCreator, sendMessageToFriendThunkCreator,
+    getListMessagesWithFriendThunkCreator, getListNewMessagesThunkCreator, sendMessageToFriendThunkCreator,
     startChattingThunkCreator
 } from "../../redux/Dialogs-Reducer";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
 
 
+const DialogsContainer = (props) => {
+    useEffect(()=>{
+        props.getAllDialogsThunk();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+    return(
+        <Dialogs {...props}/>
+    )
+}
+
 
 
 let mapStateToProps = (state) => {
     return {
-        messages: state.dialogs.messages,
         listDialogs: state.dialogs.listDialogs,
-        messagesWithFriends: state.dialogs.messagesWithFriends
+        messagesWithFriend: state.dialogs.messagesWithFriend,
+        countNesMessages: state.dialogs.countNesMessages
     }
 }
 
-export const DialogsContainer = compose(
+export default compose(
     withRouter,
     connect(mapStateToProps,{
         startChattingThunk:startChattingThunkCreator,
         getAllDialogsThunk: getAllDialogsThunkCreator,
         getListMessagesWithFriendThunk: getListMessagesWithFriendThunkCreator,
-        sendMessageToFriendThunk: sendMessageToFriendThunkCreator
+        sendMessageToFriendThunk: sendMessageToFriendThunkCreator,
+        getListNewMessagesThunk: getListNewMessagesThunkCreator
     })
-)(Dialogs)
+)(DialogsContainer)
