@@ -4,9 +4,9 @@ import Dialog from "./Dialog";
 const Dialogs = (props) => {
     return(
         <div>
-            Dialogs
-            <div><button onClick={()=> {props.startChattingThunk(2)}}>StartChatting</button></div>
-            with user with id 2
+            {/*Dialogs*/}
+            {/*<div><button onClick={()=> {props.startChattingThunk(2)}}>StartChatting</button></div>*/}
+            {/*with user with id 2*/}
             <hr/>
             <div>
                 <div>

@@ -1,5 +1,4 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import infoPageReducer from './infoPage-Reducer';
 import UsersPageReducer from "./UsersPage-Reducer";
 import profilePageReducer from "./ProfilePage-Reducer";
 import authReducer from "./Auth-Reducer";
@@ -10,7 +9,6 @@ import DialogsReducer from "./Dialogs-Reducer";
 
 
 let reducers = combineReducers({
-    infoPage: infoPageReducer,
     userPage: UsersPageReducer,
     profilePage: profilePageReducer,
     Auth: authReducer,

@@ -1,6 +1,5 @@
 import React, {Suspense} from 'react';
 import './App.css';
-import InfoContainer from "./Components/UserMessage/InfoContainer";
 import {Route} from "react-router";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
@@ -33,9 +32,6 @@ class App extends React.Component {
                 <HeaderContainer/>
                 <div className="mainApp">
                     <Sidebar/>
-                    <Route
-                        path='/MyChat'
-                        render={() => <InfoContainer/>}/>
                     <Route
                         path='/Users'
                         render={() => {
