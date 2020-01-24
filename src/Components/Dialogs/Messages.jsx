@@ -27,17 +27,19 @@ const Messages = (props) => {
                 <div className={s.chatBody}>
                     {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
                         props.messagesWithFriend.items.map(m => <div key={m.id} className={s.messagesWithFriendId}>
-                            {m.senderId == userId ?
-                                getCurrentUserPhoto
-                                :
-                                getUserPhoto
-                            }
-                            <div>Id: {m.id}</div>
-                            <div>Body: {m.body}</div>
-                            <div>AddedAt: {m.addedAt}</div>
-                            <div>SenderId: {m.senderId}</div>
-                            <div>SenderName: {m.senderName}</div>
-                            <div>recipientId: {m.recipientId}</div>
+                            <div className={s.main__img__username}>
+                                {m.senderId == userId ?
+                                    getCurrentUserPhoto
+                                    :
+                                    getUserPhoto
+                                }
+                                <h4>{m.senderName}</h4>
+                            </div>
+                            {/*<div>Id: {m.id}</div>*/}
+                            {/*<div>AddedAt: {m.addedAt}</div>*/}
+                            {/*<div>SenderId: {m.senderId}</div>*/}
+                            {/*<div>recipientId: {m.recipientId}</div>*/}
+                            <div className={s.chatText}>{m.body}</div>
                         </div>)
                     }
                 </div>

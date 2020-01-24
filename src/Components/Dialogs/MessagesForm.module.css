@@ -1,0 +1,16 @@
+.container input{
+    width: 90%;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    margin-right: 10px;
+}
+.container{
+    display: flex;
+    margin: 10px;
+}
+.container button{
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}

@@ -5,7 +5,6 @@ import {NavLink} from "react-router-dom";
 const Dialog = (props) => {
     return (
         <div className={s.dialogUser}>
-
             <NavLink to={`/Dialogs/messages/${props.dialog.id}`}>
                 <div className={s.userNameWithImg}>
                     {!props.dialog.photos.small || !props.dialog.photos.large ? 'no img' :

@@ -8,7 +8,7 @@
     width: 255px;
     border: 1px solid #666;
     min-height: 110px;
-    max-height: 678px;
+    max-height: 691px;
     overflow-y: auto;
 }
 /*dialog*/
@@ -48,11 +48,23 @@
     border: 1px solid;
 }
 .messagesWithFriendId,.dialog{
-    border: 1px solid red;
     padding: 10px;
     margin-bottom: 10px;
+    background: black;
+    color: white;
+    border-radius: 27px;
 }
-
+.main__img__username{
+    display: flex;
+}
+.main__img__username h4{
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+.chatText{
+    margin-left: 43px;
+}
 .mainChatBlock {
     width: 100%;
     display: inline-block;
