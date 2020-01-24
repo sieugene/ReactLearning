@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 import {
-    getAllDialogsThunkCreator,
     getListMessagesWithFriendThunkCreator, sendMessageToFriendThunkCreator,
 } from "../../redux/Dialogs-Reducer";
 import {compose} from "redux";
@@ -14,7 +13,7 @@ const MessagesContainer = (props) => {
     useEffect(() => {
         props.getListMessagesWithFriendThunk(userId)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    },[props.match.params.userId]);
     return(
             <Messages {...props} />
     )

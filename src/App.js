@@ -43,8 +43,7 @@ class App extends React.Component {
                     <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                     <Route path='/Login' render={() => <LoginContainer/>}/>
                     <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>
-
+                    {/*<Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>*/}
                     <SecondSidebar/>
                 </div>
             </div>
