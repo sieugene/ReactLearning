@@ -19,9 +19,17 @@ import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
 
 class App extends React.Component {
+
+     catchAllUnhandelErrors = (promiseRejectionEvent) => {
+         alert(promiseRejectionEvent.reason.message);
+         console.log(promiseRejectionEvent)
+     }
+
     componentDidMount() {
         this.props.initiliazedThunk();
+        window.addEventListener("unhandledrejection",this.catchAllUnhandelErrors)
     }
+
 
     render() {
         if (!this.props.initialized) {
