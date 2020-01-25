@@ -99,7 +99,7 @@ export const getListMessagesWithFriendThunkCreator = (userId) => async (dispatch
 }
 
 export const sendMessageToFriendThunkCreator = (userId, newMessage) => async (dispatch) => {
-    let response = await DialogsAPI.sendMessageToFriend(userId, newMessage);
+    await DialogsAPI.sendMessageToFriend(userId, newMessage);
     dispatch(getListMessagesWithFriendThunkCreator(userId));
 }
 

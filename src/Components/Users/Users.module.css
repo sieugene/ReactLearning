@@ -1,36 +1,58 @@
 .mainBlock {
-    background-color: #8686dc;
-    justify-content: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 30px;
 }
 
 .userMain {
-    width: 30%;
-    background-color: #5223237d;
+    background-color: #f1efef7d;
     padding: 15px;
     margin-top: 15px;
     margin-bottom: 15px;
     border-radius: 10px;
-    color: white;
+    color: black;
+    display: flex;
 }
 
 .userMain button {
     border-radius: 15px;
     padding: 8px;
     border: none;
-    background-color: #80738c;
+    background-color: #4b474e;
     color: white;
     outline: none;
     cursor: pointer;
 }
 .userMain button:disabled,
 .userMain button[disabled]{
-    background-color: #40314d
+    background-color: #000000;
 }
 
 .userImg {
     width: 80px;
+    border-radius: 80px;
+}
+.sendMessage{
+    margin-top: 10px;
+    transition: 0.3s all ease;
+}
+.sendMessage a {
+    color: white;
+    text-decoration: none;
+}
+.sendMessage:hover{
+    background-color: black  !important;
+}
+.userImgBlock{
+
+}
+.userInfoBlock{
+    margin-left: 10px;
+}
+.userInfoBlock h4,.userInfoBlock h5{
+    margin: 0;
+    margin-bottom: 10px;
 }

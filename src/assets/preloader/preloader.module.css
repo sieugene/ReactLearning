@@ -1,4 +1,14 @@
 .preloader{
-    display: block;
     margin: 0 auto;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 30%;
+}
+.preloadContain{
+    height: 1000vh;
+    width: 100%;
+    position: absolute;
+    background: #ffffff8a;
+    top: 0;
 }

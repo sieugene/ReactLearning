@@ -11,7 +11,6 @@ import {initiliazedThunkCreator} from "./redux/App-Reducer";
 import Preloader from "./assets/preloader/Preloader";
 import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
 import Sidebar from "./Components/Sidebar/SIdebar";
-import MessagesContainer from "./Components/Dialogs/MessagesContainer";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 
 

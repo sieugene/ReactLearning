@@ -35,12 +35,13 @@ const Users = React.memo(props => {
                 <h3 onClick={showUsersFollowing}>Parameters: <button>
                     {!showFollowing ? 'Show Follow' : 'Hide Follow'}
                 </button></h3>
+                <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize} currentPage={props.currentPage}
+                           onPageCurrentChange={props.onPageCurrentChange}
+                           portionSize={10}
+                />
             </div>
-            <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize} currentPage={props.currentPage}
-                       onPageCurrentChange={props.onPageCurrentChange}
-                       portionSize={10}
-            />
             {showFollowing ?
+                arrayWithSubs.length === 0 ? 'No subs' :
                 //вывод подписчиков
                 arrayWithSubs.map(u => <User
                     user={u}

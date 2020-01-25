@@ -9,6 +9,16 @@ class HeaderContainer extends React.Component {
     componentDidMount() {
         this.props.initiliazedUserPhotoThunk(this.props.id);
     }
+    //when changing accounts, the avatar does not change, correction
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.id !== this.props.id){
+            if(this.props.id === null){
+                //none
+            }else {
+                this.props.initiliazedUserPhotoThunk(this.props.id);
+            }
+        }
+    }
 
     render() {
         return (

@@ -11,10 +11,10 @@ const Messages = (props) => {
     //take current user photo
     let getCurrentUserPhoto = props.currentUserInChat.length === 0 ? '' :
         !props.currentUserInChat.photos.large || !props.currentUserInChat.photos.small ?
-            <img src={userPhoto}/> : <img src={props.currentUserInChat.photos.large}/>;
+            <img src={userPhoto} alt={''}/> : <img src={props.currentUserInChat.photos.large} alt={''}/>;
     //take auth profile photo
     let getUserPhoto = !props.authUserPhoto ? ' ' :
-        <img src={props.authUserPhoto.small}/> || <img src={props.authUserPhoto.large}/>
+        <img src={props.authUserPhoto.small} alt={''}/> || <img src={props.authUserPhoto.large} alt={''}/>
     return (
         <div className={s.messagesContain}>
             {props.currentUserInChat.length === 0 ? '' :

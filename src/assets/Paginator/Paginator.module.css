@@ -4,7 +4,9 @@
     color: white;
 }
 .pagination{
-    background-color: #8686dc;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 .pagination span{
     border: 1px solid #431180;
