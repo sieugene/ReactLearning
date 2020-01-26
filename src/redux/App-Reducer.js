@@ -45,6 +45,10 @@ export const initiliazedThunkCreator = () => (dispatch) => {
     })
 }
 export const initiliazedUserPhotoThunkCreator = (userId) => async(dispatch) => {
-    let promise = await ProfileAPI.getProfile(userId);
-    dispatch(initializedUserPhotoAC(promise.data.photos));
+    if(!userId){
+        //none
+    }else {
+        let promise = await ProfileAPI.getProfile(userId);
+        dispatch(initializedUserPhotoAC(promise.data.photos));
+    }
 }

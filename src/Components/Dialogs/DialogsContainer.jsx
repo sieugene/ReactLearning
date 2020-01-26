@@ -7,7 +7,7 @@ import {
     startChattingThunkCreator
 } from "../../redux/Dialogs-Reducer";
 import {compose} from "redux";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 
 
 const DialogsContainer = (props) => {
@@ -15,6 +15,9 @@ const DialogsContainer = (props) => {
         props.getAllDialogsThunk();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+    if(!props.id){
+        return <Redirect to={'/login'}/>
+    }
     return(
         <Dialogs {...props}/>
     )
@@ -26,7 +29,8 @@ let mapStateToProps = (state) => {
     return {
         listDialogs: state.dialogs.listDialogs,
         messagesWithFriend: state.dialogs.messagesWithFriend,
-        countNesMessages: state.dialogs.countNesMessages
+        countNesMessages: state.dialogs.countNesMessages,
+        id: state.Auth.id
     }
 }
 
