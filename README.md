@@ -1,3 +1,25 @@
+## Briefly about what it is?
+> This is my first social network that I develop on react.
+
+Using libraries: `React and Redux (Thunk, Axios,redux-form).`
+
+##### `API: https://social-network.samuraijs.com/`
+At this point, the user can:
+ - Log in(there is validation, captcha)
+  - To change the profile information
+  - Subscribe to other users
+  - Write messages to users
+  
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/GItPhotos/1.png?raw=true)
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/GItPhotos/2.png?raw=true)
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/GItPhotos/3.png?raw=true)
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/GItPhotos/4.png?raw=true)
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/GItPhotos/5.png?raw=true)
+P.S.
+Everything is in beta, if there are serious errors or API restriction, it will appear
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
