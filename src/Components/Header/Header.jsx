@@ -24,7 +24,7 @@ const Header = (props) => {
                         </button>
                     </NavLink>
                 }
-                dfgdff
+
             </div>
         </div>
     )
