@@ -1,4 +1,5 @@
 import {DialogsAPI, ProfileAPI} from "../Api/Api";
+import {useDebugValue} from "react";
 
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS'
 const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
@@ -109,6 +110,7 @@ export const getListNewMessagesThunkCreator = (userId) => async (dispatch) => {
     console.log('getListNewMessages');
     console.log(response.data)
 }
+
 
 
 export default DialogsReducer;

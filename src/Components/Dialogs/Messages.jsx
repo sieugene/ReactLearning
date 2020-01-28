@@ -26,7 +26,9 @@ const Messages = (props) => {
             <div className={s.mainChatBlock}>
                 <div className={s.chatBody}>
                     {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
-                        props.messagesWithFriend.items.map(m => <div key={m.id} className={s.messagesWithFriendId}>
+                        props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
+                            s.messagesWithFriendId : s.notViewedMessage}
+                        >
                             <div className={s.main__img__username}>
                                 {m.senderId == userId ?
                                     getCurrentUserPhoto
@@ -35,7 +37,8 @@ const Messages = (props) => {
                                 }
                                 <h4>{m.senderName}</h4>
                             </div>
-                            {/*<div>Id: {m.id}</div>*/}
+                            <div>Id: {m.id}</div>
+                            {/*check read message*/}
                             {/*<div>AddedAt: {m.addedAt}</div>*/}
                             {/*<div>SenderId: {m.senderId}</div>*/}
                             {/*<div>recipientId: {m.recipientId}</div>*/}
