@@ -37,7 +37,7 @@ const Messages = (props) => {
                                 }
                                 <h4>{m.senderName}</h4>
                             </div>
-                            <div>Id: {m.id}</div>
+                            {/*<div>Id: {m.id}</div>*/}
                             {/*check read message*/}
                             {/*<div>AddedAt: {m.addedAt}</div>*/}
                             {/*<div>SenderId: {m.senderId}</div>*/}
