@@ -30,7 +30,8 @@ let mapStateToProps = (state) => {
         listDialogs: state.dialogs.listDialogs,
         messagesWithFriend: state.dialogs.messagesWithFriend,
         countNesMessages: state.dialogs.countNesMessages,
-        id: state.Auth.id
+        id: state.Auth.id,
+        loading: state.dialogs.loading
     }
 }
 

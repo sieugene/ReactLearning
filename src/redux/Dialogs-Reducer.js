@@ -5,6 +5,7 @@ const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS'
 const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
 const SET_COUNT_NEW_MESSAGES = 'SET_COUNT_NEW_MESSAGES';
 const SET_CURRENT_USER_IN_CHAT = 'SET_CURRENT_USER_IN_CHAT';
+const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
 
 let initialState = {
     listDialogs: [],
@@ -13,7 +14,8 @@ let initialState = {
         totalCount: null
     },
     countNesMessages: null,
-    currentUserInChat: []
+    currentUserInChat: [],
+    loading: false
 }
 
 const DialogsReducer = (state = initialState, action) => {
@@ -42,6 +44,12 @@ const DialogsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentUserInChat: action.profile
+            }
+        case SET_SUCCESS_LOADING: {
+                return{
+                    ...state,
+                    loading: action.loading
+                }
             }
         default:
             return state
@@ -73,6 +81,12 @@ export const setMessagesListWithFriendAC = (messages, totalCount) => {
     }
 }
 
+export const setSuccessLoadingAC = (loading) => {
+    return{
+        type: SET_SUCCESS_LOADING, loading
+    }
+}
+
 export const startChattingThunkCreator = (userId) => async (dispatch) => {
     let response = await DialogsAPI.startChatting(userId)
     console.log('startChatting')
@@ -80,7 +94,9 @@ export const startChattingThunkCreator = (userId) => async (dispatch) => {
 }
 
 export const getAllDialogsThunkCreator = () => async (dispatch) => {
-    let response = await DialogsAPI.getAllDialogs();
+    dispatch(setSuccessLoadingAC(true));
+    let response = await DialogsAPI.getAllDialogs()
+    dispatch(setSuccessLoadingAC(false));
     console.log('getAllDialogs')
     dispatch(setAllDialogsAC(response.data));
     console.log(response.data)
@@ -89,13 +105,15 @@ export const getAllDialogsThunkCreator = () => async (dispatch) => {
 
 export const getListMessagesWithFriendThunkCreator = (userId) => async (dispatch) => {
     let response = await DialogsAPI.getListMessagesWithFriend(userId)
-    dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount))
+    dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
     console.log('getListMessagesWithFriend');
     console.log(response.data)
     //set current user in chat
-     response = await ProfileAPI.getProfile(userId)
+      response = await ProfileAPI.getProfile(userId)
     dispatch(setCurrentUserInChatAC(response.data))
-
+    Promise.all([response]).then( values => {
+        dispatch(setSuccessLoadingAC(false));
+    })
 
 }
 

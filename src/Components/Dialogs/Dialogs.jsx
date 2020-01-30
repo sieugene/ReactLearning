@@ -3,8 +3,12 @@ import Dialog from "./Dialog";
 import MessagesContainer from "./MessagesContainer";
 import {Route} from "react-router-dom";
 import s from './Dialogs.module.css'
+import Preloader from "../../assets/preloader/Preloader";
 
 const Dialogs = (props) => {
+    if(props.loading){
+        return <Preloader/>
+    }
     return(
         <div className={s.containerDialog}>
             {/*Dialogs*/}

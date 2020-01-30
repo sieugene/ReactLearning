@@ -4,11 +4,18 @@
     left: 0;
     right: 0;
     top: 30%;
+
 }
 .preloadContain{
+    /*height: 1000vh;*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+    /*background: #ffffff8a;*/
+    /*top: 0;*/
     height: 1000vh;
     width: 100%;
-    position: absolute;
+    position: fixed;
     background: #ffffff8a;
     top: 0;
+    left: 0;
 }

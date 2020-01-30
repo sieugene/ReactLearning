@@ -30,22 +30,24 @@ const Profile = React.memo(props => {
     }
     return (
         <div className={s.profileContain}>
-            <div className={s.mainBlock}>
-                <div className={s.avatarBlock}>
-                    <img src={!props.profile.photos.small ? userPhoto : props.profile.photos.large} alt=''/>
-                    {props.id == props.urlMatchParams &&
-                    // upload photo for myProfile
-                    <div>
-                        <input type="file" name="myFile" id="myFile" onChange={onUploadNewPhoto}/>
-                        <label htmlFor="myFile" className={s.uploadPhoto} data-tooltip="click to upload a photo"> </label>
+            {props.loading ? <Preloader/> :
+                <div className={s.mainBlock}>
+                    <div className={s.avatarBlock}>
+                        <img src={!props.profile.photos.small ? userPhoto : props.profile.photos.large} alt=''/>
+                        {props.id == props.urlMatchParams &&
+                        // upload photo for myProfile
+                        <div>
+                            <input type="file" name="myFile" id="myFile" onChange={onUploadNewPhoto}/>
+                            <label htmlFor="myFile" className={s.uploadPhoto}
+                                   data-tooltip="click to upload a photo"> </label>
+                        </div>
+                        }
+                        <h3>{props.profile.fullName}</h3>
+                        <ProfileStatusWithHooks status={props.status}
+                                                updateStatusUserThunk={props.updateStatusUserThunk}
+                                                id={props.id}
+                                                urlMatchParams={props.urlMatchParams}/>
                     </div>
-                    }
-                    <h3>{props.profile.fullName}</h3>
-                    <ProfileStatusWithHooks status={props.status}
-                                            updateStatusUserThunk={props.updateStatusUserThunk}
-                                            id={props.id}
-                                            urlMatchParams={props.urlMatchParams}/>
-                </div>
                     {editProfile ?
                         <ReduxEditProfile initialValues={props.profile} onSubmit={onSubmit} profile={props.profile}/>
                         :
@@ -57,7 +59,8 @@ const Profile = React.memo(props => {
                                      setEditProfile={setEditProfile}
                         />
                     }
-            </div>
+                </div>
+            }
         </div>
     )
 })

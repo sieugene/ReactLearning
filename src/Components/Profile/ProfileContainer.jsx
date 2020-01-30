@@ -47,6 +47,7 @@ class ProfileContainer extends React.Component {
                          urlMatchParams={this.props.match.params.userId}
                          updateProfileUserThunk={this.props.updateProfileUserThunk}
                          uploadNewPhotoThunk={this.props.uploadNewPhotoThunk}
+                         loading={this.props.loading}
                 />
         )
     }
@@ -56,7 +57,8 @@ let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         id: state.Auth.id,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        loading: state.profilePage.loading
     }
 }
 
