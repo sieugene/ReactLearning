@@ -3,7 +3,9 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {
     getAllDialogsThunkCreator,
-    getListMessagesWithFriendThunkCreator, getListNewMessagesThunkCreator, sendMessageToFriendThunkCreator,
+    getListMessagesWithFriendThunkCreator,
+    getListNewMessagesThunkCreator,
+    sendMessageToFriendThunkCreator,
     startChattingThunkCreator
 } from "../../redux/Dialogs-Reducer";
 import {compose} from "redux";

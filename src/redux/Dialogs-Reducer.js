@@ -129,6 +129,11 @@ export const getListNewMessagesThunkCreator = (userId) => async (dispatch) => {
     console.log(response.data)
 }
 
+export const getReturnMessageDateThunkCreator = (userId,date) => async(dispatch) => {
+    let response = await DialogsAPI.returnMessageThanDate(userId,date);
+    dispatch(setMessagesListWithFriendAC(response.data));
+}
+
 
 
 export default DialogsReducer;

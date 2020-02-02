@@ -25,10 +25,16 @@ const Messages = (props) => {
             }
             <div className={s.mainChatBlock}>
                 <div className={s.chatBody}>
+                    {props.messagesWithFriend.items.length >= 10 &&
+                    <button className={s.past__messages} onClick={() => {
+                        props.getReturnMessageDateThunk(props.currentUserInChat.userId, '2020.01.01')
+                    }}>
+                        Past messages
+                    </button>
+                    }
                     {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
                         props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
-                            s.messagesWithFriendId : s.notViewedMessage}
-                        >
+                            s.messagesWithFriendId : s.notViewedMessage}>
                             <div className={s.main__img__username}>
                                 {m.senderId == userId ?
                                     getCurrentUserPhoto

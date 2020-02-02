@@ -118,3 +118,18 @@
 .chatBody::-webkit-scrollbar-corner { background-color: #999;}
 .chatBody::-webkit-resizer { background-color: #666;}
 
+.past__messages{
+    margin: 10px auto;
+    display: block;
+    border: 0px;
+    background-color: #999b9cc4;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+    outline: none;
+}
+.past__messages:hover{
+    background-color: #999b9c;
+}

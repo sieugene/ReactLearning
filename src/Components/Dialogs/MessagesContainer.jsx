@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
 import {
-    getIsViewedYourMessageThunkCreator,
-    getListMessagesWithFriendThunkCreator, sendMessageToFriendThunkCreator,
+    getListMessagesWithFriendThunkCreator, getReturnMessageDateThunkCreator, sendMessageToFriendThunkCreator,
 } from "../../redux/Dialogs-Reducer";
 import {compose} from "redux";
 import {withRouter} from "react-router-dom";
@@ -10,8 +9,6 @@ import Messages from "./Messages";
 
 
 const MessagesContainer = (props) => {
-
-
     let userId = props.match.params.userId;
     useEffect(() => {
         props.getListMessagesWithFriendThunk(userId)
@@ -35,6 +32,7 @@ export default compose(
     withRouter,
     connect(mapStateToProps,{
         getListMessagesWithFriendThunk: getListMessagesWithFriendThunkCreator,
-        sendMessageToFriendThunk: sendMessageToFriendThunkCreator
+        sendMessageToFriendThunk: sendMessageToFriendThunkCreator,
+        getReturnMessageDateThunk: getReturnMessageDateThunkCreator
     })
 )(MessagesContainer)
