@@ -5,16 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from "./redux/store-redux";
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 
 
 ReactDOM.render(
-<BrowserRouter >
+<HashRouter basename={process.env.PUBLIC_URL}>
 <Provider
 store = {store} >
     <App />
     </Provider>
-    </BrowserRouter>
+    </HashRouter>
     , document.getElementById('root')
 )
 ;
