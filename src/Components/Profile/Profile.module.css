@@ -142,3 +142,19 @@ input[type="file"] { display: none; }
     opacity: 1;
     transition: all 0.4s ease-in-out;
 }
+@media screen and (max-width:700px) {
+    .profileContain{
+        display: block;
+        padding: 0px;
+    }
+    .mainBlock{
+        display: block;
+    }
+    .avatarBlock{
+        width: 100%;
+    }
+    .infoProfile{
+        padding: 0px;
+        margin-left: 0px
+    }
+}

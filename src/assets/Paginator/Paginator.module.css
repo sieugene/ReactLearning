@@ -24,3 +24,19 @@
     font-size: 22px;
     cursor: pointer;
 }
+
+@media screen and (max-width:800px) {
+    .changePortion{
+        border: 0px;
+        outline: none;
+        background-color: transparent;
+        font-size: 10px;
+        cursor: pointer;
+    }
+    .pagination span {
+        padding: 0px;
+        display: block;
+        margin: 10px auto;
+        width: 50%;
+    }
+}

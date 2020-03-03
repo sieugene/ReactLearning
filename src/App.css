@@ -9,3 +9,9 @@ body {
 .mainApp{
     display: flex;
 }
+@media screen and (max-width:800px) {
+    .mainApp{
+        display: block;
+        overflow: hidden;
+    }
+}

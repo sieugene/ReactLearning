@@ -133,3 +133,13 @@
 .past__messages:hover{
     background-color: #999b9c;
 }
+@media screen and (max-width:800px) {
+    .containerDialog{
+        display: block;
+        width: 100%;
+    }
+    .listDialogs{
+        width: auto;
+        display: block;
+    }
+}
