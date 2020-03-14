@@ -1,4 +1,5 @@
 ## Briefly about what it is?
+> Test application for training
 > This is my first social network that I develop on react.
 Using libraries: `React and Redux (Thunk, Axios,redux-form).`
 ## Link to social network: https://sieugene.github.io/ReactLearning/
