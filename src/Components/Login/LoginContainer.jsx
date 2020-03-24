@@ -1,6 +1,6 @@
 import Login from "./Login";
-import {getCaptchaThunkCreator, loginThunkCreator} from "../../redux/Auth-Reducer";
 import {connect} from "react-redux";
+import { loginThunkCreator, getCaptchaThunkCreator } from "../../redux/Auth-Reducer";
 
 
 let mapStateToProps = (state) => {

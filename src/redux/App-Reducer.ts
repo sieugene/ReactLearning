@@ -4,12 +4,16 @@ import {ProfileAPI} from "../Api/Api";
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 const INITIALIZED_USER_PHOTO = 'INITIALIZED_USER_PHOTO';
 
-let initialState = {
+type IinitialStateType = {
+    initialized: boolean,
+    userPhoto: null
+}
+let initialState:IinitialStateType = {
     initialized: false,
     userPhoto: null
 }
 
-export const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action: any):IinitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -26,25 +30,29 @@ export const appReducer = (state = initialState, action) => {
     }
 }
 
-export const initializedSuccessAC = () => {
+type InitializedSuccessACType = {
+    type: typeof INITIALIZED_SUCCESS
+}
+
+export const initializedSuccessAC = ():InitializedSuccessACType => {
     return{
         type: INITIALIZED_SUCCESS
     }
 }
-export const initializedUserPhotoAC = (userPhoto) => {
+export const initializedUserPhotoAC = (userPhoto: any) => {
     return{
         type: INITIALIZED_USER_PHOTO,
         userPhoto
     }
 }
 
-export const initiliazedThunkCreator = () => (dispatch) => {
+export const initiliazedThunkCreator = () => (dispatch: any) => {
     let promise = dispatch(authMeThunkCreator());
     promise.then(() => {
         dispatch(initializedSuccessAC());
     })
 }
-export const initiliazedUserPhotoThunkCreator = (userId) => async(dispatch) => {
+export const initiliazedUserPhotoThunkCreator = (userId : any) => async(dispatch : any) => {
     if(!userId){
         //none
     }else {
