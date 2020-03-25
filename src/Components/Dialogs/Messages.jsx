@@ -14,7 +14,7 @@ const Messages = (props) => {
             <img src={userPhoto} alt={''}/> : <img src={props.currentUserInChat.photos.large} alt={''}/>;
     //take auth profile photo
     let getUserPhoto = !props.authUserPhoto ? ' ' :
-        <img src={props.authUserPhoto.small} alt={''}/> || <img src={props.authUserPhoto.large} alt={''}/>
+        <img src={props.authUserPhoto.small} alt={''}/> || <img src={props.authUserPhoto.large} alt={''}/>  
     return (
         <div className={s.messagesContain}>
             {props.currentUserInChat.length === 0 ? '' :

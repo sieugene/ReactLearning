@@ -1,24 +1,41 @@
-import React, {useEffect} from 'react';
-import {connect} from "react-redux";
+import React, { useEffect } from 'react';
+import { connect } from "react-redux";
 import {
     getListMessagesWithFriendThunkCreator, getReturnMessageDateThunkCreator, sendMessageToFriendThunkCreator,
+    syncMessagesWithFrinedThunkCreator
 } from "../../redux/Dialogs-Reducer";
-import {compose} from "redux";
-import {withRouter} from "react-router-dom";
+import { compose } from "redux";
+import { withRouter } from "react-router-dom";
 import Messages from "./Messages";
 
 
-const MessagesContainer = (props) => {
-    let userId = props.match.params.userId;
-    useEffect(() => {
-        props.getListMessagesWithFriendThunk(userId)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[props.match.params.userId]);
-    return(
-            <Messages {...props} />
-    )
-}
+class MessagesContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {load: false};
+      }
+    componentDidMount(){
+        this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
+    }
+    componentDidUpdate(prevProps){
+        clearInterval(this.timerID);
+        if(prevProps.match.params.userId !== this.props.match.params.userId){
+            this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
+            clearInterval(this.timerID);
+        }else if(prevProps.match.params.userId === this.props.match.params.userId){
+            this.timerID = setInterval(
+                () => this.props.syncMessagesWithFrinedThunk(this.props.match.params.userId),
+                5000
+              );
+        }
+    }
 
+    render() {
+        return (
+            <Messages {...this.props} />
+        )
+    }
+}
 let mapStateToProps = (state) => {
     return {
         messagesWithFriend: state.dialogs.messagesWithFriend,
@@ -30,9 +47,10 @@ let mapStateToProps = (state) => {
 
 export default compose(
     withRouter,
-    connect(mapStateToProps,{
+    connect(mapStateToProps, {
         getListMessagesWithFriendThunk: getListMessagesWithFriendThunkCreator,
         sendMessageToFriendThunk: sendMessageToFriendThunkCreator,
-        getReturnMessageDateThunk: getReturnMessageDateThunkCreator
+        getReturnMessageDateThunk: getReturnMessageDateThunkCreator,
+        syncMessagesWithFrinedThunk: syncMessagesWithFrinedThunkCreator
     })
 )(MessagesContainer)
