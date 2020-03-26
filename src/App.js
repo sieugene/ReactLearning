@@ -1,13 +1,13 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
-import {Route} from "react-router";
+import { Route } from "react-router";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
-import {LoginContainer} from "./Components/Login/LoginContainer";
-import {connect} from "react-redux";
-import {compose} from "redux";
-import {withRouter} from "react-router-dom";
-import {initiliazedThunkCreator} from "./redux/App-Reducer";
+import { LoginContainer } from "./Components/Login/LoginContainer";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { withRouter } from "react-router-dom";
+import { initiliazedThunkCreator } from "./redux/App-Reducer";
 import Preloader from "./assets/preloader/Preloader";
 import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
 import Sidebar from "./Components/Sidebar/SIdebar";
@@ -19,39 +19,45 @@ const UsersContainer = React.lazy(() => import('./Components/Users/UsersContaine
 
 class App extends React.Component {
 
-     catchAllUnhandelErrors = (promiseRejectionEvent) => {
-         alert(promiseRejectionEvent.reason.message);
-         console.log(promiseRejectionEvent)
-     }
+    catchAllUnhandelErrors = (promiseRejectionEvent) => {
+        alert(promiseRejectionEvent.reason.message);
+        console.log(promiseRejectionEvent)
+    }
 
     componentDidMount() {
         this.props.initiliazedThunk();
-        window.addEventListener("unhandledrejection",this.catchAllUnhandelErrors)
+        window.addEventListener("unhandledrejection", this.catchAllUnhandelErrors)
     }
 
 
     render() {
         if (!this.props.initialized) {
-            return <Preloader/>
+            return <Preloader />
         }
         return (
             <div className="App">
-                <HeaderContainer/>
-                <div className="mainApp">
-                    <Sidebar/>
-                    <Route
-                        path='/Users'
-                        render={() => {
-                            return <Suspense fallback={<Preloader/>}>
-                                <UsersContainer/>
-                            </Suspense>
-                        }
-                        }/>
-                    <Route exact path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                    <Route path='/Login' render={() => <LoginContainer/>}/>
-                    <Route path='/Dialogs' render={() => <DialogsContainer/>}/>
-                    {/*<Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>*/}
-                    <SecondSidebar/>
+                <HeaderContainer />
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col xl1 l1'>
+                            <Sidebar />
+                        </div>
+                        <div className='col xl11 l11'>
+                            <Route
+                                path='/Users'
+                                render={() => {
+                                    return <Suspense fallback={<Preloader />}>
+                                        <UsersContainer />
+                                    </Suspense>
+                                }
+                                } />
+                            <Route exact path='/profile/:userId?' render={() => <ProfileContainer />} />
+                            <Route path='/Login' render={() => <LoginContainer />} />
+                            <Route path='/Dialogs' render={() => <DialogsContainer />} />
+                            {/*<Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>*/}
+                            <SecondSidebar />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

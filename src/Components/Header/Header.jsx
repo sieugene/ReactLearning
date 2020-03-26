@@ -1,32 +1,45 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './../../App.css';
 import s from './Header.module.css';
 import userPhoto from './../../assets/images/userPhoto.png'
 
 const Header = (props) => {
     let getUserPhoto = () => {
-        return !props.userPhoto ? <img src={userPhoto} alt=''/> :
-            <img src={props.userPhoto.small} alt=''/> || <img src={props.userPhoto.large} alt={''}/>;
+        return !props.userPhoto ? <img src={userPhoto} alt='' className={s.userPhoto} /> :
+            <img src={props.userPhoto.small} alt='' className={s.userPhoto} /> || <img src={props.userPhoto.large} alt={''} className={s.userPhoto} />;
     }
     return (
-        <div className={s.header}>
-            <div className={s.container}>
-                {props.isAuth ?
-                    <div className={s.loginBlock}>
-                        <h4>{props.login}</h4>
-                        {getUserPhoto()}
-                        <button onClick={props.logoutThunk}>Log out</button>
-                    </div> :
-                    <NavLink to='/login/' className={s.loginBlock}>
-                        <button className={s.loginBtn}>
-                            Login
+        <nav className={'grey darken-4'}>
+            <div className="nav-wrapper">
+                <a href="#" className="brand-logo">Logo</a>
+                <ul id="nav-mobile" className="right hide-on-med-and-down">
+                    {props.isAuth ?
+                        <>
+                            <li><h5>{props.login}</h5></li>
+                            <NavLink to='/profile' className={s.userlink}>
+                                <li className='btn-floating btn-large waves-effect waves-light grey darken-4'>
+                                    {getUserPhoto()}
+                                </li>
+                            </NavLink>
+                            <li>
+                                <button onClick={props.logoutThunk} className={s.loginButton}>
+                                    Log out
+                                    </button>
+                            </li>
+                        </>
+                        :
+                        <li><NavLink to='/login/'>
+                            <button className={s.loginButton}>
+                                Login
                         </button>
-                    </NavLink>
-                }
+                        </NavLink>
+                        </li>
+                    }
 
+                </ul>
             </div>
-        </div>
+        </nav>
     )
 }
 

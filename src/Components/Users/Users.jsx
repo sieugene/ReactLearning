@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import s from './Users.module.css';
 import Paginator from "../../assets/Paginator/Paginator";
 import User from "./User";
-import {SearchFormRedux} from "./SearchForm";
+import { SearchFormRedux } from "./SearchForm";
 
 const Users = React.memo(props => {
     //for react form
-    
+
     let onChangedTextForSearch = (formData) => {
         props.onSearchChange(formData.searchForm)
     }
@@ -29,32 +29,35 @@ const Users = React.memo(props => {
     };
 
     return (
-        <div className={s.mainBlock}>
-            <div>
-                <SearchFormRedux onChange={onChangedTextForSearch}/>
-                <h3 onClick={showUsersFollowing}>Parameters: <button>
+        <div >
+            <SearchFormRedux onChange={onChangedTextForSearch} />
+            <h5 onClick={showUsersFollowing}>Parameters:
+                <a className="waves-effect waves-light btn-small black">
                     {!showFollowing ? 'Show Follow' : 'Hide Follow'}
-                </button></h3>
-                <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize} currentPage={props.currentPage}
-                           onPageCurrentChange={props.onPageCurrentChange}
-                           portionSize={10}
-                />
+                </a>
+            </h5>
+            <div className='row'>
+                    {showFollowing ?
+                        arrayWithSubs.length === 0 ? 'No subs' :
+                            //вывод подписчиков
+                            arrayWithSubs.map(u => <User
+                                user={u}
+                                unFollowUserThunk={props.unFollowUserThunk}
+                                followUserThunk={props.followUserThunk}
+                                followingInProgress={props.followingInProgress} key={u.id} />)
+                        //вывод обычных пользователей
+                        : props.UsersList.map(u => <User
+                            user={u}
+                            unFollowUserThunk={props.unFollowUserThunk}
+                            followUserThunk={props.followUserThunk}
+                            followingInProgress={props.followingInProgress} key={u.id} />)
+                    }
             </div>
-            {showFollowing ?
-                arrayWithSubs.length === 0 ? 'No subs' :
-                //вывод подписчиков
-                arrayWithSubs.map(u => <User
-                    user={u}
-                    unFollowUserThunk={props.unFollowUserThunk}
-                    followUserThunk={props.followUserThunk}
-                    followingInProgress={props.followingInProgress} key={u.id}/>)
-                //вывод обычных пользователей
-                : props.UsersList.map(u => <User
-                    user={u}
-                    unFollowUserThunk={props.unFollowUserThunk}
-                    followUserThunk={props.followUserThunk}
-                    followingInProgress={props.followingInProgress} key={u.id}/>)
-            }
+            <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize}
+                currentPage={props.currentPage}
+                onPageCurrentChange={props.onPageCurrentChange}
+                portionSize={5}
+            />
         </div>
     )
 })

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import s from './Paginator.module.css';
 
 const Paginator = (props => {
@@ -15,23 +15,23 @@ const Paginator = (props => {
     let rightPortion = portionNumber * props.portionSize;
 
     return (
-        <div className={s.pagination}>
-            {portionNumber >= 2 && <button onClick={() => {
+        <ul className="pagination center-align">
+            {portionNumber >= 2 && <li onClick={() => {
                 setPortionNumber(portionNumber - 1)
-            }} className={s.changePortion}> {'<'} </button>}
+            }} className={s.changePortion}> {<i className="material-icons">chevron_left</i>}</li>}
             {pages.filter(p => p >= leftPortion && p <= rightPortion)
                 .map(p => {
-                    return <span className={props.currentPage === p ? s.currentPage : ''}
-                                 onClick={(e) => {
-                                     props.onPageCurrentChange(p)
-                                 }} key={p}> {p} </span>
+                    return <li className={props.currentPage === p ? 'active' : 'waves-effect'}
+                        onClick={(e) => {
+                            props.onPageCurrentChange(p)
+                        }} key={p}><a>{p}</a></li>
                 })}
-            {portionsCount > portionNumber && <button onClick={() => {
+            {portionsCount > portionNumber && <li onClick={() => {
                 setPortionNumber(portionNumber + 1);
-            }}  className={s.changePortion}>{'>'}
-            </button>
+            }} className={s.changePortion}>{<i className="material-icons">chevron_right</i>}
+            </li>
             }
-        </div>
+        </ul>
     )
 })
 

@@ -6,6 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import store from "./redux/store-redux";
 import {Provider} from "react-redux";
 import {BrowserRouter, HashRouter} from "react-router-dom";
+import 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css';
 
 
 ReactDOM.render(

@@ -12,24 +12,23 @@ import Messages from "./Messages";
 class MessagesContainer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {load: false};
-      }
-    componentDidMount(){
+        this.state = { load: false };
+    }
+    componentDidMount() {
         this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
     }
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
         clearInterval(this.timerID);
-        if(prevProps.match.params.userId !== this.props.match.params.userId){
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
             this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
             clearInterval(this.timerID);
-        }else if(prevProps.match.params.userId === this.props.match.params.userId){
+        } else if (prevProps.match.params.userId === this.props.match.params.userId) {
             this.timerID = setInterval(
                 () => this.props.syncMessagesWithFrinedThunk(this.props.match.params.userId),
                 5000
-              );
+            );
         }
     }
-
     render() {
         return (
             <Messages {...this.props} />
