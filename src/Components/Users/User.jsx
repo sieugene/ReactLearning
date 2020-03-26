@@ -5,8 +5,8 @@ import userPhoto from './../../assets/images/userPhoto.png'
 
 const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress }) => {
     return (
-        <div className='col xl4 s12 l4 m6'>
-            <div className="card medium">
+        <div className='col xl6 s12 l6 m6'>
+            <div className="card">
                 <div className="card-image waves-effect waves-block waves-light">
                     <NavLink to={'profile/' + user.id}><img className="activator" src={
                         user.photos.small != null ? user.photos.small : userPhoto} alt='' />
@@ -14,8 +14,8 @@ const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress })
                 </div>
                 <div className="card-content">
                     <span className="card-title activator grey-text text-darken-4">
-                        <p className='truncate'>Name : {user.name}<br/>
-                        Status : {user.status}</p>
+                        <p className='truncate'>Name : {user.name}</p>
+                        <p className='truncate'>Status : {user.status}</p>
                     </span>
                     {
                         user.followed
@@ -34,7 +34,7 @@ const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress })
                         <NavLink to={'/Dialogs/messages/' + user.id} className='black-text'>Send message</NavLink>
                     </button>
                 </div>
-                </div>
+            </div>
         </div>
     )
 }

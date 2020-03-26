@@ -1,33 +1,4 @@
-.someError {
-    border: 2px solid red;
-    color: red;
-    margin-top: 10px;
-    padding: 3px;
-}
-.profileContain{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: aliceblue;
-    padding: 10px;
-    width: 100%;
-}
-.mainBlock{
-    display: flex;
-    width: 100%;
-}
-.avatarBlock{
-    width: 40%;
-    padding: 15px;
-    background-color: #2d2d2d;
-    border-radius: 1px;
-    margin-right: 5px;
-    color: white;
-}
-
-.avatarBlock img{
-    width: 200px;
-}
-.uploadPhoto{
+.uploadPhoto {
     width: 200px;
     height: 200px;
     position: absolute;
@@ -37,12 +8,22 @@
     transition: 0.3s all ease;
     bottom: 21px;
 }
+
+.avatarBlock img {
+    width: 200px;
+    height: 200px;
+}
+
 .uploadPhoto:hover {
     background-color: #efefef91;
 }
 
-input[type="file"] { display: none; }
-.editButton button,.saveButton{
+input[type="file"] {
+    display: none;
+}
+
+.editButton button,
+.saveButton {
     border: 0px;
     background-color: white;
     color: black;
@@ -51,48 +32,16 @@ input[type="file"] { display: none; }
     border-radius: 15px;
     cursor: pointer;
 }
-.infoProfile{
-    width: 100%;
-    padding: 15px;
-    margin-left: 5px;
-    background-color: #2d2d2d;
-    border-radius: 1px;
-    color: white;
-}
-.infoProfile input,.avatarBlock input{
-    border: none;
-    background-color: white;
-    border-radius: 4px;
-    padding: 10px;
-    color: black;
-    font-weight: 700;
-}
-.infoProfile span{
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    font-size: 14px;
-}
-.infoProfile span p {
-    text-align: end;
-    margin: 0;
-}
-.infoProfile span a {
-   color: white;
-    text-decoration: none;
-    text-decoration-color: white;
-    transition: 0.3s all ease;
-}
-.infoProfile span a:hover{
-    color: #8a8a8a;
-}
+
 
 /*tooltip*/
+
 [data-tooltip] {
     display: inline-block;
     position: relative;
     cursor: pointer;
 }
+
 [data-tooltip]:before,
 [data-tooltip]:after {
     visibility: hidden;
@@ -101,6 +50,7 @@ input[type="file"] { display: none; }
     opacity: 0;
     pointer-events: none;
 }
+
 [data-tooltip]:before {
     position: absolute;
     bottom: 100%;
@@ -111,13 +61,13 @@ input[type="file"] { display: none; }
     -moz-border-radius: 4px;
     border-radius: 4px;
     background: #006104;
-    background: hsla(110,26%,97%,0.9);
+    background: hsla(110, 26%, 97%, 0.9);
     color: black;
     content: attr(data-tooltip);
     white-space: nowrap;
     font-size: 14px;
     line-height: 1.2;
-    text-shadow: 0 1px 1px hsla(0,0%,0%,1);
+    text-shadow: 0 1px 1px hsla(0, 0%, 0%, 1);
 }
 
 [data-tooltip]:after {
@@ -126,7 +76,7 @@ input[type="file"] { display: none; }
     left: 24px;
     width: 0;
     border-top: 5px solid #006104;
-    border-top: 5px solid hsla(110,26%,97%,0.9);
+    border-top: 5px solid hsla(110, 26%, 97%, 0.9);
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     content: " ";
@@ -141,20 +91,4 @@ input[type="file"] { display: none; }
     filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
     transition: all 0.4s ease-in-out;
-}
-@media screen and (max-width:700px) {
-    .profileContain{
-        display: block;
-        padding: 0px;
-    }
-    .mainBlock{
-        display: block;
-    }
-    .avatarBlock{
-        width: 100%;
-    }
-    .infoProfile{
-        padding: 0px;
-        margin-left: 0px
-    }
 }

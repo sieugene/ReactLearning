@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import s from './Users.module.css';
 import Paginator from "../../assets/Paginator/Paginator";
 import User from "./User";
 import { SearchFormRedux } from "./SearchForm";
@@ -31,27 +30,26 @@ const Users = React.memo(props => {
     return (
         <div >
             <SearchFormRedux onChange={onChangedTextForSearch} />
-            <h5 onClick={showUsersFollowing}>Parameters:
-                <a className="waves-effect waves-light btn-small black">
-                    {!showFollowing ? 'Show Follow' : 'Hide Follow'}
-                </a>
-            </h5>
+            <a className="waves-effect waves-light btn-small black"
+                onClick={showUsersFollowing}>
+                {!showFollowing ? 'Show Follow' : 'Hide Follow'}
+            </a>
             <div className='row'>
-                    {showFollowing ?
-                        arrayWithSubs.length === 0 ? 'No subs' :
-                            //вывод подписчиков
-                            arrayWithSubs.map(u => <User
-                                user={u}
-                                unFollowUserThunk={props.unFollowUserThunk}
-                                followUserThunk={props.followUserThunk}
-                                followingInProgress={props.followingInProgress} key={u.id} />)
-                        //вывод обычных пользователей
-                        : props.UsersList.map(u => <User
+                {showFollowing ?
+                    arrayWithSubs.length === 0 ? 'No subs' :
+                        //вывод подписчиков
+                        arrayWithSubs.map(u => <User
                             user={u}
                             unFollowUserThunk={props.unFollowUserThunk}
                             followUserThunk={props.followUserThunk}
                             followingInProgress={props.followingInProgress} key={u.id} />)
-                    }
+                    //вывод обычных пользователей
+                    : props.UsersList.map(u => <User
+                        user={u}
+                        unFollowUserThunk={props.unFollowUserThunk}
+                        followUserThunk={props.followUserThunk}
+                        followingInProgress={props.followingInProgress} key={u.id} />)
+                }
             </div>
             <Paginator totalUsers={props.totalUsers} pageSize={props.pageSize}
                 currentPage={props.currentPage}
