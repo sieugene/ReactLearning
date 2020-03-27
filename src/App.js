@@ -40,10 +40,10 @@ class App extends React.Component {
                 <HeaderContainer />
                 <div className='container'>
                     <div className='row'>
-                        <div className='col xl1 l1'>
+                        <div className='col xl12'>
                             <Sidebar />
                         </div>
-                        <div className='col xl11 l11'>
+                        <div className='col s12'>
                             <Route
                                 path='/Users'
                                 render={() => {
@@ -55,10 +55,12 @@ class App extends React.Component {
                             <Route exact path='/profile/:userId?' render={() => <ProfileContainer />} />
                             <Route path='/Login' render={() => <LoginContainer />} />
                             <Route path='/Dialogs' render={() => <DialogsContainer />} />
-                            <Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>
                             <SecondSidebar />
                         </div>
                     </div>
+                </div>
+                <div className="container-fluid fluidToMobile">
+                    <Route path='/messages/:userId?' render={() => <MessagesContainer />} />
                 </div>
             </div>
         );

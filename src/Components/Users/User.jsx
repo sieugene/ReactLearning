@@ -5,7 +5,7 @@ import userPhoto from './../../assets/images/userPhoto.png'
 
 const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress }) => {
     return (
-        <div className='col xl6 s12 l6 m6'>
+        <div className='col xl6 s12 l6 m12'>
             <div className="card">
                 <div className="card-image waves-effect waves-block waves-light p10">
                     <NavLink to={'profile/' + user.id}><img className="activator center-img" src={

@@ -3,11 +3,13 @@ import { NavLink } from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
 
 const Dialog = (props) => {
+    let lastDataActivity = props.dialog.lastDialogActivityDate;
+    let lastDataActivShort = lastDataActivity.substr(0, lastDataActivity.length - 12)
     return (
         <div className='dialog'>
             <NavLink to={`/messages/${props.dialog.id}`} className='black-text'>
                 <div className="row">
-                    <div className="col s2">
+                    <div className="col xl1 l1 m2 s3">
                         <div>
                             {!props.dialog.photos.small || !props.dialog.photos.large ?
                                 <img src={userPhoto} alt='' />
@@ -16,14 +18,16 @@ const Dialog = (props) => {
                             }
                         </div>
                     </div>
-                    <div className="col s10">
+                    <div className="col xl11 l11 m10 s9">
                         <div className="row">
                             <div className="col s6 left-align">
                                 <h5>{props.dialog.userName}</h5>
                             </div>
                             <div className="col s6 right-align">
-                                {props.dialog.lastDialogActivityDate}<br />
-                                {props.dialog.lastUserActivityDate}<br />
+                                <p className='activity'>
+                                    {lastDataActivShort}<br />
+                                    {/* {props.dialog.lastUserActivityDate}<br /> */}
+                                </p>
                                 {props.dialog.newMessagesCount <= 0 ? '' :
                                     <p className="newMessage">
                                         <span>

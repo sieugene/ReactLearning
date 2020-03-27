@@ -12,32 +12,34 @@ const Header = (props) => {
     return (
         <nav className={'grey darken-4'}>
             <div className="nav-wrapper">
-                <a href="#" className="brand-logo">Logo</a>
-                <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    {props.isAuth ?
-                        <>
-                            <li><h5>{props.login}</h5></li>
-                            <NavLink to='/profile' className={s.userlink}>
-                                <li className='btn-floating btn-large waves-effect waves-light grey darken-4'>
-                                    {getUserPhoto()}
-                                </li>
-                            </NavLink>
-                            <li>
-                                <button onClick={props.logoutThunk} className={s.loginButton}>
-                                    Log out
+                <div className="container">
+                    <a href="#" className="brand-logo"></a>
+                    <ul  className="right">
+                        {props.isAuth ?
+                            <>
+                                <li><h5>{props.login}</h5></li>
+                                <NavLink to='/profile' className={s.userlink}>
+                                    <li className='btn-floating btn-large waves-effect waves-light grey darken-4'>
+                                        {getUserPhoto()}
+                                    </li>
+                                </NavLink>
+                                <li>
+                                    <button onClick={props.logoutThunk} className={s.loginButton}>
+                                        Log out
                                     </button>
-                            </li>
-                        </>
-                        :
-                        <li><NavLink to='/login/'>
-                            <button className={s.loginButton}>
-                                Login
+                                </li>
+                            </>
+                            :
+                            <li><NavLink to='/login/'>
+                                <button className={s.loginButton}>
+                                    Login
                         </button>
-                        </NavLink>
-                        </li>
-                    }
+                            </NavLink>
+                            </li>
+                        }
 
-                </ul>
+                    </ul>
+                </div>
             </div>
         </nav>
     )
