@@ -6,7 +6,8 @@ import { loginThunkCreator, getCaptchaThunkCreator } from "../../redux/Auth-Redu
 let mapStateToProps = (state) => {
     return {
         isAuth: state.Auth.isAuth,
-        captcha: state.Auth.captcha
+        captcha: state.Auth.captcha,
+        loading: state.Auth.loading
     }
 }
 

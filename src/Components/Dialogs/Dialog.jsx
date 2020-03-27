@@ -1,32 +1,41 @@
 import React from 'react';
-import s from "./Dialogs.module.css";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import userPhoto from '../../assets/images/userPhoto.png'
 
 const Dialog = (props) => {
     return (
-        <div className={s.dialogUser}>
-            <NavLink to={`/Dialogs/messages/${props.dialog.id}`}>
-                <div className={s.userNameWithImg}>
-                    {!props.dialog.photos.small || !props.dialog.photos.large ? 'no img' :
-                        <img src={props.dialog.photos.small} alt=''/> || <img src={props.dialog.photos.large} alt=''/>
-                    }
-                    <h3>{props.dialog.userName}</h3>
+        <div className='dialog'>
+            <NavLink to={`/messages/${props.dialog.id}`} className='black-text'>
+                <div className="row">
+                    <div className="col s2">
+                        <div>
+                            {!props.dialog.photos.small || !props.dialog.photos.large ?
+                                <img src={userPhoto} alt='' />
+                                :
+                                <img src={props.dialog.photos.small} alt='' /> || <img src={props.dialog.photos.large} alt='' />
+                            }
+                        </div>
+                    </div>
+                    <div className="col s10">
+                        <div className="row">
+                            <div className="col s6 left-align">
+                                <h5>{props.dialog.userName}</h5>
+                            </div>
+                            <div className="col s6 right-align">
+                                {props.dialog.lastDialogActivityDate}<br />
+                                {props.dialog.lastUserActivityDate}<br />
+                                {props.dialog.newMessagesCount <= 0 ? '' :
+                                    <p className="newMessage">
+                                        <span>
+                                            {props.dialog.newMessagesCount}
+                                        </span>
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </NavLink>
-            {/*<div>*/}
-            {/*    Has New Message: {props.dialog.hasNewMessages ? 'Yes' : 'No'}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    Last Dialog Activity Data: {props.dialog.lastDialogActivityDate}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    last User Activity Date: {props.dialog.lastUserActivityDate}*/}
-            {/*</div>*/}
-            <div>
-                {props.dialog.newMessagesCount === 0 ? '' :
-                    'new Messages Count:' + props.dialog.newMessagesCount
-                }
-            </div>
         </div>
     )
 }

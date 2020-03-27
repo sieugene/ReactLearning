@@ -9,6 +9,10 @@
     bottom: 21px;
 }
 
+.infoProfile p {
+    margin: 0;
+}
+
 .avatarBlock img {
     width: 200px;
     height: 200px;

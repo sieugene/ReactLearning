@@ -7,8 +7,8 @@ const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress })
     return (
         <div className='col xl6 s12 l6 m6'>
             <div className="card">
-                <div className="card-image waves-effect waves-block waves-light">
-                    <NavLink to={'profile/' + user.id}><img className="activator" src={
+                <div className="card-image waves-effect waves-block waves-light p10">
+                    <NavLink to={'profile/' + user.id}><img className="activator center-img" src={
                         user.photos.small != null ? user.photos.small : userPhoto} alt='' />
                     </NavLink>
                 </div>
@@ -31,7 +31,7 @@ const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress })
                                 }} className='btn waves-effect waves-light indigo lighten-5 black-text'>Follow</button>
                     }
                     <button className={s.sendMessage} className='btn waves-effect waves-light indigo lighten-5 black-text'>
-                        <NavLink to={'/Dialogs/messages/' + user.id} className='black-text'>Send message</NavLink>
+                        <NavLink to={'/messages/' + user.id} className='black-text'>Send message</NavLink>
                     </button>
                 </div>
             </div>

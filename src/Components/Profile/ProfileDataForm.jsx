@@ -7,23 +7,23 @@ const ProfileDataForm = (props) => {
     return (
         <div className={s.infoProfile}>
             <form onSubmit={props.handleSubmit}>
-                <button className={s.saveButton}>Save</button>
+                <button className='waves-effect waves-light btn-small indigo darken-4 mb10'>Save</button>
                 {props.error &&
                     <div className={s.someError}>
                         {props.error}
                     </div>
                 }
                 <br/>
-                <span><b>About me: </b> <p>{props.profile.aboutMe}</p></span>
+                <span><b>About me:</b></span>
                 <Field placeholder='About me' name='aboutMe' component={InputMessage}/>
-                <span><b>Full name: </b> <p>{props.profile.fullName}</p></span>
+                <span><b>Full name: </b></span>
                 <Field placeholder='Full Name' name='fullName' component={InputMessage}/>
-                <span><b>Seek work: </b> <p>{props.profile.lookingForAJob ? 'yes' : 'no'}</p></span>
+                <span><b>Seek work: </b></span>
                 <Field placeholder='Looking for a job' type="checkbox" name='lookingForAJob' component={InputMessage}/>
-                <span><b>Description of the search: </b> <p>{props.profile.lookingForAJobDescription}</p></span>
+                <span><b>Description of the search: </b></span>
                 <Field placeholder='Looking for a job desc' name='lookingForAJobDescription' component={InputMessage}/>
                 {Object.keys(props.profile.contacts).map(key =>
-                    <Contact key={key} contactTitle={key} contactBody={props.profile.contacts[key]}/>
+                    <Contact key={key} contactTitle={key} contactBody={''}/>
                 )}
             </form>
         </div>

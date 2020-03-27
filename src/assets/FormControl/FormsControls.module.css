@@ -1,14 +1,15 @@
-
-
-.FormControl .error input{
-    border: 2px solid red;
+.FormControl .error input {
+    border-bottom: 2px solid red !important;
 }
-.FormControl .error span{
+
+.FormControl .error span {
     color: red;
     text-decoration: underline;
 }
 
-.someError{
-    border: 2px solid red;
+.someError {
+    border-bottom: 2px solid red;
     color: red;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

@@ -12,6 +12,7 @@ import Preloader from "./assets/preloader/Preloader";
 import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
 import Sidebar from "./Components/Sidebar/SIdebar";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+import MessagesContainer from './Components/Dialogs/MessagesContainer';
 
 
 //import UsersContainer from "./Components/Users/UsersContainer";
@@ -54,7 +55,7 @@ class App extends React.Component {
                             <Route exact path='/profile/:userId?' render={() => <ProfileContainer />} />
                             <Route path='/Login' render={() => <LoginContainer />} />
                             <Route path='/Dialogs' render={() => <DialogsContainer />} />
-                            {/*<Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>*/}
+                            <Route path='/messages/:userId?' render={() => <MessagesContainer/>}/>
                             <SecondSidebar />
                         </div>
                     </div>

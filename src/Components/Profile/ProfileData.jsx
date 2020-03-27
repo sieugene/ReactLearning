@@ -7,36 +7,73 @@ const ProfileData = (props) => {
         <div className={s.infoProfile}>
             <div className={s.editButton}>
                 {props.id == props.urlMatchParams &&
-                <button onClick={() => {
-                    props.setEditProfile(true)
-                }}>Edit
-                </button>
+                    <a className='waves-effect waves-light btn-small indigo lighten-4 black-text mb10' onClick={() => {
+                        props.setEditProfile(true)
+                    }}>Edit
+                </a>
                 }
             </div>
-            <hr/>
-            <span><b>About me: </b> <p>{props.profile.aboutMe}</p></span>
-            <span><b>Full name: </b> <p>{props.profile.fullName}</p></span>
-            <span><b>Status:</b> <p>{props.status}</p></span>
-            <span><b>Seek work: </b> <p>{props.profile.lookingForAJob ? 'yes' : 'no'}</p></span>
-            <span><b>Description of the search: </b> <p>{props.profile.lookingForAJobDescription}</p></span>
+            <hr />
+            <div className="row">
+                <div className="col s6">
+                    <b>About me: </b>
+                </div>
+                <div className="col s6 right-align">
+                    <p>{props.profile.aboutMe}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col s6">
+                    <b>Full name: </b>
+                </div>
+                <div className="col s6 right-align">
+                    <p>{props.profile.fullName}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col s6">
+                    <b>Status:</b>
+                </div>
+                <div className="col s6 right-align">
+                    <p>{props.status}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col s6">
+                    <b>Seek work: </b>
+                </div>
+                <div className="col s6 right-align">
+                    <p>{props.profile.lookingForAJob ? 'yes' : 'no'}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col s6">
+                    <b>Description of the search: </b>
+                </div>
+                <div className="col s6 right-align">
+                    <p>{props.profile.lookingForAJobDescription}</p>
+                </div>
+            </div>
             {Object.keys(props.profile.contacts).map(key =>
-                <Contact key={key} contactTitle={key} contactBody={props.profile.contacts[key]}/>
+                <Contact key={key} contactTitle={key} contactBody={props.profile.contacts[key]} />
             )}
         </div>
     )
 }
-const Contact = ({contactTitle, contactBody}) => {
+const Contact = ({ contactTitle, contactBody }) => {
     return (
         <div>
             {!!contactBody &&
-            <span>
-                <b>{contactTitle}: </b>
-                    <p>
+                <div className="row">
+                    <div className="col s6">
+                        <b>{contactTitle}: </b>
+                    </div>
+                    <div className="col s6 right-align">
                         <a href={contactBody} target="_blank" rel="noopener noreferrer">
                             {contactBody}
                         </a>
-                    </p>
-            </span>
+                    </div>
+                </div>
             }
         </div>
 

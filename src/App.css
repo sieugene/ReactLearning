@@ -36,6 +36,56 @@
     font-size: 12px;
 }
 
+.dialog {
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    padding-top: 10px;
+    transition: 0.6s all ease;
+}
+
+.dialog:hover {
+    opacity: 0.6;
+}
+
+.newMessage span {
+    background-color: red;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+}
+
+.dialog .row {
+    margin-bottom: 0;
+}
+
+.dialog img {
+    height: 100px;
+    width: 100px;
+}
+
+.dialog h5 {
+    margin: 0;
+}
+
+.center-img {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.p10 {
+    padding: 10px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width:370px) {
     .truncate {
         white-space: pre-wrap !important;
