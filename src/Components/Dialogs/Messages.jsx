@@ -8,6 +8,14 @@ const Messages = (props) => {
     let onTextInMessage = (formData) => {
         props.sendMessageToFriendThunk(userId, formData.newMessage)
     }
+
+    const regEx = /[^\d\:]/g;
+    const addedAt = (date) => {
+        let format = date.substr(date.length - 12)
+        let result = format.replace(regEx, '')
+        return  result.split(':')[0] + ':' + result.split(':')[1] ;
+    }
+
     //take current user photo
     let getCurrentUserPhoto = props.currentUserInChat.length === 0 ? '' :
         !props.currentUserInChat.photos.large || !props.currentUserInChat.photos.small ?
@@ -33,7 +41,7 @@ const Messages = (props) => {
                                         props.getReturnMessageDateThunk(props.currentUserInChat.userId, '2020.01.01')
                                     }}>
                                         Past messages
-                    </button>
+                                    </button>
                                 }
                                 {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
                                     props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
@@ -45,10 +53,10 @@ const Messages = (props) => {
                                                 getUserPhoto
                                             }
                                             <h4>{m.senderName}</h4>
+                                            <div className={s.dateAdded}>{addedAt(m.addedAt)}</div>
                                         </div>
                                         {/*<div>Id: {m.id}</div>*/}
                                         {/*check read message*/}
-                                        {/*<div>AddedAt: {m.addedAt}</div>*/}
                                         {/*<div>SenderId: {m.senderId}</div>*/}
                                         {/*<div>recipientId: {m.recipientId}</div>*/}
                                         <div className={s.chatText}>{m.body}</div>
