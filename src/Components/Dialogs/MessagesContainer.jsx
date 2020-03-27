@@ -17,18 +17,16 @@ class MessagesContainer extends React.Component {
     componentDidMount() {
         this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
     }
-    // componentDidUpdate(prevProps) {
-    //     clearInterval(this.timerID);
-    //     if (prevProps.match.params.userId !== this.props.match.params.userId) {
-    //         this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
-    //         clearInterval(this.timerID);
-    //     } else if (prevProps.match.params.userId === this.props.match.params.userId) {
-    //         this.timerID = setInterval(
-    //             () => this.props.syncMessagesWithFrinedThunk(this.props.match.params.userId),
-    //             5000
-    //         );
-    //     }
-    // }
+
+    componentDidUpdate(prevProps) {
+        this.props.ClearIntreval();
+        if (prevProps.match.params.userId !== this.props.match.params.userId) {
+            this.props.getListMessagesWithFriendThunk(this.props.match.params.userId);
+            this.props.ClearIntreval();
+        } else if (prevProps.match.params.userId === this.props.match.params.userId) {
+            this.props.SyncInterval(this.props.match.params.userId);
+        }
+    }
     render() {
         return (
             <Messages {...this.props} />

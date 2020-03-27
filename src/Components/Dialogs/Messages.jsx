@@ -2,6 +2,7 @@ import React from 'react';
 import s from "./Dialogs.module.css";
 import { ReduxMessageForm } from "./MessageForm";
 import userPhoto from './../../assets/images/userPhoto.png'
+import { NavLink } from "react-router-dom";
 
 const Messages = (props) => {
     let userId = props.match.params.userId;
@@ -13,7 +14,7 @@ const Messages = (props) => {
     const addedAt = (date) => {
         let format = date.substr(date.length - 12)
         let result = format.replace(regEx, '')
-        return  result.split(':')[0] + ':' + result.split(':')[1] ;
+        return result.split(':')[0] + ':' + result.split(':')[1];
     }
 
     //take current user photo
@@ -30,8 +31,15 @@ const Messages = (props) => {
                     <div className={s.messagesContain}>
                         {props.currentUserInChat.length === 0 ? '' :
                             <div className={s.chatTittle}>
-                                <h3>{props.currentUserInChat.fullName}</h3>
-                                {getCurrentUserPhoto}
+                                <h3 className='left-align'>
+                                    <NavLink to='/Dialogs'>
+                                        Back
+                                    </NavLink>
+                                </h3>
+                                <h3 className='center-align'>{props.currentUserInChat.fullName}</h3>
+                                <NavLink to={'/profile/' + userId}>
+                                    {getCurrentUserPhoto}
+                                </NavLink>
                             </div>
                         }
                         <div className={s.mainChatBlock}>

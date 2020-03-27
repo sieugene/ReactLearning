@@ -98,6 +98,7 @@
 
 .chatText {
     margin-left: 43px;
+    word-break: break-all;
 }
 
 .mainChatBlock {
@@ -110,9 +111,15 @@
     border: 1px solid black;
     padding: 10px;
     width: auto;
-    display: flow-root;
+    display: flex;
+    justify-content: space-between;
     background: black;
     color: white;
+}
+
+.chatTittle h3 {
+    margin: 0;
+    padding: 0;
 }
 
 .chatTittle img {
@@ -120,6 +127,8 @@
     border-radius: 30px;
     height: 34px;
     float: right;
+    position: relative;
+    bottom: 5px;
 }
 
 .chatTittle h3 {
