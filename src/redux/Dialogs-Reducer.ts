@@ -118,26 +118,26 @@ export const setSuccessLoadingAC = (loading: boolean): SetSuccessLoadingACType =
 }
 
 export const startChattingThunkCreator = (userId: number) => async (dispatch: any) => {
-    let response = await DialogsAPI.startChatting(userId)
-    console.log('startChatting')
-    console.log(response)
+    await DialogsAPI.startChatting(userId)
+    // console.log('startChatting')
+    // console.log(response)
 }
 
 export const getAllDialogsThunkCreator = () => async (dispatch: any) => {
     dispatch(setSuccessLoadingAC(true));
     let response = await DialogsAPI.getAllDialogs()
     dispatch(setSuccessLoadingAC(false));
-    console.log('getAllDialogs')
+    // console.log('getAllDialogs')
     dispatch(setAllDialogsAC(response.data));
-    console.log(response.data)
+    // console.log(response.data)
 }
 
 
 export const getListMessagesWithFriendThunkCreator = (userId: number) => async (dispatch: any) => {
     let response = await DialogsAPI.getListMessagesWithFriend(userId)
     dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
-    console.log('getListMessagesWithFriend');
-    console.log(response.data)
+    // console.log('getListMessagesWithFriend');
+    // console.log(response.data)
     //set current user in chat
     response = await ProfileAPI.getProfile(userId)
     dispatch(setCurrentUserInChatAC(response.data))
@@ -148,8 +148,8 @@ export const getListMessagesWithFriendThunkCreator = (userId: number) => async (
 export const syncMessagesWithFrinedThunkCreator = (userId: number) => (dispatch: any) => {
     DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
-        console.log('getListMessagesWithFriend');
-        console.log(response.data)
+        // console.log('getListMessagesWithFriend');
+        // console.log(response.data)
     })
     console.log('sync: User:', userId);
 }
@@ -162,8 +162,8 @@ export const sendMessageToFriendThunkCreator = (userId: number, newMessage: stri
 export const getListNewMessagesThunkCreator = (userId: number) => async (dispatch: any) => {
     let response = await DialogsAPI.listNewMessage();
     dispatch(setCountNewMessages(response.data))
-    console.log('getListNewMessages');
-    console.log(response.data)
+    // console.log('getListNewMessages');
+    // console.log(response.data)
 }
 type ReponseGetReturnMessageDateThunkCreatorType = {
     response: {}

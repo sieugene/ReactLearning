@@ -13,21 +13,16 @@ import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
 import Sidebar from "./Components/Sidebar/SIdebar";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import MessagesContainer from './Components/Dialogs/MessagesContainer';
+import GlobalErrors from './Components/GlobalErrors/GlobalErrors';
 import { syncMessagesWithFrinedThunkCreator } from './redux/Dialogs-Reducer';
-
-
+import { Redirect } from "react-router-dom"
 //import UsersContainer from "./Components/Users/UsersContainer";
 const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
 
-class App extends React.Component {
-    catchAllUnhandelErrors = (promiseRejectionEvent) => {
-        alert(promiseRejectionEvent.reason.message);
-        console.log(promiseRejectionEvent)
-    }
 
+class App extends React.Component {
     componentDidMount() {
         this.props.initiliazedThunk();
-        window.addEventListener("unhandledrejection", this.catchAllUnhandelErrors)
     }
     componentDidUpdate(prevProps) {
         if (prevProps.location.pathname !== this.props.location.pathname) {
@@ -39,7 +34,7 @@ class App extends React.Component {
         this.timerID = setInterval(() =>
             this.props.syncMessagesWithFrinedThunk(userIdi), 5000);
     }
-    ClearIntreval() {return clearInterval(this.timerID)};
+    ClearIntreval() { return clearInterval(this.timerID) };
     //end
 
     render() {
@@ -48,6 +43,7 @@ class App extends React.Component {
         }
         return (
             <div className="App">
+                <GlobalErrors />
                 <HeaderContainer />
                 <div className='container'>
                     <div className='row'>
@@ -65,16 +61,16 @@ class App extends React.Component {
                                 } />
                             <Route exact path='/profile/:userId?' render={() => <ProfileContainer />} />
                             <Route path='/Login' render={() => <LoginContainer />} />
-                            <Route path='/Dialogs' render={() => <DialogsContainer />} />
+                            <Route path='/Dialogs' render={() => this.props.id ? <DialogsContainer /> : <Redirect to='/Login' />} />
                             <SecondSidebar />
                         </div>
                     </div>
                 </div>
                 <div className="container-fluid fluidToMobile">
-                    <Route path='/messages/:userId?' render={() =>
-                         <MessagesContainer SyncInterval={this.SyncInterval.bind(this)}
-                         ClearIntreval={this.ClearIntreval.bind(this)}
-                         />} />
+                    <Route path='/messages/:userId?' render={() => this.props.id ?
+                        <MessagesContainer SyncInterval={this.SyncInterval.bind(this)}
+                            ClearIntreval={this.ClearIntreval.bind(this)}
+                        /> : <Redirect to='/Login' />} />
                 </div>
             </div>
         );
@@ -82,7 +78,8 @@ class App extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    initialized: state.app.initialized
+    initialized: state.app.initialized,
+    id: state.Auth.id
 })
 
 export default compose(

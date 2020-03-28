@@ -6,12 +6,12 @@ const MessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit} className={s.container}>
             <div className="row p10">
-                <div className="col s10">
-                    <Field name='newMessage' placeholder='Write a message' component='textarea' class="materialize-textarea" />
+                <div className="col xl11 m10 l10 s10">
+                    <Field name='newMessage' placeholder='Write a message' component='textarea' className="materialize-textarea" />
                 </div>
-                <div className="col s2 center-align">
+                <div className="col xl1 m2 l2 s2 center-align">
                     <button className='btn-Medium transparent sendMessage pt25'>
-                        <i class="Medium material-icons black-text">send</i>
+                        <i className="Medium material-icons black-text">send</i>
                     </button>
                 </div>
             </div>

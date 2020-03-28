@@ -30,10 +30,10 @@ const Users = React.memo(props => {
     return (
         <div >
             <SearchFormRedux onChange={onChangedTextForSearch} />
-            <a className="waves-effect waves-light btn-small black"
+            <p className="waves-effect waves-light btn-small black"
                 onClick={showUsersFollowing}>
                 {!showFollowing ? 'Show Follow' : 'Hide Follow'}
-            </a>
+            </p>
             <div className='row'>
                 {showFollowing ?
                     arrayWithSubs.length === 0 ? 'No subs' :

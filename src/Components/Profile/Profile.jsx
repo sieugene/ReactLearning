@@ -36,7 +36,7 @@ const Profile = React.memo(props => {
                         <div className="col">
                             <div className={s.avatarBlock}>
                                 <img src={!props.profile.photos.small ? userPhoto : props.profile.photos.large} alt='' />
-                                {props.id == props.urlMatchParams &&
+                                {props.id === Number(props.urlMatchParams) &&
                                     // upload photo for myProfile
                                     <div>
                                         <input type="file" name="myFile" id="myFile" onChange={onUploadNewPhoto} />

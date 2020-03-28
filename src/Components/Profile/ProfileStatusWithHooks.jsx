@@ -24,7 +24,7 @@ const ProfileStatusWithHooks = React.memo(props => {
 
     const withEditStatus = () => {
         //проверка страницы, если страница пользователя, то можно редактировать.
-        if (props.urlMatchParams == props.id) {
+        if (Number(props.urlMatchParams) === props.id) {
             if (!editMode) {
                 return <span onDoubleClick={activateEditMode} data-tooltip="double click to change">{!props.status ? <div>_____</div> : props.status}</span>
             } else {

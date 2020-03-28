@@ -13,8 +13,8 @@ const Header = (props) => {
         <nav className={'grey darken-4'}>
             <div className="nav-wrapper">
                 <div className="container">
-                    <a href="#" className="brand-logo"></a>
-                    <ul  className="right">
+                    {/* <a href="/" className="brand-logo"></a> */}
+                    <ul className="right">
                         {props.isAuth ?
                             <>
                                 <li><h5>{props.login}</h5></li>
@@ -30,12 +30,13 @@ const Header = (props) => {
                                 </li>
                             </>
                             :
-                            <li><NavLink to='/login/'>
-                                <button className={s.loginButton}>
+                            <button className={s.loginButton}>
+                                <NavLink to='/login/'>
                                     Login
-                        </button>
-                            </NavLink>
-                            </li>
+                                    </NavLink>
+                            </button>
+
+
                         }
 
                     </ul>

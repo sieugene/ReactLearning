@@ -6,11 +6,11 @@ const ProfileData = (props) => {
     return (
         <div className={s.infoProfile}>
             <div className={s.editButton}>
-                {props.id == props.urlMatchParams &&
-                    <a className='waves-effect waves-light btn-small indigo lighten-4 black-text mb10' onClick={() => {
+                {props.id === Number(props.urlMatchParams) &&
+                    <p className='waves-effect waves-light btn-small indigo lighten-4 black-text mb10' onClick={() => {
                         props.setEditProfile(true)
                     }}>Edit
-                </a>
+                </p>
                 }
             </div>
             <hr />

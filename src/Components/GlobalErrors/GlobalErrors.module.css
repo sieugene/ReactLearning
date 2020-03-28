@@ -1,0 +1,9 @@
+.error_window {
+    position: fixed;
+    color: white;
+    background: #ff0000c4;
+    padding: 2px;
+    font-size: 10px;
+    top: 0;
+    z-index: 11111;
+}

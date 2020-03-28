@@ -1,5 +1,4 @@
 import React from 'react';
-import s from './Users.module.css';
 import { NavLink } from "react-router-dom";
 import userPhoto from './../../assets/images/userPhoto.png'
 
@@ -30,7 +29,7 @@ const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress })
                                     followUserThunk(user.id)
                                 }} className='btn waves-effect waves-light indigo lighten-5 black-text'>Follow</button>
                     }
-                    <button className={s.sendMessage} className='btn waves-effect waves-light indigo lighten-5 black-text'>
+                    <button className='btn waves-effect waves-light indigo lighten-5 black-text'>
                         <NavLink to={'/messages/' + user.id} className='black-text'>Send message</NavLink>
                     </button>
                 </div>

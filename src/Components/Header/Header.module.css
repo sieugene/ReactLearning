@@ -12,8 +12,15 @@
     bottom: 10px;
 }
 
+.loginButton a {
+    color: black;
+}
+
 .loginButton:hover {
     background-color: black;
+}
+
+.loginButton:hover a {
     color: white;
 }
 

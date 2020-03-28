@@ -10,7 +10,7 @@ const Messages = (props) => {
         props.sendMessageToFriendThunk(userId, formData.newMessage)
     }
 
-    const regEx = /[^\d\:]/g;
+    const regEx = /[^\d:]/g;
     const addedAt = (date) => {
         let format = date.substr(date.length - 12)
         let result = format.replace(regEx, '')
@@ -55,7 +55,7 @@ const Messages = (props) => {
                                     props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
                                         s.messagesWithFriendId : s.notViewedMessage}>
                                         <div className={s.main__img__username}>
-                                            {m.senderId == userId ?
+                                            {m.senderId === userId ?
                                                 getCurrentUserPhoto
                                                 :
                                                 getUserPhoto

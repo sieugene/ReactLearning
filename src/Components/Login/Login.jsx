@@ -33,7 +33,7 @@ const LoginForm = (props) => {
                 validate={[required]} /></div>}
             <button className='waves-effect waves-light btn-small mr10'>Login</button>
             <a href='https://social-network.samuraijs.com/'
-                target='_blank' className='waves-effect waves-light btn-small  deep-purple lighten-1'>
+                target='_blank' className='waves-effect waves-light btn-small  deep-purple lighten-1' rel="noopener noreferrer">
                 Go to API
                 </a>
         </form>

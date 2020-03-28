@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from "react-redux";
 import {
     getListMessagesWithFriendThunkCreator, getReturnMessageDateThunkCreator, sendMessageToFriendThunkCreator,
@@ -7,6 +7,7 @@ import {
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import Messages from "./Messages";
+import {Redirect} from "react-router-dom";
 
 
 class MessagesContainer extends React.Component {
@@ -28,6 +29,9 @@ class MessagesContainer extends React.Component {
         }
     }
     render() {
+        if(!this.props.id){
+            return <Redirect to={'/login'}/>
+        }
         return (
             <Messages {...this.props} />
         )
@@ -38,7 +42,8 @@ let mapStateToProps = (state) => {
         messagesWithFriend: state.dialogs.messagesWithFriend,
         listDialogs: state.dialogs.listDialogs,
         currentUserInChat: state.dialogs.currentUserInChat,
-        authUserPhoto: state.app.userPhoto
+        authUserPhoto: state.app.userPhoto,
+        id: state.Auth.id
     }
 }
 

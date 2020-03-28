@@ -24,7 +24,7 @@ const Paginator = (props => {
                     return <li className={props.currentPage === p ? 'active' : 'waves-effect'}
                         onClick={(e) => {
                             props.onPageCurrentChange(p)
-                        }} key={p}><a>{p}</a></li>
+                        }} key={p}><p>{p}</p></li>
                 })}
             {portionsCount > portionNumber && <li onClick={() => {
                 setPortionNumber(portionNumber + 1);

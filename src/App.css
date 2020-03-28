@@ -33,6 +33,18 @@ nav {
     cursor: pointer;
 }
 
+.pagination li p {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    line-height: 30px;
+    margin: 0;
+}
+
+.pagination li.active p {
+    color: white;
+}
+
 .truncate {
     height: 32px;
     width: 210px;
@@ -84,6 +96,7 @@ nav {
     border: none;
     cursor: pointer;
     transition: 0.5s all ease;
+    outline: none;
 }
 
 .sendMessage:hover {
