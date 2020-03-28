@@ -10,7 +10,6 @@ import { withRouter } from "react-router-dom";
 import { initiliazedThunkCreator } from "./redux/App-Reducer";
 import Preloader from "./assets/preloader/Preloader";
 import SecondSidebar from "./Components/SecondSidebar/SecondSidebar";
-import Sidebar from "./Components/Sidebar/SIdebar";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import MessagesContainer from './Components/Dialogs/MessagesContainer';
 import GlobalErrors from './Components/GlobalErrors/GlobalErrors';
@@ -47,9 +46,6 @@ class App extends React.Component {
                 <HeaderContainer />
                 <div className='container'>
                     <div className='row'>
-                        <div className='col xl12'>
-                            <Sidebar />
-                        </div>
                         <div className='col s12'>
                             <Route
                                 path='/Users'

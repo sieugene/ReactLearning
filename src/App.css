@@ -14,8 +14,8 @@ nav {
 }
 
 .nav-wrapper ul li {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: 7px;
+    margin-left: 7px;
 }
 
 .nav-wrapper h5 {
@@ -29,8 +29,28 @@ nav {
     width: 40px !important;
 }
 
+.nav-wrapper .material-icons {
+    position: relative;
+    bottom: 10px;
+}
+
 .pagination i {
     cursor: pointer;
+}
+
+.blockDrop {
+    position: relative;
+}
+
+.dropdownMenu {
+    position: absolute;
+    z-index: 99999;
+    right: 0;
+    display: none;
+}
+
+.dropdownMenu.active {
+    display: block;
 }
 
 .pagination li p {
@@ -162,6 +182,10 @@ nav {
 @media screen and (max-width:600px) {
     .fluidToMobile .container {
         width: 100% !important;
+    }
+    .fluidToMobile {
+        position: relative;
+        bottom: 46px;
     }
     .fluidToMobile .col.s12 {
         margin: 0 !important;
