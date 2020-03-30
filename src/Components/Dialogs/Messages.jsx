@@ -4,6 +4,9 @@ import { ReduxMessageForm } from "./MessageForm";
 import userPhoto from './../../assets/images/userPhoto.png'
 import { NavLink } from "react-router-dom";
 
+
+
+
 const Messages = (props) => {
     let userId = props.match.params.userId;
     let onTextInMessage = (formData) => {
@@ -55,7 +58,7 @@ const Messages = (props) => {
                                     props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
                                         s.messagesWithFriendId : s.notViewedMessage}>
                                         <div className={s.main__img__username}>
-                                            {m.senderId === userId ?
+                                            {m.senderId === Number(userId) ?
                                                 getCurrentUserPhoto
                                                 :
                                                 getUserPhoto
