@@ -10,6 +10,7 @@ At this point, the user can:
   - Subscribe to other users
   - Write messages to users
   
+![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/0.png?raw=true)  
 ![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/1.png?raw=true)
 ![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/2.png?raw=true)
 ![demo](https://github.com/sieugene/ReactLearning/blob/master/src/assets/images/3.png?raw=true)
