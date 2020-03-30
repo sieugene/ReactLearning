@@ -3,6 +3,7 @@ import './App.css';
 import { Route } from "react-router";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import Home from './Components/Home/Home';
 import { LoginContainer } from "./Components/Login/LoginContainer";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -44,6 +45,7 @@ class App extends React.Component {
             <div className="App">
                 <GlobalErrors />
                 <HeaderContainer />
+                <Route exact path='/' render={() => (<Home/>)}/>
                 <div className='container'>
                     <div className='row'>
                         <div className='col s12'>

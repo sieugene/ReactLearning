@@ -65,10 +65,10 @@ const Contact = ({ contactTitle, contactBody }) => {
         <div>
             {!!contactBody &&
                 <div className="row">
-                    <div className="col s6">
+                    <div className="col s4">
                         <b>{contactTitle}: </b>
                     </div>
-                    <div className="col s6 right-align">
+                    <div className="col s8 right-align">
                         <a href={contactBody} target="_blank" rel="noopener noreferrer">
                             {contactBody}
                         </a>

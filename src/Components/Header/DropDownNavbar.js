@@ -5,8 +5,8 @@ const DropDownNavbar = (props) => {
     let addClassForToggle = props.toggle ? ' active' : '';
     return (
         <div className="container blockDrop">
-            <div className={'dropdownMenu' + addClassForToggle }>
-                <Sidebar logoutThunk={props.logoutThunk} />
+            <div className={'dropdownMenu' + addClassForToggle}>
+                <Sidebar logoutThunk={props.logoutThunk} isAuth={props.isAuth} />
             </div>
         </div>
     )
