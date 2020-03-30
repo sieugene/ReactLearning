@@ -6,20 +6,40 @@ const Sidebar = (props) => {
     return (
         <div className={s.sidebar}>
             <ul>
-                <li>
-                    <NavLink to='/profile/' activeClassName={s.active}> Profile </NavLink><br />
-                </li>
-                <li>
-                    <NavLink to='/Dialogs' activeClassName={s.active}> Dialogs </NavLink><br />
-                </li>
-                <li>
-                    <NavLink to='/Users' activeClassName={s.active}> Users </NavLink><br />
-                </li>
-                <li>
-                    <button onClick={props.logoutThunk} className={s.loginButton}>
-                        Log out
-                </button>
-                </li>
+                {props.isAuth ?
+                    <>
+                        <li>
+                            <NavLink to='/profile/' activeClassName={s.active}> Profile </NavLink><br />
+                        </li>
+                        <li>
+                            <NavLink to='/Dialogs' activeClassName={s.active}> Dialogs </NavLink><br />
+                        </li>
+                        <li>
+                            <NavLink to='/Users' activeClassName={s.active}> Users </NavLink><br />
+                        </li>
+                        <li>
+                            <button onClick={props.logoutThunk} className={s.loginButton}>
+                                Log out
+                        </button>
+                        </li>
+                    </>
+                    :
+                    <>
+                        <li>
+                            <NavLink to='/Dialogs' activeClassName={s.active}> Dialogs </NavLink><br />
+                        </li>
+                        <li>
+                            <NavLink to='/Users' activeClassName={s.active}> Users </NavLink><br />
+                        </li>
+                        <li>
+                            <button className={s.loginButton}>
+                                <NavLink to='/login/'>
+                                    Login
+                                </NavLink>
+                            </button>
+                        </li>
+                    </>
+                }
             </ul>
         </div>
     )

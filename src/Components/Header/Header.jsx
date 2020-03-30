@@ -16,7 +16,7 @@ const Header = (props) => {
             <nav className={'grey darken-4'}>
                 <div className="nav-wrapper">
                     <div className="container">
-                        {/* <a href="/" className="brand-logo"></a> */}
+                        <NavLink to='/' className='logo'>Home</NavLink>
                         <ul className={"right " + s.cursor} onClick={() => { props.dropDownToogle() }}>
                             {props.isAuth ?
                                 <>
@@ -31,17 +31,17 @@ const Header = (props) => {
                                     </li>
                                 </>
                                 :
-                                <button className={s.loginButton}>
-                                    <NavLink to='/login/'>
-                                        Login
-                                    </NavLink>
-                                </button>
+                                <>
+                                    <li>
+                                        <i className="material-icons">drag_handle</i>
+                                    </li>
+                                </>
                             }
                         </ul>
                     </div>
                 </div>
             </nav>
-            {props.isAuth && <DropDownNavbar logoutThunk={props.logoutThunk} toggle={props.toggle} />}
+          <DropDownNavbar logoutThunk={props.logoutThunk} toggle={props.toggle} isAuth={props.isAuth} />
         </>
     )
 }
