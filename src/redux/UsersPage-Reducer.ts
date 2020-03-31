@@ -1,5 +1,8 @@
 import { FollowAPI, UsersAPI } from "../Api/Api";
 import { UserType } from "../Types/UsersTypes";
+import { AppStateType } from "./store-redux";
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -21,7 +24,7 @@ let initialState = {
 }
 type InitialStateType = typeof initialState;
 
-const UsersPageReducer = (state = initialState, action: any): InitialStateType => {
+const UsersPageReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -81,6 +84,11 @@ const UsersPageReducer = (state = initialState, action: any): InitialStateType =
 
     }
 }
+
+type ActionsType = FollowACType | UnFollowACType | SetUsersACType | SetCurrentPageACType |
+SetUsersTotalCountType | SetSearchTermACType | ToggleIsFetchingACType | ToggleFollowingInProgressACType
+
+//Action creators
 type FollowACType = {
     type: typeof FOLLOW,
     userId: number
@@ -101,9 +109,9 @@ export const unFollowAC = (userId: number): UnFollowACType => {
 }
 type SetUsersACType = {
     type: typeof SET_USERS,
-    UsersList: UserType
+    UsersList: UserType[]
 }
-export const setUsersAC = (UsersList: UserType): SetUsersACType => {
+export const setUsersAC = (UsersList: UserType[]): SetUsersACType => {
     return {
         type: SET_USERS, UsersList
     }
@@ -155,9 +163,17 @@ export const toggleFollowingInProgressAC = (isFetching: boolean, userId: number)
         isFetching, userId
     }
 }
+//thunks
+//тип который отдает весь стейт 
+//и диспатч в котором наши экшены
+//первый способ return async (dispatch: DispatchType, getState:GetStateType)
+//второй ThunkAction
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsType>
+type ThunkType = ThunkAction<Promise<void>, GetStateType, unknown,ActionsType>
 
-export const getUsersThunkCreator = (pageSize: number, currentPage: number) => {
-    return async (dispatch: any) => {
+export const getUsersThunkCreator = (pageSize: number, currentPage: number):ThunkType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         let response = await UsersAPI.getUsers(pageSize, currentPage)
         dispatch(toggleIsFetchingAC(false));
@@ -165,9 +181,8 @@ export const getUsersThunkCreator = (pageSize: number, currentPage: number) => {
         dispatch(setUsersTotalCount(response.totalCount));
     }
 }
-
-export const setCurrentPageThunkCreator = (pageSize: number, pageNumber: number) => {
-    return async (dispatch: any) => {
+export const setCurrentPageThunkCreator = (pageSize: number, pageNumber: number): ThunkType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         dispatch(setCurrentPageAC(pageNumber));
         let response = await UsersAPI.getUsers(pageSize, pageNumber)
@@ -177,8 +192,8 @@ export const setCurrentPageThunkCreator = (pageSize: number, pageNumber: number)
     }
 }
 
-export const setSearchTermTextThunkCreator = (pageSize: number, text: string) => {
-    return async (dispatch: any) => {
+export const setSearchTermTextThunkCreator = (pageSize: number, text: string):ThunkType => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
         dispatch(setSearchTermAC(text));
         if (!text) {
@@ -191,8 +206,12 @@ export const setSearchTermTextThunkCreator = (pageSize: number, text: string) =>
     }
 }
 
-
-const followUnfollowFlow = async (dispatch: any, userId: number, methoApi: any, action: any) => {
+//так как это наша кастомная санка, то вбиваем тут же
+//dispatch - диспатч типов
+//userid - параметр id который принимает
+//methodApi - метод апи запроса
+//action - какой action creator будет использовать, принимает userid возврашает action creator в нашем случае:
+const followUnfollowFlow = async (dispatch: DispatchType, userId: number, methoApi: any, action: (userId: number) => FollowACType | UnFollowACType) => {
     dispatch(toggleFollowingInProgressAC(true, userId))
     await methoApi(userId)
     dispatch(action(userId));
@@ -200,12 +219,12 @@ const followUnfollowFlow = async (dispatch: any, userId: number, methoApi: any, 
 }
 
 
-export const unFollowUserThunkCreator = (userId: number) => (dispatch: any) => {
+export const unFollowUserThunkCreator = (userId: number):ThunkType => (dispatch) => {
     return followUnfollowFlow(dispatch, userId, FollowAPI.unfollowUser, unFollowAC)
 }
 
 
-export const followUserThunkCreator = (userId: number) => (dispatch: any) => {
+export const followUserThunkCreator = (userId: number):ThunkType => (dispatch) => {
     return followUnfollowFlow(dispatch, userId, FollowAPI.followUser, followAC)
 }
 
