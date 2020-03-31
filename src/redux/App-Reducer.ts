@@ -1,18 +1,13 @@
 import {authMeThunkCreator} from "./Auth-Reducer";
 import {ProfileAPI} from "../Api/Api";
-
+import {IinitialStateType} from "../Types/AppTypes"
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 const INITIALIZED_USER_PHOTO = 'INITIALIZED_USER_PHOTO';
 
-type IinitialStateType = {
-    initialized: boolean,
-    userPhoto: null
-}
 let initialState:IinitialStateType = {
     initialized: false,
     userPhoto: null
 }
-
 export const appReducer = (state = initialState, action: any):IinitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:

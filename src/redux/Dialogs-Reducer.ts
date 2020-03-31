@@ -1,22 +1,10 @@
 import { DialogsAPI, ProfileAPI } from "../Api/Api";
-
+import {InitialStateType} from "../Types/DialogsTypes"
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS'
 const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
 const SET_COUNT_NEW_MESSAGES = 'SET_COUNT_NEW_MESSAGES';
 const SET_CURRENT_USER_IN_CHAT = 'SET_CURRENT_USER_IN_CHAT';
 const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
-
-
-type InitialStateType = {
-    listDialogs: [];
-    messagesWithFriend: {
-        items: [],
-        totalCount: number | null
-    };
-    countNesMessages: number | null;
-    currentUserInChat: [];
-    loading: boolean;
-}
 
 let initialState: InitialStateType = {
     listDialogs: [],
