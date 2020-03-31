@@ -17,14 +17,21 @@ let reducers = combineReducers({
     dialogs: DialogsReducer
 })
 
+//
+type RootReducerType = typeof reducers;
+export type AppStateType = ReturnType<RootReducerType>
+//Более глобальный просмотр стейта
+
+
 //extension
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers,composeEnhancers(
     applyMiddleware(thunkMiddleware)
 ));
 
 // let store = createStore(reducers,applyMiddleware(thunkMiddleware));
-
+// @ts-ignore
 window.store = store;
 
 export default store;

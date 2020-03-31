@@ -17,7 +17,7 @@ let initialState = {
     currentPage: 1,
     searchTerm: '',
     isFetching: false,
-    followingInProgress: [] as UserType[]
+    followingInProgress: [] as Array<Number>
 }
 type InitialStateType = typeof initialState;
 

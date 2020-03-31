@@ -34,7 +34,11 @@ export const initializedSuccessAC = ():InitializedSuccessACType => {
         type: INITIALIZED_SUCCESS
     }
 }
-export const initializedUserPhotoAC = (userPhoto: any) => {
+type InitializedUserPhotoACType = {
+    type: typeof INITIALIZED_USER_PHOTO,
+    userPhoto: string
+}
+export const initializedUserPhotoAC = (userPhoto: string):InitializedUserPhotoACType => {
     return{
         type: INITIALIZED_USER_PHOTO,
         userPhoto
@@ -47,7 +51,7 @@ export const initiliazedThunkCreator = () => (dispatch: any) => {
         dispatch(initializedSuccessAC());
     })
 }
-export const initiliazedUserPhotoThunkCreator = (userId : any) => async(dispatch : any) => {
+export const initiliazedUserPhotoThunkCreator = (userId : number) => async(dispatch : any) => {
     if(!userId){
         //none
     }else {

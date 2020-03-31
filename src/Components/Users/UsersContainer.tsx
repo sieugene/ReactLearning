@@ -1,13 +1,10 @@
 import { connect } from "react-redux";
 import Users from "./Users";
 import {
-	followAC,
 	followUserThunkCreator,
 	getUsersThunkCreator,
 	setCurrentPageThunkCreator,
 	setSearchTermTextThunkCreator,
-	toggleFollowingInProgressAC,
-	unFollowAC,
 	unFollowUserThunkCreator
 } from "../../redux/UsersPage-Reducer";
 import React from "react";
@@ -22,21 +19,41 @@ import {
 	getTotalUsers,
 	getUsersList,
 } from "../../redux/users-selectors";
+import { UserType } from "../../Types/UsersTypes";
+import { AppStateType } from "../../redux/store-redux";
 
 
-//эту классовую компоненту мы создали для того чтобы
-// , наша компонента Users стала чистой, а здесь мы выполняем запросы и передаем через callback
-class UsersContainerClass extends React.Component {
+type MapStatePropsType = {
+	isFetching: boolean,
+	searchTerm: string | null,
+	totalUsers: number,
+    pageSize: number,
+	currentPage: number,
+	UsersList: UserType[],
+	followingInProgress: Array<Number>
+}
+type MapDispatchPropsType = {
+	followUserThunk: (userId: number) => void,
+    unFollowUserThunk: (userId: number) => void,
+	getUsersThunk: (pageSize: number, currentPage: number) => void,
+	setCurrentPageThunk: (pageSize: number, pageNumber: number) => void,
+	setSearchTermTextThunk: (pageSize: number, text: string) => void
+}
+//делим типы пропсов, если же мы получаем напрямую через передачу другой компоненты
+//то делаем тип, то есть три типа: MapState, MapDispatch, OwnProps(этот если через компоненту)
+type PropsTypes = MapStatePropsType & MapDispatchPropsType //& OwnProps
+
+class UsersContainerClass extends React.Component<PropsTypes> {
 	componentDidMount() {
 		this.props.getUsersThunk(this.props.pageSize, this.props.currentPage)
 	}
 
 	//новый запрос, на изменение выбранной страницы
-	onPageCurrentChange = (pageNumber) => {
+	onPageCurrentChange = (pageNumber: number) => {
 		this.props.setCurrentPageThunk(this.props.pageSize, pageNumber)
 	}
 	//поиск по пользователям метод
-	onSearchChange = (text) => {
+	onSearchChange = (text: string) => {
 		this.props.setSearchTermTextThunk(this.props.pageSize, text)
 	}
 
@@ -58,8 +75,8 @@ class UsersContainerClass extends React.Component {
 	}
 }
 
-
-let mapStateToProps = (state) => {
+//указываем наш глобальный тип, а также тип mapstate
+let mapStateToProps = (state: AppStateType):MapStatePropsType => {
 	return {
 		UsersList: getUsersList(state),
 		pageSize: getPageSize(state),
@@ -70,6 +87,28 @@ let mapStateToProps = (state) => {
 		followingInProgress: getFollowingInProgress(state)
 	}
 }
+//типы также указываем где connect ctrl click для просмотра подробно, 4 параметра, если 
+//в типах не указана подробная информация(в случае санок) могут возникнуть ошибки
+//обязательно указывать все параметры
+export default compose(
+	//тут
+connect<MapStatePropsType, MapDispatchPropsType,null,AppStateType>
+	//generic
+(mapStateToProps, {
+		getUsersThunk: getUsersThunkCreator,
+		setCurrentPageThunk: setCurrentPageThunkCreator,
+		setSearchTermTextThunk: setSearchTermTextThunkCreator,
+		unFollowUserThunk: unFollowUserThunkCreator,
+		followUserThunk: followUserThunkCreator
+	})
+)(UsersContainerClass)
+
+
+
+
+
+
+
 //old method mdtp
 // let mapDispatchToProps = (dispatch) => {
 //     return {
@@ -111,16 +150,3 @@ let mapStateToProps = (state) => {
 //     }
 // )(UsersContainerClass);
 // export default UsersContainer;
-
-export default compose(
-	connect(mapStateToProps, {
-		follow: followAC,
-		unFollow: unFollowAC,
-		toggleFollowingInProgress: toggleFollowingInProgressAC,
-		getUsersThunk: getUsersThunkCreator,
-		setCurrentPageThunk: setCurrentPageThunkCreator,
-		setSearchTermTextThunk: setSearchTermTextThunkCreator,
-		unFollowUserThunk: unFollowUserThunkCreator,
-		followUserThunk: followUserThunkCreator
-	})
-)(UsersContainerClass)

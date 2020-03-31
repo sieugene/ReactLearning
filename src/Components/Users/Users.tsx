@@ -2,19 +2,33 @@ import React, { useState } from 'react';
 import Paginator from "../../assets/Paginator/Paginator";
 import User from "./User";
 import { SearchFormRedux } from "./SearchForm";
+import {UserType} from "./../../Types/UsersTypes";
 
-const Users = React.memo(props => {
+type PropsType = {
+    totalUsers: number,
+    pageSize: number,
+    currentPage: number,
+    onPageCurrentChange: (pageNumber: number) => void,
+    followUserThunk: (userId: number) => void,
+    unFollowUserThunk: (userId: number) => void,
+    followingInProgress: Array<Number>,
+    onSearchChange: (textForSearch: string) => void
+    UsersList: UserType[],
+    searchTerm?: string | null
+}
+
+const Users:React.FC<PropsType> = React.memo(props => {
     //for react form
 
-    let onChangedTextForSearch = (formData) => {
+    let onChangedTextForSearch = (formData:{searchForm:string}) => {
         props.onSearchChange(formData.searchForm)
     }
     //searching subs
     let arrayUsersFollowed = props.UsersList;
-    const isFollowed = (obj) => {
+    const isFollowed = (obj:boolean) => {
         return obj === true;
     }
-    const filterByFollowing = (item) => {
+    const filterByFollowing = (item:{followed:boolean}) => {
         if (isFollowed(item.followed)) {
             return true;
         }
