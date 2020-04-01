@@ -1,10 +1,15 @@
 import { DialogsAPI, ProfileAPI } from "../Api/Api";
-import {InitialStateType} from "../Types/DialogsTypes"
+import { InitialStateType, DialogItemType, MessageItemType } from "../Types/DialogsTypes";
+import { AppStateType } from "./store-redux";
+import { ThunkAction } from "redux-thunk";
+import { Dispatch } from "redux";
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS'
 const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
 const SET_COUNT_NEW_MESSAGES = 'SET_COUNT_NEW_MESSAGES';
 const SET_CURRENT_USER_IN_CHAT = 'SET_CURRENT_USER_IN_CHAT';
 const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
+
+
 
 let initialState: InitialStateType = {
     listDialogs: [],
@@ -17,7 +22,7 @@ let initialState: InitialStateType = {
     loading: false
 }
 
-const DialogsReducer = (state = initialState, action: any) => {
+const DialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_ALL_DIALOGS:
             return {
@@ -55,12 +60,14 @@ const DialogsReducer = (state = initialState, action: any) => {
             return state
     }
 }
-
+type ActionsType = SetAllDialogsACType | SetCountNewMessagesType | SetCurrentUserInChatACType |
+    SetMessagesListWithFriendACType | SetSuccessLoadingACType
+//actions creators
 type SetAllDialogsACType = {
     type: typeof SET_ALL_DIALOGS
-    allDialogs: object
+    allDialogs: DialogItemType[]
 }
-export const setAllDialogsAC = (allDialogs: Object): SetAllDialogsACType => {
+export const setAllDialogsAC = (allDialogs: DialogItemType[]): SetAllDialogsACType => {
     return {
         type: SET_ALL_DIALOGS, allDialogs
     }
@@ -86,10 +93,10 @@ export const setCurrentUserInChatAC = (profile: object): SetCurrentUserInChatACT
 
 type SetMessagesListWithFriendACType = {
     type: typeof SET_MESSAGES_WITH_FRIEND
-    messages: object
-    totalCount?: number | null
+    messages: MessageItemType[]
+    totalCount: number | null
 }
-export const setMessagesListWithFriendAC = (messages: object, totalCount?: number):
+export const setMessagesListWithFriendAC = (messages: MessageItemType[], totalCount: number):
     SetMessagesListWithFriendACType => {
     return {
         type: SET_MESSAGES_WITH_FRIEND, messages, totalCount
@@ -104,14 +111,17 @@ export const setSuccessLoadingAC = (loading: boolean): SetSuccessLoadingACType =
         type: SET_SUCCESS_LOADING, loading
     }
 }
-
-export const startChattingThunkCreator = (userId: number) => async (dispatch: any) => {
+//thunks
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsType>
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+export const startChattingThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     await DialogsAPI.startChatting(userId)
     // console.log('startChatting')
     // console.log(response)
 }
 
-export const getAllDialogsThunkCreator = () => async (dispatch: any) => {
+export const getAllDialogsThunkCreator = (): ThunkActionType => async (dispatch) => {
     dispatch(setSuccessLoadingAC(true));
     let response = await DialogsAPI.getAllDialogs()
     dispatch(setSuccessLoadingAC(false));
@@ -121,7 +131,7 @@ export const getAllDialogsThunkCreator = () => async (dispatch: any) => {
 }
 
 
-export const getListMessagesWithFriendThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getListMessagesWithFriendThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     let response = await DialogsAPI.getListMessagesWithFriend(userId)
     dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
     // console.log('getListMessagesWithFriend');
@@ -133,8 +143,16 @@ export const getListMessagesWithFriendThunkCreator = (userId: number) => async (
         dispatch(setSuccessLoadingAC(false));
     })
 }
-export const syncMessagesWithFrinedThunkCreator = (userId: number) => (dispatch: any) => {
-    DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+type GetListMessageWithFriendResponseType = {
+    response: {}
+    data: {
+        items: MessageItemType[]
+        totalCount: number
+        error: null | string
+    }
+}
+export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response: GetListMessageWithFriendResponseType) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
         // console.log('getListMessagesWithFriend');
         // console.log(response.data)
@@ -142,12 +160,12 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number) => (dispatch:
     console.log('sync: User:', userId);
 }
 
-export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string) => async (dispatch: any) => {
+export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch) => {
     await DialogsAPI.sendMessageToFriend(userId, newMessage);
     dispatch(getListMessagesWithFriendThunkCreator(userId));
 }
 
-export const getListNewMessagesThunkCreator = (userId: number) => async (dispatch: any) => {
+export const getListNewMessagesThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     let response = await DialogsAPI.listNewMessage();
     dispatch(setCountNewMessages(response.data))
     // console.log('getListNewMessages');
@@ -155,14 +173,14 @@ export const getListNewMessagesThunkCreator = (userId: number) => async (dispatc
 }
 type ReponseGetReturnMessageDateThunkCreatorType = {
     response: {}
-    data: {
-        items: any
-        totalCount: number | null
-    }
+    data: MessageItemType[]
+    totalCount: number | null
 }
-export const getReturnMessageDateThunkCreator = (userId: number, date: string) => async (dispatch: any) => {
+//проверить
+export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {
     let response: ReponseGetReturnMessageDateThunkCreatorType = await DialogsAPI.returnMessageThanDate(userId, date);
-    dispatch(setMessagesListWithFriendAC(response.data));
+    if (!response.totalCount) response.totalCount = 0
+    dispatch(setMessagesListWithFriendAC(response.data, response.totalCount));
 }
 
 

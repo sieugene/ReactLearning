@@ -1,5 +1,8 @@
 import { meAPI, securityAPI } from "../Api/Api";
 import { stopSubmit } from "redux-form";
+import { AppStateType } from "./store-redux";
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 
 const SET_AUTH_USER = 'SET_AUTH_USER';
 const SET_SUCCESS_CAPTCHA = 'SET_SUCCESS_CAPTCHA';
@@ -25,7 +28,7 @@ let initialState = {
 //но указав as, даем понятие четкого типа
 
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_AUTH_USER:
         case SET_SUCCESS_CAPTCHA:
@@ -42,6 +45,10 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
             return state
     }
 }
+
+type ActionsType = SetAuthUserACType | SetSuccessCaptchaACType | 
+                    ToogleLoadingACType | SetSuccessCaptchaACType
+//actions creators
 type DataSetAuthUserACType = {
     id: number | null
     login: string | null
@@ -61,12 +68,6 @@ export const setAuthUserAC =
         }
     }
 
-type SetSuccessCaptchaACType = {
-    type: typeof SET_SUCCESS_CAPTCHA,
-    data: {
-        captcha: string
-    }
-}
 type ToogleLoadingACType = {
     type: typeof TOOGLE_LOADING,
     loading: boolean
@@ -77,12 +78,22 @@ export const toogleLoadingAC = (loading: boolean): ToogleLoadingACType => {
         loading
     }
 }
+type SetSuccessCaptchaACType = {
+    type: typeof SET_SUCCESS_CAPTCHA,
+    data: {
+        captcha: string
+    }
+}
 export const setSuccessCaptchaAC = (captcha: string): SetSuccessCaptchaACType => {
     return {
         type: SET_SUCCESS_CAPTCHA,
         data: { captcha }
     }
 }
+//thunks
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsType>
+type ThunkType = ThunkAction<void,AppStateType,unknown,ActionsType>
 
 type AuthMeThunkCreatorType = {
     response: {}
@@ -95,7 +106,7 @@ type AuthMeThunkCreatorType = {
         }
     }
 }
-export const authMeThunkCreator = () => (dispatch: any) => {
+export const authMeThunkCreator = ():ThunkType => (dispatch) => {
     dispatch(toogleLoadingAC(true));
     return meAPI.me().then((response: AuthMeThunkCreatorType) => {
         if (response.data.resultCode === 0) {
@@ -114,7 +125,8 @@ type loginThunkCreatorType = {
         messages: string[]
     }
 }
-export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: string) => (dispatch: any) => {
+export const loginThunkCreator = 
+(email: string, password: string, rememberMe: boolean, captcha: string):ThunkType => (dispatch:any) => {
     dispatch(toogleLoadingAC(true));
     meAPI.login(email, password, rememberMe, captcha).then((response: loginThunkCreatorType) => {
         if (response.data.resultCode === 0) {
@@ -137,7 +149,7 @@ type LogoutThunkCreatorType = {
         resultCode: number
     }
 }
-export const logoutThunkCreator = () => (dispatch: any) => {
+export const logoutThunkCreator = ():ThunkType => (dispatch) => {
     dispatch(toogleLoadingAC(true));
     meAPI.logout().then((response: LogoutThunkCreatorType) => {
         if (response.data.resultCode === 0) {
@@ -148,7 +160,7 @@ export const logoutThunkCreator = () => (dispatch: any) => {
         }
     })
 }
-export const getCaptchaThunkCreator = () => async (dispatch: any) => {
+export const getCaptchaThunkCreator = ():ThunkType => async (dispatch) => {
     dispatch(toogleLoadingAC(true));
     let response = await securityAPI.getCaptcha();
     dispatch(setSuccessCaptchaAC(response.data.url))
