@@ -1,4 +1,7 @@
 export type IinitialStateType = {
     initialized: boolean,
-    userPhoto: null | string
+    userPhoto: {
+        small: string | null
+        large: string | null
+    }
 }

@@ -18,8 +18,8 @@ export type DialogItemType = {
     lastUserActivityDate: string
     newMessagesCount: number
     photos: {
-        small: string
-        large: string
+        small: string | null
+        large: string | null
     }
 }
 export type MessageItemType = {

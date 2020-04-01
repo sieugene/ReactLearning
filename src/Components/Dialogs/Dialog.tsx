@@ -1,8 +1,13 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import userPhoto from '../../assets/images/userPhoto.png'
+import { DialogItemType } from '../../Types/DialogsTypes';
 
-const Dialog = (props) => {
+type PropsType = {
+    dialog: DialogItemType
+}
+
+const Dialog: React.FC<PropsType> = (props) => {
     let lastDataActivity = props.dialog.lastDialogActivityDate;
     let lastDataActivShort = lastDataActivity.substr(0, lastDataActivity.length - 12)
     return (

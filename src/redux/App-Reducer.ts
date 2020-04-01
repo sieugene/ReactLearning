@@ -10,7 +10,10 @@ const INITIALIZED_USER_PHOTO = 'INITIALIZED_USER_PHOTO';
 
 let initialState:IinitialStateType = {
     initialized: false,
-    userPhoto: null
+    userPhoto: {
+        small: '',
+        large: ''
+    }
 }
 export const appReducer = (state = initialState, action: ActionsType):IinitialStateType => {
     switch (action.type) {
@@ -42,9 +45,9 @@ export const initializedSuccessAC = ():InitializedSuccessACType => {
 }
 type InitializedUserPhotoACType = {
     type: typeof INITIALIZED_USER_PHOTO,
-    userPhoto: string
+    userPhoto: {small:string,large:string}
 }
-export const initializedUserPhotoAC = (userPhoto: string):InitializedUserPhotoACType => {
+export const initializedUserPhotoAC = (userPhoto: {small:string,large:string}):InitializedUserPhotoACType => {
     return{
         type: INITIALIZED_USER_PHOTO,
         userPhoto

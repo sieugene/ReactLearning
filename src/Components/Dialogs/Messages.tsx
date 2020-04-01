@@ -3,36 +3,53 @@ import s from "./Dialogs.module.css";
 import { ReduxMessageForm } from "./MessageForm";
 import userPhoto from './../../assets/images/userPhoto.png'
 import { NavLink } from "react-router-dom";
+import { CurrentUserType, MessageItemType } from "./../../Types/DialogsTypes"
 
 
 
+type PropsType = {
+    userId: number
+    sendMessageToFriendThunk: (userId: number, newMessage: string | null) => void
+    currentUserInChat: CurrentUserType | {} | any
+    authUserPhoto: {
+        small: string | null
+        large: string | null
+    }
+    messagesWithFriend: {
+        items: MessageItemType[],
+        totalCount: number | null
+    };
+    getReturnMessageDateThunk: (userId: number, date: string) => void
+}
 
-const Messages = (props) => {
-    let userId = props.match.params.userId;
-    let onTextInMessage = (formData) => {
+const Messages: React.FC<PropsType> = (props) => {
+    let userId = props.userId;
+    //problems with the typing of the form data
+    let onTextInMessage = (formData: any) => {
         props.sendMessageToFriendThunk(userId, formData.newMessage)
     }
 
     const regEx = /[^\d:]/g;
-    const addedAt = (date) => {
+    const addedAt = (date: string) => {
         let format = date.substr(date.length - 12)
         let result = format.replace(regEx, '')
         return result.split(':')[0] + ':' + result.split(':')[1];
     }
 
     //take current user photo
-    let getCurrentUserPhoto = props.currentUserInChat.length === 0 ? '' :
+
+    let getCurrentUserPhoto = !props.currentUserInChat.photos ? ' ' :
         !props.currentUserInChat.photos.large || !props.currentUserInChat.photos.small ?
             <img src={userPhoto} alt={''} /> : <img src={props.currentUserInChat.photos.large} alt={''} />;
     //take auth profile photo
-    let getUserPhoto = !props.authUserPhoto ? ' ' :
+    let getUserPhoto = !props.authUserPhoto.small || !props.authUserPhoto.large ? ' ' :
         <img src={props.authUserPhoto.small} alt={''} /> || <img src={props.authUserPhoto.large} alt={''} />
     return (
         <div className="message__main container">
             <div className="row">
                 <div className="col s12">
                     <div className={s.messagesContain}>
-                        {props.currentUserInChat.length === 0 ? '' :
+                        {!props.currentUserInChat ? '' :
                             <div className={s.chatTittle}>
                                 <h3 className='left-align'>
                                     <NavLink to='/Dialogs'>
