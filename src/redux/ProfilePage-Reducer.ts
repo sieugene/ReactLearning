@@ -1,6 +1,9 @@
 import { ProfileAPI } from "../Api/Api";
 import { stopSubmit } from "redux-form";
 import { ProfileType } from "../Types/ProfileTypes";
+import { AppStateType } from "./store-redux";
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
@@ -14,7 +17,7 @@ let initialState = {
 }
 type InitialStateType = typeof initialState;
 
-const profilePageReducer = (state = initialState, action: any): InitialStateType => {
+const profilePageReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case SET_USER_PROFILE:
             return {
@@ -41,6 +44,9 @@ const profilePageReducer = (state = initialState, action: any): InitialStateType
     }
 }
 
+type ActionsType = SetUserProfileACType | SetStatusUserACType | UploadNewPhotoACType |
+    SetLoadingACType
+//actions creator
 type SetUserProfileACType = {
     type: typeof SET_USER_PROFILE,
     profile: ProfileType
@@ -77,12 +83,17 @@ export const setLoadingAC = (loading: boolean): SetLoadingACType => {
         type: SET_SUCCESS_LOADING, loading
     }
 }
-export const getProfileThunkCreator = (userId: number) => {
-    return (dispatch: any) => {
+//thunks
+type GetStateType = () => AppStateType
+type DispatchType = Dispatch<ActionsType>
+type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+
+export const getProfileThunkCreator = (userId: number): ThunkActionType => {
+    return async (dispatch) => {
         if (!userId) {
             //none
         } else {
-            ProfileAPI.getProfile(userId)
+            await ProfileAPI.getProfile(userId)
                 .then((response: { data: ProfileType; }) => {
                     dispatch(setUserProfileAC(response.data));
                 })
@@ -90,12 +101,12 @@ export const getProfileThunkCreator = (userId: number) => {
     }
 }
 //получение статуса пользователя
-export const setStatusUserThunkCreator = (userId: number) => {
-    return (dispatch: any) => {
+export const setStatusUserThunkCreator = (userId: number): ThunkActionType => {
+    return async (dispatch) => {
         if (!userId) {
             //none
         } else {
-            ProfileAPI.getStatus(userId).then((response: { data: string; }) => {
+            await ProfileAPI.getStatus(userId).then((response: { data: string; }) => {
                 dispatch(setStatusUserAC(response.data))
             })
         }
@@ -106,10 +117,10 @@ type UpdateStatusResponseType = {
         resultCode: number
     }
 }
-export const updateStatusUserThunkCreator = (userId: number, newStatus: string | null) => {
-    return (dispatch: any) => {
+export const updateStatusUserThunkCreator = (userId: number, newStatus: string | null): ThunkActionType => {
+    return async (dispatch) => {
         //проверка на изменение входящего текста
-        ProfileAPI.getStatus(userId).then((response: { data: string }) => {
+        await ProfileAPI.getStatus(userId).then((response: { data: string }) => {
             dispatch(setStatusUserAC(response.data))
             if (!newStatus) {
                 alert('field empty')
@@ -134,11 +145,14 @@ type UpdateProfileResponseType = {
         messages: string | any[]
     }
 }
-export const updateProfileUserThunkCreator = (profile: ProfileType) => (dispatch: any, getState: any) => {
-    return ProfileAPI.updateProfile(profile).then((response: UpdateProfileResponseType) => {
+export const updateProfileUserThunkCreator = (profile: ProfileType): ThunkActionType => 
+    async(dispatch: any, getState) => {
+    return await ProfileAPI.updateProfile(profile).then((response: UpdateProfileResponseType) => {
         if (response.data.resultCode === 0) {
             const userId = getState().Auth.id;
-            dispatch(getProfileThunkCreator(userId));
+            if (userId) {
+                dispatch(getProfileThunkCreator(userId));
+            }
         } else {
             let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
             dispatch(stopSubmit("editProfile", { _error: messageError }))
@@ -148,7 +162,7 @@ export const updateProfileUserThunkCreator = (profile: ProfileType) => (dispatch
 
 }
 
-export const uploadNewPhotoThunkCreator = (photos: string) => async (dispatch: any) => {
+export const uploadNewPhotoThunkCreator = (photos: string): ThunkActionType => async (dispatch) => {
     dispatch(setLoadingAC(true));
     let response = await ProfileAPI.uploadPhoto(photos)
     dispatch(setLoadingAC(false));
