@@ -1,13 +1,21 @@
 import React from 'react';
 import { Redirect } from "react-router-dom";
-import Preloader from './../../assets/preloader/Preloader';
+import Preloader from '../../assets/preloader/Preloader';
 import { ReduxLoginForm } from './LoginForm';
 
-const Login = (props) => {
-    let onSubmit = (formData) => {
+type PropsType = {
+    isAuth: boolean,
+    loading: boolean,
+    captcha: string,
+    loginThunk: (email: string, password: string, rememberMe: boolean, captcha: string) => void
+}
+
+const Login:React.FC<PropsType> = (props) => {
+    let onSubmit = (formData:any) => {
         //авторизация
         props.loginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
+
     if (props.isAuth) {
         return <Redirect to={'/profile'} />
     }

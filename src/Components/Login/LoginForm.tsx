@@ -9,8 +9,7 @@ type PropsType = {
     captcha?: string
 }
 
-
-const LoginForm: React.FC<InjectedFormProps & PropsType> = (props) => {
+const LoginForm: React.FC<PropsType & InjectedFormProps<{}, PropsType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -41,4 +40,4 @@ const LoginForm: React.FC<InjectedFormProps & PropsType> = (props) => {
     )
 }
 
-export const ReduxLoginForm = reduxForm({ form: 'login' })(LoginForm)
+export const ReduxLoginForm = reduxForm<{}, PropsType>({ form: 'login' })(LoginForm)

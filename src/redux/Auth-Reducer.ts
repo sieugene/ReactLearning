@@ -21,7 +21,7 @@ let initialState = {
     login: null as string | null,
     email: null as string | null,
     isAuth: false,
-    captcha: null as string | null,
+    captcha: '' as string,
     loading: false
 }
 //коротая запись установки типа, автоматически
