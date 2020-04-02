@@ -2,7 +2,12 @@ import React from 'react';
 import { NavLink } from "react-router-dom";
 import s from './Sidebar.module.css';
 
-const Sidebar = (props) => {
+type PropsType = {
+    isAuth: boolean
+    logoutThunk: () => void
+}
+
+const Sidebar:React.FC<PropsType> = (props) => {
     return (
         <div className={s.sidebar}>
             <ul>

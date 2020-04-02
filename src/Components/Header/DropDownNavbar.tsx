@@ -1,7 +1,13 @@
 import React from 'react';
-import Sidebar from './../Sidebar/SIdebar';
+import Sidebar from '../Sidebar/SIdebar';
 
-const DropDownNavbar = (props) => {
+
+type PropsType = {
+    toggle: boolean
+    logoutThunk: () => void
+    isAuth: boolean
+}
+const DropDownNavbar:React.FC<PropsType> = (props) => {
     let addClassForToggle = props.toggle ? ' active' : '';
     return (
         <div className="container blockDrop">

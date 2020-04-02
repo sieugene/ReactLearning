@@ -1,12 +1,25 @@
 import React from 'react';
 import s from './GlobalErrors.module.css'
 
-class GlobalErrors extends React.Component {
-    constructor(props) {
+
+type StateType = {
+    globalErrors: null | string
+}
+type PromiseRejectionType = {
+    reason: {
+        message: string;
+        request: {
+            response: string;
+        }
+    }
+}
+//<{}> because props are empty, only read
+class GlobalErrors extends React.Component<{},StateType> {
+    constructor(props: Readonly<{}>) {
         super(props);
         this.state = { globalErrors: null };
     }
-    catchAllUnhandelErrors = (promiseRejectionEvent) => {
+    catchAllUnhandelErrors = (promiseRejectionEvent:PromiseRejectionType) => {
         // alert(promiseRejectionEvent.reason.message);
         //console.log(promiseRejectionEvent)
         this.setState({

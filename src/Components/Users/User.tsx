@@ -1,8 +1,16 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import userPhoto from './../../assets/images/userPhoto.png'
+import { UserType } from '../../Types/UsersTypes';
 
-const User = ({ user, unFollowUserThunk, followUserThunk, followingInProgress }) => {
+type PropsType = {
+    user: UserType
+    unFollowUserThunk: (userId: number) => void
+    followUserThunk: (userId: number) => void
+    followingInProgress: Array<Number>
+}
+
+const User:React.FC<PropsType> = ({ user, unFollowUserThunk, followUserThunk, followingInProgress }) => {
     return (
         <div className='col xl6 s12 l6 m12'>
             <div className="card">

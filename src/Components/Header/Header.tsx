@@ -5,12 +5,25 @@ import s from './Header.module.css';
 import userPhoto from './../../assets/images/userPhoto.png'
 import DropDownNavbar from './DropDownNavbar';
 
-
-const Header = (props) => {
-    let getUserPhoto = () => {
-        return !props.userPhoto ? <img src={userPhoto} alt='' className={s.userPhoto} /> :
-            <img src={props.userPhoto.small} alt='' className={s.userPhoto} /> || <img src={props.userPhoto.large} alt={''} className={s.userPhoto} />;
+type PropsType = {
+    userPhoto: {
+        small: string | null
+        large: string | null
     }
+    isAuth: boolean
+    login: string | null
+    dropDownToogle: () => void
+    logoutThunk: () => void
+    toggle: boolean
+}
+
+const Header: React.FC<PropsType> = (props) => {
+    let getUserPhoto = !props.userPhoto.small || !props.userPhoto.large ?
+        <img src={userPhoto} alt='' className={s.userPhoto} />
+        :
+        <img src={props.userPhoto.small} alt={''} className={s.userPhoto} /> ||
+        <img src={props.userPhoto.large} alt={''} className={s.userPhoto} />
+
     return (
         <>
             <nav className={'grey darken-4'}>
@@ -21,9 +34,9 @@ const Header = (props) => {
                             {props.isAuth ?
                                 <>
                                     <li><h5>{props.login}</h5></li>
-                                    <p to='/profile' className={s.userlink}>
+                                    <p className={s.userlink}>
                                         <li className='btn-floating btn-large waves-effect waves-light grey darken-4'>
-                                            {getUserPhoto()}
+                                            {getUserPhoto}
                                         </li>
                                     </p>
                                     <li>
@@ -41,7 +54,7 @@ const Header = (props) => {
                     </div>
                 </div>
             </nav>
-          <DropDownNavbar logoutThunk={props.logoutThunk} toggle={props.toggle} isAuth={props.isAuth} />
+            <DropDownNavbar logoutThunk={props.logoutThunk} toggle={props.toggle} isAuth={props.isAuth} />
         </>
     )
 }
