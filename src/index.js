@@ -10,9 +10,9 @@ import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 
 
-
+// basename={process.env.PUBLIC_URL}
 ReactDOM.render(
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
         <Provider
             store={store} >
             <App />

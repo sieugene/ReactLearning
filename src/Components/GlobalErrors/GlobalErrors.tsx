@@ -11,21 +11,27 @@ type PromiseRejectionType = {
         request: {
             response: string;
         }
-    }
+    } | string
 }
 //<{}> because props are empty, only read
-class GlobalErrors extends React.Component<{},StateType> {
+class GlobalErrors extends React.Component<{}, StateType> {
     constructor(props: Readonly<{}>) {
         super(props);
         this.state = { globalErrors: null };
     }
-    catchAllUnhandelErrors = (promiseRejectionEvent:PromiseRejectionType) => {
+    catchAllUnhandelErrors = (promiseRejectionEvent: PromiseRejectionType) => {
         // alert(promiseRejectionEvent.reason.message);
-        //console.log(promiseRejectionEvent)
-        this.setState({
-            globalErrors: promiseRejectionEvent.reason.message +
-                '(' + promiseRejectionEvent.reason.request.response + ')'
-        })
+        console.log(promiseRejectionEvent)
+        if (typeof (promiseRejectionEvent.reason) === "object") {
+            this.setState({
+                globalErrors: promiseRejectionEvent.reason.message +
+                    '(' + promiseRejectionEvent.reason.request.response + ')'
+            })
+        } if (typeof (promiseRejectionEvent.reason) === "string") {
+            this.setState({
+                globalErrors: promiseRejectionEvent.reason
+            })
+        }
         setTimeout(() =>
             this.setState({
                 globalErrors: null

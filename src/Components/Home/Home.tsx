@@ -1,8 +1,8 @@
 import React from 'react';
 import post2 from './../../assets/images/post2.jpg'
 
-const Home = (props) => {
-    const postBackground = (img) => {
+const Home = () => {
+    const postBackground = (img:string) => {
         return {
             backgroundImage: 'url(' + img + ')',
             height: '35vh',
