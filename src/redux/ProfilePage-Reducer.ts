@@ -1,6 +1,6 @@
 import { ProfileAPI } from "../Api/Api";
 import { stopSubmit } from "redux-form";
-import { ProfileType } from "../Types/ProfileTypes";
+import { ProfileType, PhotosType } from "../Types/ProfileTypes";
 import { AppStateType } from "./store-redux";
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -11,7 +11,15 @@ const SET_NEW_PHOTO = 'SET_NEW_PHOTO'
 const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
 
 let initialState = {
-    profile: null as ProfileType | {} | null,
+    profile: {
+        userId: 0,
+        lookingForAJob: false,
+        lookingForAJobDescription: '',
+        fullName: '',
+        contacts: {},
+        photos: {small: '',large: ''},
+        aboutMe: ''
+    } as ProfileType,
     status: "",
     loading: false
 }
@@ -67,9 +75,9 @@ export const setStatusUserAC = (status: string): SetStatusUserACType => {
 }
 type UploadNewPhotoACType = {
     type: typeof SET_NEW_PHOTO,
-    photos: string
+    photos: PhotosType
 }
-export const uploadNewPhotoAC = (photos: string): UploadNewPhotoACType => {
+export const uploadNewPhotoAC = (photos: PhotosType): UploadNewPhotoACType => {
     return {
         type: SET_NEW_PHOTO, photos
     }
@@ -145,24 +153,28 @@ type UpdateProfileResponseType = {
         messages: string | any[]
     }
 }
-export const updateProfileUserThunkCreator = (profile: ProfileType): ThunkActionType => 
-    async(dispatch: any, getState) => {
-    return await ProfileAPI.updateProfile(profile).then((response: UpdateProfileResponseType) => {
-        if (response.data.resultCode === 0) {
-            const userId = getState().Auth.id;
-            if (userId) {
-                dispatch(getProfileThunkCreator(userId));
+export const updateProfileUserThunkCreator = (profile: ProfileType): ThunkActionType =>
+    async (dispatch: any, getState) => {
+        dispatch(setLoadingAC(true));
+        return await ProfileAPI.updateProfile(profile).then((response: UpdateProfileResponseType) => {
+            if (response.data.resultCode === 0) {
+                const userId = getState().Auth.id;
+                if (userId) {
+                    dispatch(getProfileThunkCreator(userId));
+                    dispatch(setLoadingAC(false));
+                }
+                dispatch(setLoadingAC(false));
+            } else {
+                let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+                dispatch(stopSubmit("editProfile", { _error: messageError }))
+                dispatch(setLoadingAC(false));
+                return Promise.reject(response.data.messages[0]);
             }
-        } else {
-            let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
-            dispatch(stopSubmit("editProfile", { _error: messageError }))
-            return Promise.reject(response.data.messages[0]);
-        }
-    })
+        })
 
-}
+    }
 
-export const uploadNewPhotoThunkCreator = (photos: string): ThunkActionType => async (dispatch) => {
+export const uploadNewPhotoThunkCreator = (photos: object): ThunkActionType => async (dispatch) => {
     dispatch(setLoadingAC(true));
     let response = await ProfileAPI.uploadPhoto(photos)
     dispatch(setLoadingAC(false));

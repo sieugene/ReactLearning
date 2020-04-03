@@ -1,8 +1,16 @@
 import s from "./Profile.module.css";
 import React from "react";
+import { ProfileType } from './../../Types/ProfileTypes'
 
+type PropsType = {
+    id: number | null
+    urlMatchParams: string
+    setEditProfile: (editMode: boolean) => void
+    profile: ProfileType
+    status: string | null
+}
 
-const ProfileData = (props) => {
+const ProfileData: React.FC<PropsType> = (props) => {
     return (
         <div className={s.infoProfile}>
             <div className={s.editButton}>
@@ -54,13 +62,17 @@ const ProfileData = (props) => {
                     <p>{props.profile.lookingForAJobDescription}</p>
                 </div>
             </div>
-            {Object.keys(props.profile.contacts).map(key =>
+            {Object.keys(props.profile.contacts).map((key: any) =>
                 <Contact key={key} contactTitle={key} contactBody={props.profile.contacts[key]} />
             )}
         </div>
     )
 }
-const Contact = ({ contactTitle, contactBody }) => {
+type ContactsType = {
+    contactTitle: string
+    contactBody: string | {}
+}
+const Contact: React.FC<ContactsType> = ({ contactTitle, contactBody }) => {
     return (
         <div>
             {!!contactBody &&
@@ -69,9 +81,13 @@ const Contact = ({ contactTitle, contactBody }) => {
                         <b>{contactTitle}: </b>
                     </div>
                     <div className="col s8 right-align">
-                        <a href={contactBody} target="_blank" rel="noopener noreferrer">
-                            {contactBody}
-                        </a>
+                        {typeof (contactBody) === "string" ?
+                            <a href={contactBody} target="_blank" rel="noopener noreferrer">
+                                {contactBody}
+                            </a>
+                            :
+                            ' ' + console.log('ERR_3000__contact')
+                        }
                     </div>
                 </div>
             }

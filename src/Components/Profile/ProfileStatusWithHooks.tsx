@@ -5,7 +5,7 @@ type PropsType = {
     status: string | null
     updateStatusUserThunk: (userId: number, status: string | null) => void
     urlMatchParams: string | number
-    id: number
+    id: number | null
 }
 
 
@@ -19,7 +19,9 @@ const ProfileStatusWithHooks: React.FC<PropsType> = React.memo(props => {
     }
     const deactivateEditMode = () => {
         setEditMode(false);
-        props.updateStatusUserThunk(props.id, status)
+        if (props.id) {
+            props.updateStatusUserThunk(props.id, status)
+        }
     }
     let onChangeTextStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value);

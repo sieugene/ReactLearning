@@ -6,26 +6,38 @@ import ReduxEditProfile from "./ProfileDataForm";
 import userPhoto from './../../assets/images/userPhoto.png'
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import ProfileData from "./ProfileData";
+import { ProfileType } from '../../Types/ProfileTypes';
 
-const Profile = React.memo(props => {
+type PropsType = {
+    profile: ProfileType
+    updateProfileUserThunk: (profile: ProfileType) => void
+    uploadNewPhotoThunk: (photo: object) => void
+    loading: boolean
+    id: number | null
+    urlMatchParams: string
+    status: string | null
+    updateStatusUserThunk: (userId: number, newStatus: string | null) => void
+}
+const Profile: React.FC<PropsType> = React.memo(props => {
     if (!props.profile) {
         return <Preloader />
     }
     let [editProfile, setEditProfile] = useState(false);
     //update profile
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: any) => {
         if (formData === props.profile) {
             setEditProfile(false)
         } else {
-            props.updateProfileUserThunk(formData).then(() => {
-                setEditProfile(false)
-            })
+            props.updateProfileUserThunk(formData)
+            setEditProfile(false)
         }
     }
     //upload photo
-    let onUploadNewPhoto = (e) => {
-        if (e.target.files.length) {
-            props.uploadNewPhotoThunk(e.target.files[0])
+    let onUploadNewPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files !== null) {
+            if (e.target.files.length) {
+                props.uploadNewPhotoThunk(e.target.files[0])
+            }
         }
     }
     return (
@@ -61,7 +73,6 @@ const Profile = React.memo(props => {
                                 :
                                 <ProfileData profile={props.profile}
                                     status={props.status}
-                                    updateStatusUserThunk={props.updateStatusUserThunk}
                                     id={props.id}
                                     urlMatchParams={props.urlMatchParams}
                                     setEditProfile={setEditProfile}
