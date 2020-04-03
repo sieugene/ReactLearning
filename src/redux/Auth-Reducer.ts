@@ -1,4 +1,4 @@
-import { meAPI, securityAPI } from "../Api/Api";
+import { meAPI, securityAPI, ResultCodesEnum } from "../Api/Api";
 import { stopSubmit } from "redux-form";
 import { AppStateType } from "./store-redux";
 import { Dispatch } from "redux";
@@ -36,18 +36,18 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
                 ...state,
                 ...action.data
             }
-        case TOOGLE_LOADING: 
-        return{
-            ...state,
-            loading: action.loading
-        }
+        case TOOGLE_LOADING:
+            return {
+                ...state,
+                loading: action.loading
+            }
         default:
             return state
     }
 }
 
-type ActionsType = SetAuthUserACType | SetSuccessCaptchaACType | 
-                    ToogleLoadingACType | SetSuccessCaptchaACType
+type ActionsType = SetAuthUserACType | SetSuccessCaptchaACType |
+    ToogleLoadingACType | SetSuccessCaptchaACType
 //actions creators
 type DataSetAuthUserACType = {
     id: number | null
@@ -93,27 +93,18 @@ export const setSuccessCaptchaAC = (captcha: string): SetSuccessCaptchaACType =>
 //thunks
 type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsType>
-type ThunkType = ThunkAction<void,AppStateType,unknown,ActionsType>
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
 
-type AuthMeThunkCreatorType = {
-    response: {}
-    data: {
-        resultCode: number;
-        data: {
-            id: number;
-            login: string;
-            email: string
-        }
-    }
-}
-export const authMeThunkCreator = ():ThunkType => (dispatch) => {
+export const authMeThunkCreator = (): ThunkType => async (dispatch) => {
     dispatch(toogleLoadingAC(true));
-    return meAPI.me().then((response: AuthMeThunkCreatorType) => {
-        if (response.data.resultCode === 0) {
+    return await meAPI.me().then((response) => {
+        //вставили enum, который дает понятие возвращаемых ошибок
+        //подробнее в api.ts
+        if (response.data.resultCode === ResultCodesEnum.Success) {
             let { id, login, email } = response.data.data;
             dispatch(setAuthUserAC(id, login, email, true))
             dispatch(toogleLoadingAC(false));
-        }else{
+        } else {
             dispatch(toogleLoadingAC(false));
         }
     })
@@ -125,42 +116,42 @@ type loginThunkCreatorType = {
         messages: string[]
     }
 }
-export const loginThunkCreator = 
-(email: string, password: string, rememberMe: boolean, captcha: string):ThunkType => (dispatch:any) => {
-    dispatch(toogleLoadingAC(true));
-    meAPI.login(email, password, rememberMe, captcha).then((response: loginThunkCreatorType) => {
-        if (response.data.resultCode === 0) {
-            dispatch(authMeThunkCreator())
-            dispatch(toogleLoadingAC(false));
-        } else {
-            if (response.data.resultCode === 10) {
-                dispatch(getCaptchaThunkCreator());
+export const loginThunkCreator =
+    (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => (dispatch: any) => {
+        dispatch(toogleLoadingAC(true));
+        meAPI.login(email, password, rememberMe, captcha).then((response: any) => {
+            if (response.data.resultCode === 0) {
+                dispatch(authMeThunkCreator())
+                dispatch(toogleLoadingAC(false));
+            } else {
+                if (response.data.resultCode === 10) {
+                    dispatch(getCaptchaThunkCreator());
+                    dispatch(toogleLoadingAC(false));
+                }
+                let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+                dispatch(stopSubmit("login", { _error: messageError }))
                 dispatch(toogleLoadingAC(false));
             }
-            let messageError = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
-            dispatch(stopSubmit("login", { _error: messageError }))
-            dispatch(toogleLoadingAC(false));
-        }
-    })
-}
+        })
+    }
 type LogoutThunkCreatorType = {
     response: {};
     data: {
         resultCode: number
     }
 }
-export const logoutThunkCreator = ():ThunkType => (dispatch) => {
+export const logoutThunkCreator = (): ThunkType => (dispatch) => {
     dispatch(toogleLoadingAC(true));
-    meAPI.logout().then((response: LogoutThunkCreatorType) => {
+    meAPI.logout().then((response: any) => {
         if (response.data.resultCode === 0) {
             dispatch(setAuthUserAC(null, null, null, false))
             dispatch(toogleLoadingAC(false));
-        }else{
+        } else {
             dispatch(toogleLoadingAC(false));
         }
     })
 }
-export const getCaptchaThunkCreator = ():ThunkType => async (dispatch) => {
+export const getCaptchaThunkCreator = (): ThunkType => async (dispatch) => {
     dispatch(toogleLoadingAC(true));
     let response = await securityAPI.getCaptcha();
     dispatch(setSuccessCaptchaAC(response.data.url))

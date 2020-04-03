@@ -152,7 +152,7 @@ type GetListMessageWithFriendResponseType = {
     }
 }
 export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
-    await DialogsAPI.getListMessagesWithFriend(userId).then((response: GetListMessageWithFriendResponseType) => {
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
         // console.log('getListMessagesWithFriend');
         // console.log(response.data)
@@ -178,7 +178,7 @@ type ReponseGetReturnMessageDateThunkCreatorType = {
 }
 //проверить
 export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {
-    let response: ReponseGetReturnMessageDateThunkCreatorType = await DialogsAPI.returnMessageThanDate(userId, date);
+    let response: any = await DialogsAPI.returnMessageThanDate(userId, date);
     if (!response.totalCount) response.totalCount = 0
     dispatch(setMessagesListWithFriendAC(response.data, response.totalCount));
 }
