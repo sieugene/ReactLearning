@@ -9,9 +9,15 @@ type PropsType = {
     captcha: string,
     loginThunk: (email: string, password: string, rememberMe: boolean, captcha: string) => void
 }
+export type LoginFormValueType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
+}
 
 const Login:React.FC<PropsType> = (props) => {
-    let onSubmit = (formData:any) => {
+    let onSubmit = (formData:LoginFormValueType) => {
         //авторизация
         props.loginThunk(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
