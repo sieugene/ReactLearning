@@ -8,7 +8,7 @@ const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
 const SET_COUNT_NEW_MESSAGES = 'SET_COUNT_NEW_MESSAGES';
 const SET_CURRENT_USER_IN_CHAT = 'SET_CURRENT_USER_IN_CHAT';
 const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
-
+const SYNC_ALL_MESSAGES_TOOGLE = 'SYNC_ALL_MESSAGES_TOOGLE'
 
 
 let initialState: InitialStateType = {
@@ -19,7 +19,8 @@ let initialState: InitialStateType = {
     },
     countNesMessages: 0,
     currentUserInChat: [],
-    loading: false
+    loading: false,
+    syncingAllMessages: false
 }
 
 const DialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -56,12 +57,18 @@ const DialogsReducer = (state = initialState, action: ActionsType): InitialState
                 loading: action.loading
             }
         }
+        case SYNC_ALL_MESSAGES_TOOGLE: {
+            return {
+                ...state,
+                syncingAllMessages: action.syncingAllMessages
+            }
+        }
         default:
             return state
     }
 }
 type ActionsType = SetAllDialogsACType | SetCountNewMessagesType | SetCurrentUserInChatACType |
-    SetMessagesListWithFriendACType | SetSuccessLoadingACType
+    SetMessagesListWithFriendACType | SetSuccessLoadingACType | SyncAllMessagesACType
 //actions creators
 type SetAllDialogsACType = {
     type: typeof SET_ALL_DIALOGS
@@ -111,6 +118,15 @@ export const setSuccessLoadingAC = (loading: boolean): SetSuccessLoadingACType =
         type: SET_SUCCESS_LOADING, loading
     }
 }
+type SyncAllMessagesACType = {
+    type: typeof SYNC_ALL_MESSAGES_TOOGLE
+    syncingAllMessages: boolean
+}
+export const syncAllMessagesAC = (syncingAllMessages: boolean): SyncAllMessagesACType => {
+    return {
+        type: SYNC_ALL_MESSAGES_TOOGLE, syncingAllMessages
+    }
+}
 //thunks
 type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsType>
@@ -140,13 +156,20 @@ export const getListMessagesWithFriendThunkCreator = (userId: number): ThunkActi
     })
 }
 
-export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
-    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
-        dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
-        // console.log('getListMessagesWithFriend');
-        // console.log(response.data)
-    })
-    console.log('sync: User:', userId);
+export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionType => async (dispatch, getState) => {
+    const syncingAllMessages = getState().dialogs.syncingAllMessages;
+    if (syncingAllMessages) {
+        console.log('syncingAllMessages:', userId)
+        let response = await DialogsAPI.returnMessageThanDate(userId, '2020.01.01');
+        dispatch(setMessagesListWithFriendAC(response.data, response.data.length));
+    } else {
+        await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+            dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
+            // console.log('getListMessagesWithFriend');
+            // console.log(response.data)
+            console.log('sync: User:', userId);
+        })
+    }
 }
 
 export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch) => {
@@ -173,9 +196,10 @@ type ReponseGetReturnMessageDateThunkCreatorType = {
 export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {
     let response = await DialogsAPI.returnMessageThanDate(userId, date);
     dispatch(setMessagesListWithFriendAC(response.data, response.data.length));
+    dispatch(syncAllMessagesAC(true))
 }
 
-export const DeleteMessageTC = (messageId:string,userId: number):ThunkActionType => async (dispatch) => {
+export const DeleteMessageTC = (messageId: string, userId: number): ThunkActionType => async (dispatch) => {
     await DialogsAPI.deleteMessage(messageId);
     console.log('the message was deleted')
     await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {

@@ -9,6 +9,7 @@ export type InitialStateType = {
     countNesMessages: number | null;
     currentUserInChat: CurrentUserType | {};
     loading: boolean;
+    syncingAllMessages: boolean
 }
 export type DialogItemType = {
     id: number

@@ -136,6 +136,18 @@ nav {
     opacity: 0.6;
 }
 
+.message-textarea {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0px;
+    height: 65px;
+    width: 356px;
+    resize: none;
+    overflow: auto;
+    width: 100%;
+}
+
 .newMessage span {
     background-color: red;
     color: white;
