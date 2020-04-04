@@ -114,7 +114,7 @@ export const setStatusUserThunkCreator = (userId: number): ThunkActionType => {
         if (!userId) {
             //none
         } else {
-            await ProfileAPI.getStatus(userId).then((response: { data: string; }) => {
+            await ProfileAPI.getStatus(userId).then(response => {
                 dispatch(setStatusUserAC(response.data))
             })
         }
@@ -147,16 +147,11 @@ export const updateStatusUserThunkCreator = (userId: number, newStatus: string |
         //end
     }
 }
-type UpdateProfileResponseType = {
-    data: {
-        resultCode: number;
-        messages: string | any[]
-    }
-}
+
 export const updateProfileUserThunkCreator = (profile: ProfileType): ThunkActionType =>
     async (dispatch: any, getState) => {
         dispatch(setLoadingAC(true));
-        return await ProfileAPI.updateProfile(profile).then((response: UpdateProfileResponseType) => {
+        return await ProfileAPI.updateProfile(profile).then(response => {
             if (response.data.resultCode === 0) {
                 const userId = getState().Auth.id;
                 if (userId) {
@@ -174,7 +169,7 @@ export const updateProfileUserThunkCreator = (profile: ProfileType): ThunkAction
 
     }
 
-export const uploadNewPhotoThunkCreator = (photos: object): ThunkActionType => async (dispatch) => {
+export const uploadNewPhotoThunkCreator = (photos:File): ThunkActionType => async (dispatch) => {
     dispatch(setLoadingAC(true));
     let response = await ProfileAPI.uploadPhoto(photos)
     dispatch(setLoadingAC(false));

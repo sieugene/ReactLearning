@@ -11,7 +11,7 @@ import { ProfileType } from '../../Types/ProfileTypes';
 type PropsType = {
     profile: ProfileType
     updateProfileUserThunk: (profile: ProfileType) => void
-    uploadNewPhotoThunk: (photo: object) => void
+    uploadNewPhotoThunk: (photo: File) => void
     loading: boolean
     id: number | null
     urlMatchParams: string

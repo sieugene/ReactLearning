@@ -4,7 +4,7 @@ export type InitialStateType = {
     listDialogs: DialogItemType[];
     messagesWithFriend: {
         items: MessageItemType[],
-        totalCount: number | null
+        totalCount: number
     };
     countNesMessages: number | null;
     currentUserInChat: CurrentUserType | {};
@@ -30,7 +30,12 @@ export type MessageItemType = {
     senderId: number
     senderName: string
     recipientId: number
+    recipientName: string
     viewed: boolean
+    deletedBySender: boolean
+    deletedByRecipient: boolean
+    isSpam: boolean
+    distributionId: null
 }
 export type CurrentUserType = {
     aboutMe: string

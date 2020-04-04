@@ -1,5 +1,7 @@
 import axios from "axios";
 import { ProfileType } from "../Types/ProfileTypes";
+import { UserType } from "../Types/UsersTypes";
+import { DialogItemType, MessageItemType } from "../Types/DialogsTypes";
 //создаем образец, чтобы не дублировать код
 let instance = axios.create({
     withCredentials: true,
@@ -8,39 +10,61 @@ let instance = axios.create({
         "API-KEY": "a6c20467-1a5b-406b-88d2-a8a4879b1b99"
     }
 })
+
+type GetUsersResponseType = {
+    items: UserType[]
+    totalCount: number
+    error: string
+}
 //группировка методов
 export const UsersAPI = {
     getUsers(pageSize: number, pageNumber: number) {
-        return instance.get(`users?count=${pageSize}&page=${pageNumber}`)
+        return instance.get<GetUsersResponseType>(`users?count=${pageSize}&page=${pageNumber}`)
             .then(response => {
                 return response.data
             })
     },
     getUsersTerm(pageSize: number, text: string) {
-        return instance.get(`users?count=${pageSize}&page=1&term=${text}`)
+        return instance.get<GetUsersResponseType>(`users?count=${pageSize}&page=1&term=${text}`)
             .then(response => {
                 return response.data
             })
     }
 }
 
+type UpdateProfileRespType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {}
+}
+type UpdatePhotoRespType = {
+    data: {
+        photos: {
+            small: string,
+            large: string
+        }
+    }
+    messages: Array<string>
+    resultCode: number
+}
+
 export const ProfileAPI = {
-    getProfile(userId: string | number) {
-        return instance.get(`profile/` + userId)
+    getProfile(userId: number) {
+        return instance.get<ProfileType>(`profile/` + userId)
     },
-    getStatus(userId: string | number) {
-        return instance.get(`/profile/status/` + userId);
+    getStatus(userId: number) {
+        return instance.get<string>(`/profile/status/` + userId);
     },
     updateStatus(newStatus: string) {
-        return instance.put(`/profile/status`, { status: newStatus })
+        return instance.put<UpdateProfileRespType>(`/profile/status`, { status: newStatus })
     },
     updateProfile(profile: ProfileType) {
-        return instance.put(`/profile`, profile)
+        return instance.put<UpdateProfileRespType>(`/profile`, profile)
     },
     uploadPhoto(photos: any) {
         const formData = new FormData();
         formData.append("image", photos);
-        return instance.put(`profile/photo`, formData, {
+        return instance.put<UpdatePhotoRespType>(`profile/photo`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -51,11 +75,11 @@ export const ProfileAPI = {
 }
 
 export const FollowAPI = {
-    followUser(id: any) {
-        return instance.post(`follow/${id}`, {})
+    followUser(id: number) {
+        return instance.post<boolean>(`follow/${id}`, {})
     },
-    unfollowUser(id: any) {
-        return instance.delete(`follow/${id}`, {})
+    unfollowUser(id: number) {
+        return instance.delete<boolean>(`follow/${id}`, {})
     }
 }
 export enum ResultCodesEnum {
@@ -72,23 +96,48 @@ type MeResponseType = {
         login: string
     }
 }
+type LoginResponseType = {
+    resultCode: ResultCodesEnum
+    messages: Array<string>,
+    data: {
+        userId: number
+    }
+}
+type LogoutResponseType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {}
+}
 
 export const meAPI = {
     me() {
         return instance.get<MeResponseType>(`auth/me`)
     },
     login(email: string, password: string, rememberMe = false, captcha: string | null = null) {
-        return instance.post(`auth/login`, { email, password, rememberMe, captcha })
+        return instance.post<LoginResponseType>(`auth/login`, { email, password, rememberMe, captcha })
     },
     logout() {
-        return instance.delete(`auth/login`)
+        return instance.delete<LogoutResponseType>(`auth/login`)
     }
 }
-
+type GetCaptchaRespType = {
+    url: string
+}
 export const securityAPI = {
     getCaptcha() {
-        return instance.get(`security/get-captcha-url`)
+        return instance.get<GetCaptchaRespType>(`security/get-captcha-url`)
     }
+}
+type GetListMessagesWithFriendRespType = {
+    items: MessageItemType[],
+    totalCount: number
+}
+type SendMessageRespType = {
+    data: {
+        message: MessageItemType[]
+    }
+    messages: Array<string>
+    resultCode: number
 }
 
 export const DialogsAPI = {
@@ -96,13 +145,13 @@ export const DialogsAPI = {
         return instance.put(`dialogs/${userId}`)
     },
     getAllDialogs() {
-        return instance.get(`dialogs`)
+        return instance.get<DialogItemType[]>(`dialogs`)
     },
     getListMessagesWithFriend(userId: number) {
-        return instance.get(`dialogs/${userId}/messages`)
+        return instance.get<GetListMessagesWithFriendRespType>(`dialogs/${userId}/messages`)
     },
     sendMessageToFriend(userId: number, newMessage: string) {
-        return instance.post(`dialogs/${userId}/messages`, { body: newMessage })
+        return instance.post<SendMessageRespType>(`dialogs/${userId}/messages`, { body: newMessage })
     },
     isViewedYourMessage(messageId: any) {
         return instance.get(`dialogs/messages/${messageId}/viewed`)
@@ -117,7 +166,7 @@ export const DialogsAPI = {
         return instance.put(`dialogs/messages/${messageId}/restore`)
     },
     returnMessageThanDate(userId: number, date: string) {
-        return instance.get(`dialogs/${userId}/messages/new?newerThen=${date}`)
+        return instance.get<MessageItemType[]>(`dialogs/${userId}/messages/new?newerThen=${date}`)
     },
     listNewMessage() {
         return instance.get(`dialogs/messages/new/count`)

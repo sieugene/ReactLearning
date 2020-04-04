@@ -15,9 +15,9 @@ let initialState: InitialStateType = {
     listDialogs: [],
     messagesWithFriend: {
         items: [],
-        totalCount: null
+        totalCount: 0
     },
-    countNesMessages: null,
+    countNesMessages: 0,
     currentUserInChat: [],
     loading: false
 }
@@ -94,7 +94,7 @@ export const setCurrentUserInChatAC = (profile: object): SetCurrentUserInChatACT
 type SetMessagesListWithFriendACType = {
     type: typeof SET_MESSAGES_WITH_FRIEND
     messages: MessageItemType[]
-    totalCount: number | null
+    totalCount: number
 }
 export const setMessagesListWithFriendAC = (messages: MessageItemType[], totalCount: number):
     SetMessagesListWithFriendACType => {
@@ -117,8 +117,6 @@ type DispatchType = Dispatch<ActionsType>
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 export const startChattingThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     await DialogsAPI.startChatting(userId)
-    // console.log('startChatting')
-    // console.log(response)
 }
 
 export const getAllDialogsThunkCreator = (): ThunkActionType => async (dispatch) => {
@@ -134,23 +132,13 @@ export const getAllDialogsThunkCreator = (): ThunkActionType => async (dispatch)
 export const getListMessagesWithFriendThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     let response = await DialogsAPI.getListMessagesWithFriend(userId)
     dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
-    // console.log('getListMessagesWithFriend');
-    // console.log(response.data)
-    //set current user in chat
-    response = await ProfileAPI.getProfile(userId)
-    dispatch(setCurrentUserInChatAC(response.data))
-    Promise.all([response]).then(values => {
+    let secondResponse = await ProfileAPI.getProfile(userId)
+    dispatch(setCurrentUserInChatAC(secondResponse.data))
+    Promise.all([response, secondResponse]).then(values => {
         dispatch(setSuccessLoadingAC(false));
     })
 }
-type GetListMessageWithFriendResponseType = {
-    response: {}
-    data: {
-        items: MessageItemType[]
-        totalCount: number
-        error: null | string
-    }
-}
+
 export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
     await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
@@ -161,7 +149,7 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionT
 }
 
 export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch) => {
-    await DialogsAPI.sendMessageToFriend(userId, newMessage);
+    await DialogsAPI.sendMessageToFriend(userId, newMessage)
     dispatch(getListMessagesWithFriendThunkCreator(userId));
 }
 
@@ -178,9 +166,8 @@ type ReponseGetReturnMessageDateThunkCreatorType = {
 }
 //проверить
 export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {
-    let response: any = await DialogsAPI.returnMessageThanDate(userId, date);
-    if (!response.totalCount) response.totalCount = 0
-    dispatch(setMessagesListWithFriendAC(response.data, response.totalCount));
+    let response = await DialogsAPI.returnMessageThanDate(userId, date);
+    dispatch(setMessagesListWithFriendAC(response.data, response.data.length));
 }
 
 

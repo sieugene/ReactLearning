@@ -29,7 +29,7 @@ type MapDispatchType = {
     setStatusUserThunk: (userId: number) => void
     updateStatusUserThunk: (userId: number, newStatus: string | null) => void
     updateProfileUserThunk: (profile: ProfileType) => void
-    uploadNewPhotoThunk: (photo: object) => void
+    uploadNewPhotoThunk: (photo: File) => void
 }
 type PropsType = MapStateType & MapDispatchType & WithRouterType
 
