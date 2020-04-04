@@ -9,7 +9,8 @@ import { LoginFormValueType } from './Login';
 type PropsType = {
     captcha?: string
 }
-
+//<InjectedFormProps<LoginFormValueType,PropsType> & PropsType>
+//если что-то не работает PropsType Login.tsx а не формы
 const LoginForm: React.FC<InjectedFormProps<LoginFormValueType> & PropsType> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>

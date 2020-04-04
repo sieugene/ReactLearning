@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import {
     getListMessagesWithFriendThunkCreator, getReturnMessageDateThunkCreator, sendMessageToFriendThunkCreator,
-    syncMessagesWithFrinedThunkCreator
+    syncMessagesWithFrinedThunkCreator, DeleteMessageTC
 } from "../../redux/Dialogs-Reducer";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
@@ -22,6 +22,7 @@ type MapStateType = {
         small: string | null
         large: string | null
     }
+    loading: boolean
 }
 type MapDispatchType = {
     getListMessagesWithFriendThunk: (userId: number) => void
@@ -29,6 +30,7 @@ type MapDispatchType = {
     ClearIntreval: () => void
     sendMessageToFriendThunk: (userId: number, newMessage: string | null) => void
     getReturnMessageDateThunk: (userId: number, date: string) => void
+    DeleteMessageTC: (messageId: string,userId: number) => void
 }
 type WithRouterType = {
     match:{
@@ -68,6 +70,8 @@ class MessagesContainer extends React.Component<PropsType> {
             authUserPhoto={this.props.authUserPhoto}
             messagesWithFriend={this.props.messagesWithFriend}
             getReturnMessageDateThunk={this.props.getReturnMessageDateThunk}
+            loading={this.props.loading}
+            DeleteMessageTC={this.props.DeleteMessageTC}
             />
         )
     }
@@ -77,7 +81,8 @@ let mapStateToProps = (state: AppStateType):MapStateType => {
         messagesWithFriend: state.dialogs.messagesWithFriend,
         currentUserInChat: state.dialogs.currentUserInChat,
         authUserPhoto: state.app.userPhoto,
-        id: state.Auth.id
+        id: state.Auth.id,
+        loading: state.dialogs.loading,
     }
 }
 //<MapStateType,MapDispatchType,null,AppStateType>
@@ -87,6 +92,7 @@ export default compose(
         getListMessagesWithFriendThunk: getListMessagesWithFriendThunkCreator,
         sendMessageToFriendThunk: sendMessageToFriendThunkCreator,
         getReturnMessageDateThunk: getReturnMessageDateThunkCreator,
-        syncMessagesWithFrinedThunk: syncMessagesWithFrinedThunkCreator
+        syncMessagesWithFrinedThunk: syncMessagesWithFrinedThunkCreator,
+        DeleteMessageTC
     })
 )(MessagesContainer)

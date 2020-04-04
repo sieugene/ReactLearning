@@ -130,6 +130,7 @@ export const getAllDialogsThunkCreator = (): ThunkActionType => async (dispatch)
 
 
 export const getListMessagesWithFriendThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
+    dispatch(setSuccessLoadingAC(true));
     let response = await DialogsAPI.getListMessagesWithFriend(userId)
     dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
     let secondResponse = await ProfileAPI.getProfile(userId)
@@ -150,7 +151,11 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionT
 
 export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch) => {
     await DialogsAPI.sendMessageToFriend(userId, newMessage)
-    dispatch(getListMessagesWithFriendThunkCreator(userId));
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+        dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
+        // console.log('getListMessagesWithFriend');
+        // console.log(response.data)
+    })
 }
 
 export const getListNewMessagesThunkCreator = (userId: number): ThunkActionType => async (dispatch) => {
@@ -164,10 +169,20 @@ type ReponseGetReturnMessageDateThunkCreatorType = {
     data: MessageItemType[]
     totalCount: number | null
 }
-//проверить
+
 export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {
     let response = await DialogsAPI.returnMessageThanDate(userId, date);
     dispatch(setMessagesListWithFriendAC(response.data, response.data.length));
+}
+
+export const DeleteMessageTC = (messageId:string,userId: number):ThunkActionType => async (dispatch) => {
+    await DialogsAPI.deleteMessage(messageId);
+    console.log('the message was deleted')
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+        dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
+        // console.log('getListMessagesWithFriend');
+        // console.log(response.data)
+    })
 }
 
 

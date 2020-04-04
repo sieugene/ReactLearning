@@ -159,7 +159,7 @@ export const DialogsAPI = {
     messageInSpam(messageId: any) {
         return instance.post(`dialogs/messages/${messageId}/spam`)
     },
-    deleteMessage(messageId: any) {
+    deleteMessage(messageId: string) {
         return instance.delete(`dialogs/messages/${messageId}`)
     },
     restoreMessage(messageId: any) {

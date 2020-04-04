@@ -4,6 +4,7 @@ import { ReduxMessageForm } from "./MessageForm";
 import userPhoto from './../../assets/images/userPhoto.png'
 import { NavLink } from "react-router-dom";
 import { CurrentUserType, MessageItemType } from "./../../Types/DialogsTypes"
+import Preloader from '../../assets/preloader/Preloader';
 
 
 
@@ -20,6 +21,8 @@ type PropsType = {
         totalCount: number | null
     };
     getReturnMessageDateThunk: (userId: number, date: string) => void
+    loading: boolean
+    DeleteMessageTC: (messageId: string, userId: number) => void
 }
 
 const Messages: React.FC<PropsType> = (props) => {
@@ -44,6 +47,16 @@ const Messages: React.FC<PropsType> = (props) => {
     //take auth profile photo
     let getUserPhoto = !props.authUserPhoto.small || !props.authUserPhoto.large ? ' ' :
         <img src={props.authUserPhoto.small} alt={''} /> || <img src={props.authUserPhoto.large} alt={''} />
+
+    const confirmmDeletingMessage = (id: string, userId: number) => {
+        let isConfirm = window.confirm(`delete a message?`);
+        if (isConfirm) {
+            props.DeleteMessageTC(id, userId)
+        }
+    }
+    if (props.loading) {
+        return <Preloader />
+    }
     return (
         <div className="message__main container">
             <div className="row">
@@ -73,7 +86,8 @@ const Messages: React.FC<PropsType> = (props) => {
                                 }
                                 {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
                                     props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
-                                        s.messagesWithFriendId : s.notViewedMessage}>
+                                        s.messagesWithFriendId : s.notViewedMessage}
+                                        onClick={() => { confirmmDeletingMessage(m.id, props.currentUserInChat.userId) }}>
                                         <div className={s.main__img__username}>
                                             {m.senderId === Number(userId) ?
                                                 getCurrentUserPhoto
