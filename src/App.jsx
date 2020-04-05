@@ -13,7 +13,7 @@ import Preloader from "./assets/preloader/Preloader";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import MessagesContainer from './Components/Dialogs/MessagesContainer';
 import GlobalErrors from './Components/GlobalErrors/GlobalErrors';
-import { syncMessagesWithFrinedThunkCreator } from './redux/Dialogs-Reducer';
+import { syncMessagesWithFrinedThunkCreator, syncAllMessagesAC } from './redux/Dialogs-Reducer';
 import { Redirect } from "react-router-dom"
 //import UsersContainer from "./Components/Users/UsersContainer";
 const UsersContainer = React.lazy(() => import('./Components/Users/UsersContainer'));
@@ -26,6 +26,7 @@ class App extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.location.pathname !== this.props.location.pathname) {
             this.ClearIntreval();
+            this.props.syncAllMessagesAC(false);
         }
     }
     //sync message
@@ -81,8 +82,8 @@ let mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, {
         initiliazedThunk: initiliazedThunkCreator,
-        syncMessagesWithFrinedThunk: syncMessagesWithFrinedThunkCreator
-
+        syncMessagesWithFrinedThunk: syncMessagesWithFrinedThunkCreator,
+        syncAllMessagesAC
     }),
     withRouter
 )(App)

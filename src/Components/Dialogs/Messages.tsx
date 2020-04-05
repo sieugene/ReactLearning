@@ -54,6 +54,13 @@ const Messages: React.FC<PropsType> = (props) => {
             props.DeleteMessageTC(id, userId)
         }
     }
+    let alignMessage = (senderId: number) => {
+        if(props.currentUserInChat.userId === senderId){
+            return ' ' + s.leftAlignMessage
+        }else{
+            return ' ' + s.rightAlignMessage
+        }
+    }
     if (props.loading) {
         return <Preloader />
     }
@@ -86,7 +93,7 @@ const Messages: React.FC<PropsType> = (props) => {
                                 }
                                 {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
                                     props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
-                                        s.messagesWithFriendId : s.notViewedMessage}
+                                        s.messagesWithFriendId + alignMessage(m.senderId) : s.notViewedMessage + alignMessage(m.senderId)}
                                         onClick={() => { confirmmDeletingMessage(m.id, props.currentUserInChat.userId) }}>
                                         <div className={s.main__img__username}>
                                             {m.senderId === Number(userId) ?

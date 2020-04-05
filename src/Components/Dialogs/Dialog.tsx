@@ -27,6 +27,7 @@ const Dialog: React.FC<PropsType> = (props) => {
                         <div className="row">
                             <div className="col s6 left-align">
                                 <h5>{props.dialog.userName}</h5>
+                                <p className='lastMessage'>Last message...</p>
                             </div>
                             <div className="col s6 right-align">
                                 <p className='activity'>
