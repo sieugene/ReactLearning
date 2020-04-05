@@ -220,6 +220,7 @@
     cursor: pointer;
     transition: 0.3s all ease;
     outline: none;
+    height: 26px;
 }
 
 .past__messages:hover {
