@@ -210,17 +210,21 @@
 }
 
 .past__messages {
-    margin: 10px auto;
+    margin: 0 auto;
     display: block;
-    border: 0px;
+    border: 0;
     background-color: #f3f0f0;
     color: #717070;
     padding: 5px;
     border-radius: 10px;
     cursor: pointer;
-    transition: 0.3s all ease;
+    transition: all .3s ease;
     outline: none;
     height: 26px;
+    font-size: 14px;
+    min-height: 26px !important;
+    margin-bottom: 16px;
+    margin-top: 15px;
 }
 
 .past__messages:hover {
