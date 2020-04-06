@@ -3,13 +3,14 @@ import { InitialStateType, DialogItemType, MessageItemType } from "../Types/Dial
 import { AppStateType } from "./store-redux";
 import { ThunkAction } from "redux-thunk";
 import { Dispatch } from "redux";
+import { reset } from "redux-form";
 const SET_ALL_DIALOGS = 'SET_ALL_DIALOGS'
 const SET_MESSAGES_WITH_FRIEND = 'SET_MESSAGES_WITH_FRIEND'
 const SET_COUNT_NEW_MESSAGES = 'SET_COUNT_NEW_MESSAGES';
 const SET_CURRENT_USER_IN_CHAT = 'SET_CURRENT_USER_IN_CHAT';
 const SET_SUCCESS_LOADING = 'SET_SUCCESS_LOADING'
 const SYNC_ALL_MESSAGES_TOOGLE = 'SYNC_ALL_MESSAGES_TOOGLE'
-
+const TOGGLE_DISABLED_FORM = 'TOGGLE_DISABLED_FORM'
 
 let initialState: InitialStateType = {
     listDialogs: [],
@@ -20,7 +21,8 @@ let initialState: InitialStateType = {
     countNesMessages: 0,
     currentUserInChat: [],
     loading: false,
-    syncingAllMessages: false
+    syncingAllMessages: false,
+    disabledForm: false
 }
 
 const DialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -63,12 +65,18 @@ const DialogsReducer = (state = initialState, action: ActionsType): InitialState
                 syncingAllMessages: action.syncingAllMessages
             }
         }
+        case TOGGLE_DISABLED_FORM: {
+            return {
+                ...state,
+                disabledForm: action.disabledForm
+            }
+        }
         default:
             return state
     }
 }
 type ActionsType = SetAllDialogsACType | SetCountNewMessagesType | SetCurrentUserInChatACType |
-    SetMessagesListWithFriendACType | SetSuccessLoadingACType | SyncAllMessagesACType
+    SetMessagesListWithFriendACType | SetSuccessLoadingACType | SyncAllMessagesACType | DisabledFormACType
 //actions creators
 type SetAllDialogsACType = {
     type: typeof SET_ALL_DIALOGS
@@ -127,6 +135,15 @@ export const syncAllMessagesAC = (syncingAllMessages: boolean): SyncAllMessagesA
         type: SYNC_ALL_MESSAGES_TOOGLE, syncingAllMessages
     }
 }
+type DisabledFormACType = {
+    type: typeof TOGGLE_DISABLED_FORM
+    disabledForm: boolean
+}
+export const disabledFormAC = (disabledForm: boolean): DisabledFormACType => {
+    return {
+        type: TOGGLE_DISABLED_FORM, disabledForm
+    }
+}
 //thunks
 type GetStateType = () => AppStateType
 type DispatchType = Dispatch<ActionsType>
@@ -172,9 +189,13 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionT
     }
 }
 
-export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch) => {
-    await DialogsAPI.sendMessageToFriend(userId, newMessage)
-    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch: any) => {
+    dispatch(disabledFormAC(true));
+    await DialogsAPI.sendMessageToFriend(userId, newMessage).then((resp) => {
+        dispatch(disabledFormAC(false));
+        dispatch(reset("Message"));
+    })
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
         // console.log('getListMessagesWithFriend');
         // console.log(response.data)
@@ -186,11 +207,6 @@ export const getListNewMessagesThunkCreator = (userId: number): ThunkActionType 
     dispatch(setCountNewMessages(response.data))
     // console.log('getListNewMessages');
     // console.log(response.data)
-}
-type ReponseGetReturnMessageDateThunkCreatorType = {
-    response: {}
-    data: MessageItemType[]
-    totalCount: number | null
 }
 
 export const getReturnMessageDateThunkCreator = (userId: number, date: string): ThunkActionType => async (dispatch) => {

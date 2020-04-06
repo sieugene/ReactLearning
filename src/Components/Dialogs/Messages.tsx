@@ -10,7 +10,7 @@ import Preloader from '../../assets/preloader/Preloader';
 
 type PropsType = {
     userId: number
-    sendMessageToFriendThunk: (userId: number, newMessage: string | null) => void
+    sendMessageToFriendThunk: (userId: number, newMessage: string) => void
     currentUserInChat: CurrentUserType | {} | any
     authUserPhoto: {
         small: string | null
@@ -23,6 +23,7 @@ type PropsType = {
     getReturnMessageDateThunk: (userId: number, date: string) => void
     loading: boolean
     DeleteMessageTC: (messageId: string, userId: number) => void
+    disabledForm: boolean
 }
 
 const Messages: React.FC<PropsType> = (props) => {
@@ -55,9 +56,9 @@ const Messages: React.FC<PropsType> = (props) => {
         }
     }
     let alignMessage = (senderId: number) => {
-        if(props.currentUserInChat.userId === senderId){
+        if (props.currentUserInChat.userId === senderId) {
             return ' ' + s.leftAlignMessage
-        }else{
+        } else {
             return ' ' + s.rightAlignMessage
         }
     }
@@ -113,7 +114,7 @@ const Messages: React.FC<PropsType> = (props) => {
                                 }
                             </div>
                         </div>
-                        <ReduxMessageForm onSubmit={onTextInMessage} />
+                        <ReduxMessageForm onSubmit={onTextInMessage} {...props} />
                     </div>
 
                 </div>

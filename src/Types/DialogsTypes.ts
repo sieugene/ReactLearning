@@ -10,6 +10,7 @@ export type InitialStateType = {
     currentUserInChat: CurrentUserType | {};
     loading: boolean;
     syncingAllMessages: boolean
+    disabledForm: boolean
 }
 export type DialogItemType = {
     id: number
