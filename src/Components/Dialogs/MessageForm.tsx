@@ -1,15 +1,20 @@
 import React from 'react';
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import s from './MessagesForm.module.css'
+import { SendMessageFormDataType } from './Messages';
 
+type PropsType = {
+    disabledForm: boolean
+}
 
-const MessageForm = (props) => {
-    const handleKeyPress = (event) => {
+const MessageForm:React.FC<InjectedFormProps<SendMessageFormDataType> & PropsType> = (props) => {
+    const handleKeyPress = (event:React.KeyboardEvent) => {
         if (event.key === 'Enter' && event.shiftKey) {
             return false
         }
         if (event.key === 'Enter') {
-            props.handleSubmit();
+            // @ts-ignore
+            return props.handleSubmit()
         }
     }
     const disableForm = props.disabledForm
@@ -33,4 +38,4 @@ const MessageForm = (props) => {
     )
 }
 
-export const ReduxMessageForm = reduxForm({ form: 'Message' })(MessageForm)
+export const ReduxMessageForm = reduxForm<SendMessageFormDataType,PropsType>({ form: 'Message' })(MessageForm)

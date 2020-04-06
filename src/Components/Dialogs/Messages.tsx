@@ -25,11 +25,15 @@ type PropsType = {
     DeleteMessageTC: (messageId: string, userId: number) => void
     disabledForm: boolean
 }
+export type SendMessageFormDataType = {
+    userId: number,
+    newMessage: string
+}
 
 const Messages: React.FC<PropsType> = (props) => {
     let userId = props.userId;
     //problems with the typing of the form data
-    let onTextInMessage = (formData: any) => {
+    let onTextInMessage = (formData: SendMessageFormDataType) => {
         props.sendMessageToFriendThunk(userId, formData.newMessage)
     }
 

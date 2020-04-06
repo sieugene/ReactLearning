@@ -180,7 +180,7 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionT
         let response = await DialogsAPI.returnMessageThanDate(userId, '2020.01.01');
         dispatch(setMessagesListWithFriendAC(response.data, response.data.length));
     } else {
-        await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+        await DialogsAPI.getListMessagesWithFriend(userId).then((response) => {
             dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
             // console.log('getListMessagesWithFriend');
             // console.log(response.data)
@@ -189,7 +189,7 @@ export const syncMessagesWithFrinedThunkCreator = (userId: number): ThunkActionT
     }
 }
 
-export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch: any) => {
+export const sendMessageToFriendThunkCreator = (userId: number, newMessage: string): ThunkActionType => async (dispatch:any) => {
     dispatch(disabledFormAC(true));
     await DialogsAPI.sendMessageToFriend(userId, newMessage).then((resp) => {
         dispatch(disabledFormAC(false));
@@ -218,7 +218,7 @@ export const getReturnMessageDateThunkCreator = (userId: number, date: string): 
 export const DeleteMessageTC = (messageId: string, userId: number): ThunkActionType => async (dispatch) => {
     await DialogsAPI.deleteMessage(messageId);
     console.log('the message was deleted')
-    await DialogsAPI.getListMessagesWithFriend(userId).then((response: any) => {
+    await DialogsAPI.getListMessagesWithFriend(userId).then((response) => {
         dispatch(setMessagesListWithFriendAC(response.data.items, response.data.totalCount));
         // console.log('getListMessagesWithFriend');
         // console.log(response.data)
