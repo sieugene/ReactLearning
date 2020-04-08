@@ -24,7 +24,7 @@ const Profile: React.FC<PropsType> = React.memo(props => {
     }
     let [editProfile, setEditProfile] = useState(false);
     //update profile
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: ProfileType) => {
         if (formData === props.profile) {
             setEditProfile(false)
         } else {

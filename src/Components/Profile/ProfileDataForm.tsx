@@ -8,7 +8,7 @@ type PropsType = {
     profile: ProfileType
 }
 
-const ProfileDataForm: React.FC<PropsType & InjectedFormProps<{}, PropsType>> = (props) => {
+const ProfileDataForm: React.FC<InjectedFormProps<ProfileType> & PropsType> = (props) => {
     return (
         <div className={s.infoProfile}>
             <form onSubmit={props.handleSubmit}>
@@ -54,7 +54,7 @@ const Contact: React.FC<ContactsType> = ({ contactTitle, contactBody }) => {
         </div>
     )
 }
-const ReduxEditProfile = reduxForm<{}, PropsType>({ form: 'editProfile' })(ProfileDataForm)
+const ReduxEditProfile = reduxForm<ProfileType,PropsType>({ form: 'editProfile' })(ProfileDataForm)
 
 export default ReduxEditProfile;
 
