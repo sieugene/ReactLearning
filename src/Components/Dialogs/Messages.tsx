@@ -117,12 +117,11 @@ const Messages: React.FC<PropsType> = (props) => {
                                     </div>)
                                 }
                             </div>
-                        </div>
-                        <ReduxMessageForm onSubmit={onTextInMessage} {...props} />
+                        </div>          
                     </div>
-
                 </div>
             </div>
+            <ReduxMessageForm onSubmit={onTextInMessage} {...props} />
         </div>
     )
 }

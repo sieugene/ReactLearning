@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
+import s from './MessagesForm.module.css'
 import { SendMessageFormDataType } from './Messages';
 
 type PropsType = {
@@ -18,7 +19,7 @@ const MessageForm:React.FC<InjectedFormProps<SendMessageFormDataType> & PropsTyp
     }
     const disableForm = props.disabledForm
     return (
-        <form onSubmit={props.handleSubmit} className={'mobileBottom'}>
+        <form onSubmit={props.handleSubmit} className={'formBottom'}>
             <div className="row p10">
                 <div className="col s1"></div>
                 <div className="col xl10 m9 l9 s9">
