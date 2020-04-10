@@ -1,11 +1,11 @@
 import React from 'react';
 import s from "./Dialogs.module.css";
 import { ReduxMessageForm } from "./MessageForm";
-import userPhoto from './../../assets/images/userPhoto.png'
 import { NavLink } from "react-router-dom";
 import { CurrentUserType, MessageItemType } from "./../../Types/DialogsTypes"
 import Preloader from '../../assets/preloader/Preloader';
-
+import {CurrentUserPhoto} from '../../assets/Helpers/HelperDialog';
+import Message from './Message';
 
 
 type PropsType = {
@@ -36,36 +36,6 @@ const Messages: React.FC<PropsType> = (props) => {
     let onTextInMessage = (formData: SendMessageFormDataType) => {
         props.sendMessageToFriendThunk(userId, formData.newMessage)
     }
-
-    const regEx = /[^\d:]/g;
-    const addedAt = (date: string) => {
-        let format = date.substr(date.length - 12)
-        let result = format.replace(regEx, '')
-        return result.split(':')[0] + ':' + result.split(':')[1];
-    }
-
-    //take current user photo
-
-    let getCurrentUserPhoto = !props.currentUserInChat.photos ? ' ' :
-        !props.currentUserInChat.photos.large || !props.currentUserInChat.photos.small ?
-            <img src={userPhoto} alt={''} /> : <img src={props.currentUserInChat.photos.large} alt={''} />;
-    //take auth profile photo
-    let getUserPhoto = !props.authUserPhoto.small || !props.authUserPhoto.large ? ' ' :
-        <img src={props.authUserPhoto.small} alt={''} /> || <img src={props.authUserPhoto.large} alt={''} />
-
-    const confirmmDeletingMessage = (id: string, userId: number) => {
-        let isConfirm = window.confirm(`delete a message?`);
-        if (isConfirm) {
-            props.DeleteMessageTC(id, userId)
-        }
-    }
-    let alignMessage = (senderId: number) => {
-        if (props.currentUserInChat.userId === senderId) {
-            return ' ' + s.leftAlignMessage
-        } else {
-            return ' ' + s.rightAlignMessage
-        }
-    }
     if (props.loading) {
         return <Preloader />
     }
@@ -83,7 +53,7 @@ const Messages: React.FC<PropsType> = (props) => {
                                 </h3>
                                 <h3 className='center-align'>{props.currentUserInChat.fullName}</h3>
                                 <NavLink to={'/profile/' + userId}>
-                                    {getCurrentUserPhoto}
+                                    <CurrentUserPhoto currentUserInChat={props.currentUserInChat} />
                                 </NavLink>
                             </div>
                         }
@@ -97,27 +67,23 @@ const Messages: React.FC<PropsType> = (props) => {
                                     </button>
                                 }
                                 {props.messagesWithFriend.items.length === 0 ? 'You don\'t have messages with this user' :
-                                    props.messagesWithFriend.items.map(m => <div key={m.id} className={m.viewed === true ?
-                                        s.messagesWithFriendId + alignMessage(m.senderId) : s.notViewedMessage + alignMessage(m.senderId)}
-                                        onClick={() => { confirmmDeletingMessage(m.id, props.currentUserInChat.userId) }}>
-                                        <div className={s.main__img__username}>
-                                            {m.senderId === Number(userId) ?
-                                                getCurrentUserPhoto
-                                                :
-                                                getUserPhoto
-                                            }
-                                            <h4>{m.senderName}</h4>
-                                            <div className={s.dateAdded}>{addedAt(m.addedAt)}</div>
-                                        </div>
-                                        {/*<div>Id: {m.id}</div>*/}
-                                        {/*check read message*/}
-                                        {/*<div>SenderId: {m.senderId}</div>*/}
-                                        {/*<div>recipientId: {m.recipientId}</div>*/}
-                                        <div className={s.chatText}>{m.body}</div>
-                                    </div>)
+                                    props.messagesWithFriend.items.map(m =>
+                                        <Message key={m.id}
+                                            id={m.id}
+                                            viewed={m.viewed}
+                                            senderId={m.senderId}
+                                            currentUserInChat={props.currentUserInChat}
+                                            DeleteMessageTC={props.DeleteMessageTC}
+                                            userId={userId}
+                                            authUserPhoto={props.authUserPhoto}
+                                            senderName={m.senderName}
+                                            addedAt={m.addedAt}
+                                            body={m.body}
+                                        />
+                                    )
                                 }
                             </div>
-                        </div>          
+                        </div>
                     </div>
                 </div>
             </div>

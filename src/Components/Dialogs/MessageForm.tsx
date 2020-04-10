@@ -1,6 +1,5 @@
 import React from 'react';
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
-import s from './MessagesForm.module.css'
 import { SendMessageFormDataType } from './Messages';
 
 type PropsType = {
@@ -23,7 +22,8 @@ const MessageForm:React.FC<InjectedFormProps<SendMessageFormDataType> & PropsTyp
             <div className="row p10">
                 <div className="col s1"></div>
                 <div className="col xl10 m9 l9 s9">
-                    <Field name='newMessage' placeholder='Start writing, shift + enter to go to the next line' component='textarea' className="message-textarea"
+                    <Field name='newMessage' placeholder='Start writing, shift + enter to go to the next line' 
+                    component='textarea' className="message-textarea"
                         onKeyPress={handleKeyPress}
                         disabled={disableForm}
                     />
