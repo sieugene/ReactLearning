@@ -7,9 +7,9 @@ import {
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import Messages from "./Messages";
-import { Redirect } from "react-router-dom";
 import { AppStateType } from '../../redux/store-redux';
 import { MessageItemType, CurrentUserType } from '../../Types/DialogsTypes';
+import { withAuthRedirect } from './../HOC/AuthRedirectHOC';
 
 type MapStateType = {
     id: number | null
@@ -63,9 +63,6 @@ class MessagesContainer extends React.Component<PropsType> {
         }
     }
     render() {
-        if (!this.props.id) {
-            return <Redirect to={'/login'} />
-        }
         return (
             <Messages userId={this.props.match.params.userId}
                 sendMessageToFriendThunk={this.props.sendMessageToFriendThunk}
@@ -96,6 +93,7 @@ let mapStateToProps = (state: AppStateType): MapStateType => {
 
 export default compose(
     withRouter,
+    withAuthRedirect,
     connect<MapStateType, MapDispatchType, null, AppStateType>(mapStateToProps, {
         getListMessagesWithFriendThunk: getListMessagesWithFriendThunkCreator,
         sendMessageToFriendThunk: sendMessageToFriendThunkCreator,

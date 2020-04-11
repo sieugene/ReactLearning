@@ -5,9 +5,10 @@ import {
     getAllDialogsThunkCreator
 } from "../../redux/Dialogs-Reducer";
 import { compose } from "redux";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { DialogItemType } from '../../Types/DialogsTypes';
 import { AppStateType } from '../../redux/store-redux';
+import { withAuthRedirect } from './../HOC/AuthRedirectHOC';
 
 type MapStatePropsType = {
     listDialogs: DialogItemType[],
@@ -24,9 +25,6 @@ const DialogsContainer: React.FC<PropsType> = (props) => {
         props.getAllDialogsThunk();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    if (!props.id) {
-        return <Redirect to={'/login'} />
-    }
     return (
         <Dialogs listDialogs={props.listDialogs} loading={props.loading} />
     )
@@ -44,6 +42,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 export default compose(
     withRouter,
+    withAuthRedirect,
     connect<MapStatePropsType, MapDispatchPropsType, null, AppStateType>
         (mapStateToProps, { getAllDialogsThunk: getAllDialogsThunkCreator })
 )(DialogsContainer)
